@@ -1,0 +1,190 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package pb;
+option go_package = ".;pb";
+
+
+
+import "common.proto";
+
+
+
+
+
+// App平台
+enum Platform {
+    Platform_Null = 0;  				// 无
+	Platform_Andriod = 1; 				// 安卓
+	Platform_Apple = 2;					// 苹果
+	Platform_WeChatMinProgram = 3;		// 微信小程序
+}
+
+// App渠道
+enum AppFrom {
+    // 炒股达人
+    Ios_000 = 0;   			// 苹果0渠道（企业网站下载的苹果）
+    Android_001 = 1;   		// 安卓001渠道（企业网站下载的安卓）
+    Android_201 = 201; 		// 安卓201渠道
+    Android_204 = 204; 		// 安卓204渠道
+    Android_205 = 205; 		// 安卓205渠道
+    Android_206 = 206; 		// 安卓206渠道
+    Android_208 = 208; 		// 安卓208渠道
+    Android_209 = 209; 		// 安卓209渠道
+    Android_210 = 210; 		// 安卓210渠道
+    Android_211 = 211; 		// 安卓211渠道
+    Android_212 = 212; 		// 安卓212渠道
+    Android_301 = 301; 		// 安卓301渠道
+    Android_302 = 302; 		// 安卓302渠道
+    Android_601 = 601; 		// 安卓601渠道
+
+    // K线学院
+    Android_1000 = 1000; 	// 安卓1000渠道
+    Android_1204 = 1204; 	// 安卓1204渠道
+    Android_1205 = 1205; 	// 安卓1205渠道
+    Android_1208 = 1208; 	// 安卓1208渠道
+    Android_1212 = 1212; 	// 安卓1212渠道
+
+	WebsiteAndriod= 4999;   // 企业网站下载的安卓
+	WebsiteIos    = 6666;   // 企业网站下载的苹果
+	IosAppleStore = 6667;	// 苹果商店下载的App
+	Ipad          = 6668;   // 苹果商店下载的App
+
+	WeChatMinProgram = 8888;// 微信小程序
+
+	Website3th = 9999;		// 第三方网站
+	Test = 10000;			// 测试
+}
+
+// 登录类型
+enum LoginType {
+	LoginType_NULL = 0;
+
+	MobilePhoneId = 1;	// 手机号码
+	WeChat        = 2;	// 微信
+	QQ            = 3;	// QQ
+	WeChat_MiniProg=4;	// 微信小程序
+	AppTest		  = 98; // app测试
+	WebTest		  = 99; // web测试
+}
+
+// 广告位置
+enum AdPosition {
+	AdPosition_NULL = 0;
+
+	AdPosition_Startup = 1;			// 启动页
+	AdPosition_Main = 2;			// 主页
+	AdPosition_Exit = 3;			// 退出页
+	AdPosition_Plugin = 4;			// 插屏
+	AdPosition_CgdsList = 5;		// 炒股大赛列表
+	AdPosition_AiStockList = 6;		// Ai股票列表
+	AdPosition_Qihuo = 7;			// 期货页
+	AdPosition_DailyAward = 8;		// 每日看广告领取奖励
+	AdPosition_7Award = 9;			// 7天奖励
+	AdPosition_Dxxl = 10;			// 定向训练
+	AdPosition_Qhxl = 11;			// 期货训练
+	AdPosition_Tjdxl = 12;			// 条件单训练
+	AdPosition_Broker = 13;			// 破产补助
+	AdPosition_Cg = 14;				// 闯关双倍奖励
+}
+
+// 广告统计
+message AdClicked {
+	int32 id = 1;		// 广告ID：内部广告自己编号，外部广告填0，服务器通过Hash(URL)计算得到广告ID
+	int32 pos = 2;		// 广告位置
+	string url = 3;		// 广告URL
+	string title = 4;	// 广告标题
+	int32 uid = 5;		// uid（可为0）
+	AppFrom from = 6;	// 渠道
+	int32 gold = 7;		// 赠送金币
+	int32 diamond = 8;	// 赠送钻石
+	int32 coupon = 9;	// 赠送点券
+}
+
+// 注册
+message CmdRegistry {
+	string account = 1; // 玩家账号：手机号、QQ或微信登录的OpenID、微信小程序登录则为Code
+	LoginType type = 2; // 登录类型
+	string pwd = 3;     // 玩家密码
+	string sms_code = 4;// 手机验证码
+	AppFrom from = 5; 	// App渠道
+	bool websocket = 6;	// 是否为websocket（默认返回TCP连接地址，是则返回websocket连接地址）
+	string union_id = 7;// 微信平台的UnionID（通过微信平台登录时需要填写）
+	int32 inviter = 8;	// 邀请者的uid（可为0）
+
+}
+// 返回类型：CmdLoginReply
+
+// 登录参数
+message CmdLogin {
+	string account = 1; // 玩家账号：手机号、QQ或微信登录的OpenID、微信小程序登录则为Code
+	LoginType type = 2; // 登录类型
+	string pwd = 3;     // 玩家密码
+	AppFrom from = 4; 	// App渠道
+	bool websocket = 5;	// 是否为websocket（默认返回TCP连接地址，是则返回websocket连接地址）
+	string union_id = 6;// 微信平台的UnionID（通过微信平台登录时需要填写）
+	int32 inviter = 7;	// 邀请者的uid（可为0）
+}
+// 登录响应
+message CmdLoginReply {
+	ErrorInfo err = 1;  // 登录结果
+	int32 uid     = 2;  // 玩家ID
+	string token  = 3;  // 登录成功后返回的Token，客户端可以缓存它（当断线重连时或玩家关闭App一段时间后再进入，可以使用token恢复登录，不需要去登录服务器再次登录）
+	string gameAddr = 4;// 服务器做的负载均衡，给客户端分配的游戏服务器IP和端口
+}
+
+// 获取图形码
+message CmdGetCaptcha {
+	string account = 1; // 玩家账号：手机号
+}
+// 获取图形码应答
+message CmdGetCaptchaReply {
+	bytes captcha = 1; // 图形码（区分机器人还是人类的图灵测试）
+}
+
+// 获取短信验证码
+message CmdGetSms {
+	string account = 1; // 玩家账号：手机号
+	string captcha = 2; // 图形码（区分机器人还是人类的图灵测试）
+}
+
+// 重新设置密码
+message CmdResetPwd {
+	string account = 1; // 玩家账号：手机号、微信登录的Code
+	string pwd = 2;     // 新密码
+	string captcha = 3; // 手机验证码或原密码
+}
+
+// 支付成功回调
+message CmdPay {
+	int32 uid = 1;			// uid
+	int64 order_id = 2;		// 订单号
+}
+
+
+
+
+
+// Rpc service
+service LoginService {
+  rpc Registry (CmdRegistry) returns (ErrorInfo) {}
+  rpc Login (CmdLogin) returns (CmdLoginReply) {}
+  rpc GetCaptcha (CmdGetCaptcha) returns (CmdGetCaptchaReply) {}
+  rpc GetSms (CmdGetSms) returns (ErrorInfo) {}
+  rpc ResetPwd (CmdResetPwd) returns (ErrorInfo) {}
+}
+
+
