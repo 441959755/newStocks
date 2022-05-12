@@ -1,0 +1,4 @@
+export default {
+    SHOWLOADING: 'SHOWLOADING',
+    HIDELOADING: 'HIDELOADING',
+}
