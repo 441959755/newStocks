@@ -12,6 +12,14 @@ export default {
         GlobalEvent.on(EventCfg.HIDELOADING, () => { this.nodes['prefabs/loading'].active = false }, this);
 
         this.openNode(cc.find('Canvas'), null, 'prefabs/loading', 99);
+
+        GlobalEvent.on(EventCfg.SHOWTIPSTEXT, this.onShowTipsText.bind(this), this);
+    },
+
+    onShowTipsText(str) {
+        this.openNode(cc.find('Canvas'), this.nodes['prefabs/tipsText'], 'prefabs/tipsText', 99, (node) => {
+            node && (node.getComponent('TipsText').onShow(str));
+        })
     },
 
 
