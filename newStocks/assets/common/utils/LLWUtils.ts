@@ -1,4 +1,4 @@
-import LocalStorageUtils from "../../sctiprs/LocalStorageUtils";
+import LocalStorageUtils from "../../sctiprs/utils/LocalStorageUtils";
 
 
 export default class LLWUtils {

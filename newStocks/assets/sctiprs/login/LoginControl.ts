@@ -1,7 +1,5 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import GameData from "../GameData";
-import EventCfg from "../utils/EventCfg";
-import GlobalEvent from "../utils/GlobalEvent";
 import LoadUtils from "../utils/LoadUtils";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
 import PopupManager from "../utils/PopupManager";
@@ -19,10 +17,15 @@ export default class LoginControl extends cc.Component {
     loginLayer: cc.Node = null;
 
     protected onLoad(): void {
+
         PopupManager.init();
+
         this.loginAD.active = false;
+        this.loginLayer.active = false;
+
         this.loadConf();
     }
+
 
     loadConf() {
 
@@ -31,8 +34,8 @@ export default class LoginControl extends cc.Component {
             this.loginLayer.active = true;
             return;
         }
-        //
 
+        //
         let url = LLWConfing.LoginUrl + '/conf/';
         let url1 = LLWConfing.LoginUrl + '/';
         Promise.all([LoadUtils.loadRemote(url1 + 'app.conf'), LoadUtils.loadRemote(url + 'game.conf'), LoadUtils.loadRemote(url + 'ad.conf'), LoadUtils.loadRemote(url + 'stocklist.dat'), LoadUtils.loadRemote(url + 'contractlist.dat')])

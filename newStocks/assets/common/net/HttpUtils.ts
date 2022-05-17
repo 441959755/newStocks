@@ -7,9 +7,17 @@ export default {
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 300)) {
-                    let res = JSON.parse(xhr.responseText);
+                    let res = xhr.response;
                     resolve(res);
                 }
+            }
+
+            xhr.ontimeout = function (ret) {
+                reject('ontimeout:' + ret);
+            }
+
+            xhr.onerror = function (ret) {
+                reject('onerror:' + ret);
             }
 
             xhr.timeout = options.timeout || 5000;
@@ -17,6 +25,8 @@ export default {
 
             let url = options.url;
             options.data = options.data || {};
+
+
 
             if (method == 'GET') {
                 let str = '';
@@ -33,8 +43,12 @@ export default {
             }
             else {
                 xhr.open(method, options.url, true);
-                xhr.setRequestHeader('Content-type', 'application/json;charset=uft-8');
-                xhr.send(JSON.stringify(options.data));
+                // xhr.setRequestHeader('Content-type', 'application/json;charset=uft-8');
+                // xhr.send(JSON.stringify(options.data));
+                xhr.setRequestHeader('Content-Type', 'application/x-protobuf');
+                xhr.responseType = 'arraybuffer';
+
+                xhr.send(options.data);
             }
         })
     }

@@ -1,8 +1,8 @@
 import LLWConfing from "../../common/config/LLWConfing";
+import LLWSDK from "../../common/sdk/LLWSDK";
 import { pb } from "../../proto/proto";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
-
 
 const { ccclass, property } = cc._decorator;
 
@@ -37,6 +37,13 @@ export default class LoginLayer extends cc.Component {
 
         GlobalEvent.on(EventCfg.SHOWREG, () => { this.reg.active = true }, this);
         GlobalEvent.on(EventCfg.HIDEREG, () => { this.reg.active = false }, this);
+
+        GlobalEvent.on(EventCfg.LOGINSERVER, this.loginServer.bind(this), this);
+    }
+
+    loginServer(obj) {
+        GlobalEvent.emit(EventCfg.SHOWLOADING);
+        LLWSDK.getSDK().login();
     }
 
     protected onEnable(): void {

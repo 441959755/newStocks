@@ -22,7 +22,6 @@ export default class TipsText extends cc.Component {
                     .start()
             }, 1500)
         }
-
     }
 
     protected onDisable(): void {

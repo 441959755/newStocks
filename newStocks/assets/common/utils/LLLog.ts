@@ -41,12 +41,7 @@ export default class LLLog {
                 //     origConsole.assert(arguments[0]);
                 // },
 
-
-
-
             }
-
-
 
         }(window.console))
     }
