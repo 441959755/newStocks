@@ -33,5 +33,21 @@ export default {
      */
     LOGINSERVER: 'LOGINSERVER',
 
+    /**
+     * VIP状态
+     */
+    VIPCHANGE: 'VIPCHANGE',
+
+    /**
+     * 金币
+     */
+    GOLDCHANGE: 'GOLDCHANGE',
+
+
+    /**
+     * 钻石
+     */
+    DIAMONDCHANGE: 'DIAMONDCHANGE',
+
 
 }

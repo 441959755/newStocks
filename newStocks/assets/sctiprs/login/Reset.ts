@@ -2,8 +2,8 @@ import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
 import { pb } from "../../proto/proto";
 import GameData from "../GameData";
-import EventCfg from "../utils/EventCfg";
-import GlobalEvent from "../utils/GlobalEvent";
+import EventCfg from "../Utils/EventCfg";
+import GlobalEvent from "../Utils/GlobalEvent";
 import RegUtils from "../utils/RegUtils";
 
 
@@ -29,6 +29,7 @@ export default class Reset extends cc.Component {
     timecount = 0;
 
     onload() {
+
         this.phone.node.on('editing-did-ended', edit => {
             let str = parseInt(edit.string);
             if (!RegUtils.isPhoneNumber(str)) {

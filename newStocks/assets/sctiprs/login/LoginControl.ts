@@ -1,8 +1,9 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import GameData from "../GameData";
-import LoadUtils from "../utils/LoadUtils";
+import FitUtils from "../utils/FitUtils";
+import LoadUtils from "../Utils/LoadUtils";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
-import PopupManager from "../utils/PopupManager";
+import PopupManager from "../Utils/PopupManager";
 
 
 const { ccclass, property } = cc._decorator;
@@ -18,12 +19,16 @@ export default class LoginControl extends cc.Component {
 
     protected onLoad(): void {
 
+        FitUtils.resetSize(this.node);
+
         PopupManager.init();
 
         this.loginAD.active = false;
         this.loginLayer.active = false;
 
         this.loadConf();
+
+        this.initConfData();
     }
 
 
@@ -77,6 +82,13 @@ export default class LoginControl extends cc.Component {
         setTimeout(() => {
             this.loginLayer.active = true;
         }, 1500);
+
+    }
+
+
+    initConfData() {
+        GameData.account = LocalStorageUtils.getItem('ACCOUNT') || '';
+        GameData.password = localStorage.getItem('PASSEORD') || '';
 
     }
 

@@ -1,5 +1,13 @@
 
+import LLWConfing from "../../common/config/LLWConfing";
+import PlatDefine from "../../common/config/PlatDefine";
+import LLWSDK from "../../common/sdk/LLWSDK";
 import GameData from "../GameData";
+import ActionUtils from "../Utils/ActionUtils";
+import EventCfg from "../Utils/EventCfg";
+import GlobalEvent from "../Utils/GlobalEvent";
+import PopupManager from "../Utils/PopupManager";
+import TimeUtils from "../utils/TimeUtils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -21,7 +29,7 @@ export default class HallTopHandle extends cc.Component {
     setVIPstatus() {
         //vip状态
         if (GameData.vipStatus) {
-            ComUtils.getVIPDisTime(this.SetVIPDisTime.bind(this));
+            TimeUtils.getVipTime(this.SetVIPDisTime.bind(this));
         }
         else {
             this.vipTimeLabel.string = 'VIP';
@@ -38,7 +46,7 @@ export default class HallTopHandle extends cc.Component {
         //设置
         if (name == 'xl_topbtn_xlsz') {
             PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/hallSetLayer', 11, (node) => {
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             })
         }
 
@@ -48,8 +56,9 @@ export default class HallTopHandle extends cc.Component {
         }
 
         else if (name == 'main_tb_qq') {
+
             let str = '';
-            if (LLWConfig.PLATTYPE == PlatDefine.PLAT_WECHAT) {
+            if (LLWConfing.PLATTYPE == PlatDefine.PLAT_WECHAT) {
                 // str = 'Prefabs/sericeBox1';
                 LLWSDK.getSDK().openCustomerServiceConversation();
                 return;

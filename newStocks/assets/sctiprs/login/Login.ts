@@ -1,6 +1,6 @@
 import GameData from "../GameData";
-import EventCfg from "../utils/EventCfg";
-import GlobalEvent from "../utils/GlobalEvent";
+import EventCfg from "../Utils/EventCfg";
+import GlobalEvent from "../Utils/GlobalEvent";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
 
 
@@ -19,13 +19,13 @@ export default class Login extends cc.Component {
 
         let acc = GameData.account;
 
-        if (acc) {
+        if (acc && acc != "undefined") {
             this.account.string = acc;
         }
 
         let pass = GameData.password;
 
-        if (pass) {
+        if (pass && pass != "undefined") {
             this.password.string = pass;
         }
 

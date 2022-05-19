@@ -56,7 +56,7 @@ export default class Socket {
 
         let callback = this.queue[messageId.messageId];
 
-        callback && (this.callback(PbHelp.selectProtoBlackData(messageId.messageId, beadBuf)));
+        callback && (callback(PbHelp.selectProtoBlackData(messageId.messageId, beadBuf)));
 
     }
 

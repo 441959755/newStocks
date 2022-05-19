@@ -1,8 +1,12 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import LLWSDK from "../../common/sdk/LLWSDK";
 import { pb } from "../../proto/proto";
-import EventCfg from "../utils/EventCfg";
-import GlobalEvent from "../utils/GlobalEvent";
+import GameData from "../GameData";
+import EventCfg from "../Utils/EventCfg";
+import GlobalEvent from "../Utils/GlobalEvent";
+import Socket from '../../common/net/Socket';
+import HttpMgr from "../HttpMgr";
+
 
 const { ccclass, property } = cc._decorator;
 
@@ -43,7 +47,27 @@ export default class LoginLayer extends cc.Component {
 
     loginServer(obj) {
         GlobalEvent.emit(EventCfg.SHOWLOADING);
-        LLWSDK.getSDK().login();
+        let uid = obj.uid;
+        let pw = obj.pw;
+
+        LLWSDK.getSDK().login(this.loginResultCallback.bind(this), uid, pw);
+    }
+
+    loginResultCallback(decode) {
+
+        console.log('loginResultCallback:' + JSON.stringify(decode));
+
+        if (decode.err.err) {
+            GlobalEvent.emit(EventCfg.HIDELOADING);
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, decode.err.err);
+            return;
+        }
+
+        decode.token && (GameData.token = decode.token);
+        decode.uid && (GameData.userID = decode.uid);
+
+        (<any>window).socket = new Socket(decode.gameAddr, HttpMgr.loginSocket)
+
     }
 
     protected onEnable(): void {

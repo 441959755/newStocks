@@ -1,5 +1,5 @@
 
-import { pb } from "../../protos/proto";
+import { pb } from "../../proto/proto";
 import GameData from "../GameData";
 import EventCfg from "../Utils/EventCfg";
 import GlobalEvent from "../Utils/GlobalEvent";
@@ -16,6 +16,7 @@ export default class HallCapital extends cc.Component {
     diamondLabel: cc.Label = null;
 
     onLoad() {
+
         GlobalEvent.on(EventCfg.GOLDCHANGE, this.initData.bind(this), this);
 
         GlobalEvent.on(EventCfg.DIAMONDCHANGE, this.initData.bind(this), this);
@@ -42,7 +43,7 @@ export default class HallCapital extends cc.Component {
         }
     }
 
-    openShopLayer(type){
+    openShopLayer(type) {
         PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/shop/shop', 88, (node) => {
             type && (node.getComponent('ShopControl').onShow(type));
         })
