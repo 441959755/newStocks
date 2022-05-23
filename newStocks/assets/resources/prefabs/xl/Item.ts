@@ -1,4 +1,4 @@
-import GlobalEvent from "../../../sctiprs/Utils/GlobalEvent";
+import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 

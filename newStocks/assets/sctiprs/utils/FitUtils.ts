@@ -16,7 +16,7 @@ export default {
             cav.height = designSize.width * frameSize.height / frameSize.width;
         }
         cav.getComponent(cc.Canvas).getDesignResolutionSize = cc.size(cav.width, cav.height);
-        this.firscene(cav, designSize);
+        this.fitScene(cav, designSize);
 
     },
 

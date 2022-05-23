@@ -2,11 +2,12 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import PlatDefine from "../../common/config/PlatDefine";
 import LLWSDK from "../../common/sdk/LLWSDK";
+import { pb } from "../../proto/proto";
 import GameData from "../GameData";
-import ActionUtils from "../Utils/ActionUtils";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
-import PopupManager from "../Utils/PopupManager";
+import ActionUtils from "../utils/ActionUtils";
+import EventCfg from "../utils/EventCfg";
+import GlobalEvent from "../utils/GlobalEvent";
+import PopupManager from "../utils/PopupManager";
 import TimeUtils from "../utils/TimeUtils";
 
 const { ccclass, property } = cc._decorator;
@@ -45,7 +46,7 @@ export default class HallTopHandle extends cc.Component {
         let name = event.target.name;
         //设置
         if (name == 'xl_topbtn_xlsz') {
-            PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/hallSetLayer', 11, (node) => {
+            PopupManager.openNode(cc.find('Canvas'), null, 'prefabs/hallSetLayer', 11, (node) => {
                 ActionUtils.openNode(node);
             })
         }
@@ -58,8 +59,7 @@ export default class HallTopHandle extends cc.Component {
         else if (name == 'main_tb_qq') {
 
             let str = '';
-            if (LLWConfing.PLATTYPE == PlatDefine.PLAT_WECHAT) {
-                // str = 'Prefabs/sericeBox1';
+            if (LLWConfing.AppFrom == pb.AppFrom.WeChatMinProgram) {
                 LLWSDK.getSDK().openCustomerServiceConversation();
                 return;
             }
@@ -70,25 +70,25 @@ export default class HallTopHandle extends cc.Component {
             PopupManager.openNode(this.node.parent, null, str, 11, (node) => {
                 let handle = node.getComponent('SericeBox1');
                 handle.onShow('客服');
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             })
         }
 
         else if (name == 'main_smbt_gg1') {
             PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/noticeLayer', 10, (node) => {
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             });
         }
 
         else if (name == 'main_topbt_fl') {
             PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/welfare', 11, (node) => {
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             });
         }
 
         else if (name == 'main_topbt_ph') {
             PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/rankingList', 10, (node) => {
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             })
         }
 
@@ -98,7 +98,7 @@ export default class HallTopHandle extends cc.Component {
 
         else if (name == 'main_topbt_invite') {
             PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/InviteLayer', 11, (node) => {
-                ActionUtils.openBox(node);
+                ActionUtils.openNode(node);
             })
         }
 

@@ -1,9 +1,11 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import GameData from "../GameData";
+import AudioUtils from "../utils/AudioUtils";
+import ConfUtils from "../utils/ConfUtils";
 import FitUtils from "../utils/FitUtils";
-import LoadUtils from "../Utils/LoadUtils";
+import LoadUtils from "../utils/LoadUtils";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
-import PopupManager from "../Utils/PopupManager";
+import PopupManager from "../utils/PopupManager";
 
 
 const { ccclass, property } = cc._decorator;
@@ -23,6 +25,9 @@ export default class LoginControl extends cc.Component {
 
         PopupManager.init();
 
+        AudioUtils.getAudioVolume();
+        AudioUtils.loadAudios('audio');
+
         this.loginAD.active = false;
         this.loginLayer.active = false;
 
@@ -31,6 +36,22 @@ export default class LoginControl extends cc.Component {
         this.initConfData();
     }
 
+    protected start(): void {
+        cc.macro.ENABLE_MULTI_TOUCH = false;
+
+        cc.Button.prototype._onTouchEnded = function (t) {
+            if (this.interactable && this.enabledInHierarchy) {
+                AudioUtils.playEffect('click', false);
+                if (this._pressed) {
+                    cc.Component.EventHandler.emitEvents(this.clickEvents, t);
+                    this.node.emit('click', true);
+                }
+                this._pressed = 1;
+                this._updateState();
+                t.stopPropagation();
+            }
+        }
+    }
 
     loadConf() {
 
@@ -85,13 +106,24 @@ export default class LoginControl extends cc.Component {
 
     }
 
-
     initConfData() {
+
         GameData.account = LocalStorageUtils.getItem('ACCOUNT') || '';
         GameData.password = localStorage.getItem('PASSEORD') || '';
 
-    }
+        GameData.smSet = ConfUtils.getConf('SMSET');
 
+        GameData.jjpkSet = ConfUtils.getConf('JJPKSET');
+
+        GameData.dxSet = ConfUtils.getConf('DXSET');
+
+        GameData.qhSet = ConfUtils.getConf('QHSET');
+
+        GameData.tjdSet = ConfUtils.getConf("TJDSET");
+
+        GameData.fsSet = ConfUtils.getConf("FSSET");
+
+    }
 
 
 }

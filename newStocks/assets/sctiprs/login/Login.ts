@@ -1,6 +1,6 @@
 import GameData from "../GameData";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
+import EventCfg from "../utils/EventCfg";
+import GlobalEvent from "../utils/GlobalEvent";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
 
 

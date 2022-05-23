@@ -63,7 +63,22 @@ export default {
 
     get vipStatus() {
         return (new Date().getTime() / 1000 > this.properties[pb.GamePropertyId.VipExpiration]);
-    }
+    },
+
+    smSet: null,
+
+    jjpkSet: null,
+
+    dxSet: null,
+
+    qhSet: null,
+
+    tjdSet: null,
+
+    fsSet: null,
+
+    zbSet: null,
+
 
 
 

@@ -4,10 +4,10 @@ import PlatDefine from "../common/config/PlatDefine";
 import GameData from "../GameData";
 import GameCfgText from "../GameText";
 import GlobalHandle from "../global/GlobalHandle";
-import ActionUtils from "../Utils/ActionUtils";
-import GlobalEvent from "../Utils/GlobalEvent";
-import LoadUtils from "../Utils/LoadUtils";
-import PopupManager from "../Utils/PopupManager";
+import ActionUtils from "../utils/ActionUtils";
+import GlobalEvent from "../utils/GlobalEvent";
+import LoadUtils from "../utils/LoadUtils";
+import PopupManager from "../utils/PopupManager";
 
 const { ccclass, property } = cc._decorator;
 

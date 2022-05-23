@@ -1,9 +1,9 @@
 
 import GameData from "../../sctiprs/GameData";
-import AudioUtils from "../../sctiprs/Utils/AudioUtils";
-import GlobalEvent from "../../sctiprs/Utils/GlobalEvent";
+import AudioUtils from "../../sctiprs/utils/AudioUtils";
+import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
+import LocalStorageUtils from "../../sctiprs/utils/LocalStorageUtils";
 
-// import { pb } from "../../../protos/proto";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -42,7 +42,6 @@ export default class HallSetHandle extends cc.Component {
     }
 
     protected onDisable() {
-
         GlobalEvent.off('ItemValue');
     }
 
@@ -62,7 +61,7 @@ export default class HallSetHandle extends cc.Component {
     //默认的选项
     initToggle() {
         let data;
-        data = GameData.SMSet;
+        data = GameData.smSet;
         this.showVol[0].isChecked = data.isShowVol;
         this.showVol[1].isChecked = !data.isShowVol;
         this.BW[0].isChecked = data.isBW;
@@ -83,55 +82,53 @@ export default class HallSetHandle extends cc.Component {
 
         this.soundToggle[0].isChecked = data.isSound;
         this.soundToggle[1].isChecked = !data.isSound;
-        // AudioUtils.setEffectsVolume(data.isSound);
     }
 
     //保存设置的数据
     SaveToggle() {
-        GameData.SMSet.isShowVol = this.showVol[0].isChecked ? true : false;
+        GameData.smSet.isShowVol = this.showVol[0].isChecked ? true : false;
 
-        GameData.SMSet.isBW = this.BW[0].isChecked ? true : false;
+        GameData.smSet.isBW = this.BW[0].isChecked ? true : false;
 
-        GameData.SMSet.isSound = this.soundToggle[0].isChecked ? 1 : 0;
+        GameData.smSet.isSound = this.soundToggle[0].isChecked ? 1 : 0;
 
-        GameData.SMSet.isMA1 = this.MAs[0].isChecked ? true : false;
+        GameData.smSet.isMA1 = this.MAs[0].isChecked ? true : false;
 
-        GameData.SMSet.isMA2 = this.MAs[1].isChecked ? true : false;
-        GameData.SMSet.isMA3 = this.MAs[2].isChecked ? true : false;
-        GameData.SMSet.isMA4 = this.MAs[3].isChecked ? true : false;
-        GameData.SMSet.isMA5 = this.MAs[4].isChecked ? true : false;
-        GameData.SMSet.isMA6 = this.MAs[5].isChecked ? true : false;
+        GameData.smSet.isMA2 = this.MAs[1].isChecked ? true : false;
+        GameData.smSet.isMA3 = this.MAs[2].isChecked ? true : false;
+        GameData.smSet.isMA4 = this.MAs[3].isChecked ? true : false;
+        GameData.smSet.isMA5 = this.MAs[4].isChecked ? true : false;
+        GameData.smSet.isMA6 = this.MAs[5].isChecked ? true : false;
 
-        GameData.SMSet.MA1Date = parseInt(this.MaDates[0].string);
-        GameData.SMSet.MA2Date = parseInt(this.MaDates[1].string);
-        GameData.SMSet.MA3Date = parseInt(this.MaDates[2].string);
-        GameData.SMSet.MA4Date = parseInt(this.MaDates[3].string);
-        GameData.SMSet.MA5Date = parseInt(this.MaDates[4].string);
-        GameData.SMSet.MA6Date = parseInt(this.MaDates[5].string);
+        GameData.smSet.MA1Date = parseInt(this.MaDates[0].string);
+        GameData.smSet.MA2Date = parseInt(this.MaDates[1].string);
+        GameData.smSet.MA3Date = parseInt(this.MaDates[2].string);
+        GameData.smSet.MA4Date = parseInt(this.MaDates[3].string);
+        GameData.smSet.MA5Date = parseInt(this.MaDates[4].string);
+        GameData.smSet.MA6Date = parseInt(this.MaDates[5].string);
 
-        let arr = [GameData.DXSet, GameData.ZBSet, GameData.QHSet, GameData.FSSet, GameData.TJDSet, GameData.SMSet, GameData.JJPKSet];
+        let arr = [GameData.dxSet, GameData.zbSet, GameData.qhSet, GameData.fsSet, GameData.tjdSet, GameData.jjpkSet];
 
         arr.forEach(el => {
-            el.isShowVol = GameData.SMSet.isShowVol;
-            el.isBW = GameData.SMSet.isBW;
-            el.isSound = GameData.SMSet.isSound;
-            el.isMA1 = GameData.SMSet.isMA1;
-            el.isMA2 = GameData.SMSet.isMA2;
-            el.isMA3 = GameData.SMSet.isMA3;
-            el.isMA4 = GameData.SMSet.isMA4;
-            el.isMA5 = GameData.SMSet.isMA5;
-            el.isMA6 = GameData.SMSet.isMA6;
-            el.MA1Date = GameData.SMSet.MA1Date;
-            el.MA2Date = GameData.SMSet.MA2Date;
-            el.MA3Date = GameData.SMSet.MA3Date;
-            el.MA4Date = GameData.SMSet.MA4Date;
-            el.MA5Date = GameData.SMSet.MA5Date;
-            el.MA6Date = GameData.SMSet.MA6Date;
+            el.isShowVol = GameData.smSet.isShowVol;
+            el.isBW = GameData.smSet.isBW;
+            el.isSound = GameData.smSet.isSound;
+            el.isMA1 = GameData.smSet.isMA1;
+            el.isMA2 = GameData.smSet.isMA2;
+            el.isMA3 = GameData.smSet.isMA3;
+            el.isMA4 = GameData.smSet.isMA4;
+            el.isMA5 = GameData.smSet.isMA5;
+            el.isMA6 = GameData.smSet.isMA6;
+            el.MA1Date = GameData.smSet.MA1Date;
+            el.MA2Date = GameData.smSet.MA2Date;
+            el.MA3Date = GameData.smSet.MA3Date;
+            el.MA4Date = GameData.smSet.MA4Date;
+            el.MA5Date = GameData.smSet.MA5Date;
+            el.MA6Date = GameData.smSet.MA6Date;
         })
 
-        GameData.SMSet = GameData.SMSet;
-        AudioUtils.setEffectsVolume(GameData.SMSet.isSound);
-        cc.sys.localStorage.setItem('SMSET', JSON.stringify(GameData.SMSet));
+        AudioUtils.setEffectVolume(GameData.smSet.isSound);
+        LocalStorageUtils.setItem('SMSET', JSON.stringify(GameData.smSet));
     }
 
     onBtnClick(event, data) {

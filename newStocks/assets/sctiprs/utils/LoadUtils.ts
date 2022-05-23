@@ -38,6 +38,19 @@ export default {
         })
     },
 
+    loadDir(url) {
+        return new Promise((resolve, reject) => {
+            cc.resources.loadDir(url, (err, pre) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(pre);
+                }
+            })
+        })
+    },
+
     /**
      * 
      * @param str 

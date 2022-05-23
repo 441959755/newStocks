@@ -1,8 +1,9 @@
-import { pb } from "../protos/proto";
+
+import { pb } from "../proto/proto";
 import GameData from "./GameData";
-import EventCfg from "./Utils/EventCfg";
-import GlobalEvent from "./Utils/GlobalEvent";
-import PopupManager from "./Utils/PopupManager";
+import EventCfg from "./utils/EventCfg";
+import GlobalEvent from "./utils/GlobalEvent";
+import PopupManager from "./utils/PopupManager";
 
 
 const { ccclass, property } = cc._decorator;

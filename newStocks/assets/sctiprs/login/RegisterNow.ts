@@ -2,9 +2,9 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
 import { pb } from "../../proto/proto";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
-import PopupManager from "../Utils/PopupManager";
+import EventCfg from "../utils/EventCfg";
+import GlobalEvent from "../utils/GlobalEvent";
+import PopupManager from "../utils/PopupManager";
 import RegUtils from "../utils/RegUtils";
 
 

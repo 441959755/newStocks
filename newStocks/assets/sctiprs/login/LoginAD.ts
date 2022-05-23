@@ -1,7 +1,7 @@
 
 
 import GameData from "../GameData";
-import LoadUtils from "../Utils/LoadUtils";
+import LoadUtils from "../utils/LoadUtils";
 
 
 const { ccclass, property } = cc._decorator;

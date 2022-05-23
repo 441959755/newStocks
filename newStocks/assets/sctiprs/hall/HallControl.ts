@@ -1,5 +1,5 @@
 import FitUtils from "../utils/FitUtils";
-import PopupManager from "../Utils/PopupManager";
+import PopupManager from "../utils/PopupManager";
 
 const { ccclass, property } = cc._decorator;
 

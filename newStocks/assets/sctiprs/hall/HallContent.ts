@@ -1,14 +1,14 @@
-import GlobalEvent from '../Utils/GlobalEvent';
-import EventCfg from '../Utils/EventCfg';
+import GlobalEvent from '../utils/GlobalEvent';
+import EventCfg from '../utils/EventCfg';
 import { pb } from '../../protos/proto';
 import GameData from '../GameData';
 import GameCfgText from '../GameText';
 import LLWSDK from '../common/sdk/LLWSDK';
-import PopupManager from '../Utils/PopupManager';
+import PopupManager from '../utils/PopupManager';
 import GameCfg from '../game/GameCfg';
-import ComUtils from '../Utils/ComUtils';
+import ComUtils from '../utils/ComUtils';
 import GlobalHandle from '../global/GlobalHandle';
-import ActionUtils from '../Utils/ActionUtils';
+import ActionUtils from '../utils/ActionUtils';
 
 const { ccclass, property } = cc._decorator;
 

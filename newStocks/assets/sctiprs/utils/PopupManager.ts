@@ -1,6 +1,8 @@
+
 import EventCfg from "./EventCfg"
 import GlobalEvent from "./GlobalEvent"
 import LoadUtils from "./LoadUtils";
+import ActionUtils from "./ActionUtils";
 
 
 export default {
@@ -19,6 +21,12 @@ export default {
     onShowTipsText(str) {
         this.openNode(cc.find('Canvas'), this.nodes['prefabs/tipsText'], 'prefabs/tipsText', 99, (node) => {
             node && (node.getComponent('TipsText').onShow(str));
+        })
+    },
+
+    loadVipExplain() {
+        this.openNode(cc.find('Canvas'), this.node['prefabs/vipExplain'], 'prefabs/vipExplain', 50, (node) => {
+            ActionUtils.openNode(node);
         })
     },
 
@@ -56,9 +64,5 @@ export default {
             call && (call(selfNode));
         }
     }
-
-
-
-
 
 }

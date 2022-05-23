@@ -3,9 +3,9 @@ import LLWConfig from "../../sctiprs/common/config/LLWConfig";
 import LLWSDK from "../../sctiprs/common/sdk/LLWSDK";
 import GameData from "../../sctiprs/GameData";
 import GameCfgText from "../../sctiprs/GameText";
-import ComUtils from "../../sctiprs/Utils/ComUtils";
-import EventCfg from "../../sctiprs/Utils/EventCfg";
-import GlobalEvent from "../../sctiprs/Utils/GlobalEvent";
+import ComUtils from "../../sctiprs/utils/ComUtils";
+import EventCfg from "../../sctiprs/utils/EventCfg";
+import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 

@@ -2,8 +2,8 @@ import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
 import { pb } from "../../proto/proto";
 import GameData from "../GameData";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
+import EventCfg from "../utils/EventCfg";
+import GlobalEvent from "../utils/GlobalEvent";
 import RegUtils from "../utils/RegUtils";
 
 

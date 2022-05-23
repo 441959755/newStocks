@@ -3,7 +3,7 @@ import HttpUtils from "../common/net/HttpUtils";
 import Socket from "../common/net/Socket";
 import { pb } from "../proto/proto";
 import GameData from "./GameData";
-import LoadUtils from "./Utils/LoadUtils";
+import LoadUtils from "./utils/LoadUtils";
 
 export default {
 
@@ -63,6 +63,7 @@ export default {
 
                 if (cc.director.getScene().name == 'login') {
                     LoadUtils.loadScene('hall');
+
                 }
 
                 cb && (cb());
