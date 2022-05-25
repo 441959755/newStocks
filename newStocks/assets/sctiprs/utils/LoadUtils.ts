@@ -60,6 +60,7 @@ export default {
         cc.director.loadScene(str, cb);
     },
 
+
     /**
      * 
      * @param url 
@@ -79,7 +80,5 @@ export default {
             })
         })
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 import FitUtils from "../utils/FitUtils";
 import PopupManager from "../utils/PopupManager";
+import SchoolBundle from "./SchoolBundle";
 
 const { ccclass, property } = cc._decorator;
 
@@ -15,6 +16,11 @@ export default class HallControl extends cc.Component {
 
     start() {
 
+    }
+
+
+    protected onDestroy(): void {
+        SchoolBundle.removeBundle();
     }
 
     // update (dt) {}

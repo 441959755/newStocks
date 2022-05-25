@@ -1,6 +1,6 @@
-import GameData from "../GameData";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
+import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
+import EventCfg from "../../../sctiprs/utils/EventCfg";
+import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 
@@ -25,42 +25,43 @@ export default class StudyHandle extends cc.Component {
 
     onLoad() {
         this.pageView.node.on('scroll-to-right', () => {
-            if (GameData.studyBar >= 4) {
+            if (SchoolBundle.studyBar >= 4) {
                 return;
             }
 
             this.flag = 0;
-            GlobalEvent.emit(EventCfg.LOADINGSHOW);
-            GameData.studyBar = parseInt(GameData.studyBar) + 1;
 
-            if (GameData.studyBar > GameData.studyHisBar) {
-                GameData.studyHisBar = GameData.studyBar;
+            GlobalEvent.emit(EventCfg.SHOWLOADING);
+            SchoolBundle.studyBar = parseInt(SchoolBundle.studyBar) + 1;
+
+            if (SchoolBundle.studyBar > SchoolBundle.studyHisBar) {
+                SchoolBundle.studyHisBar = SchoolBundle.studyBar;
                 GlobalEvent.emit('UPDATESCHOOLUI');
                 GlobalEvent.emit('saveStudyProgress', 0);
             }
 
             this.node.active = false;
             GlobalEvent.emit('OPENCURSTUDYBAR');
-            GlobalEvent.emit(EventCfg.LOADINGHIDE);
+            GlobalEvent.emit(EventCfg.HIDELOADING);
         })
 
         this.pageView.node.on('scroll-to-left', () => {
-            if (GameData.studyBar <= 1) {
+            if (SchoolBundle.studyBar <= 1) {
                 return;
             }
 
             this.flag = 1;
-            GlobalEvent.emit(EventCfg.LOADINGSHOW);
-            GameData.studyBar = parseInt(GameData.studyBar) - 1;;
+            GlobalEvent.emit(EventCfg.SHOWLOADING);
+            SchoolBundle.studyBar = parseInt(SchoolBundle.studyBar) - 1;;
             this.node.active = false;
             GlobalEvent.emit('OPENCURSTUDYBAR');
-            GlobalEvent.emit(EventCfg.LOADINGHIDE);
+            GlobalEvent.emit(EventCfg.HIDELOADING);
         })
     }
 
     onShow(data, Imgs, data1?) {
         this.asset = Imgs;
-        let pagesData = data.list[GameData.studyBar - 1].pages[0].contents;
+        let pagesData = data.list[SchoolBundle.studyBar - 1].pages[0].contents;
         let pages = this.content.children;
 
         pagesData.forEach((el, index) => {
@@ -72,14 +73,14 @@ export default class StudyHandle extends cc.Component {
             this.pageView && (this.pageView.addPage(node))
             node.setPosition(0, 0);
             node.width = this.pageView.node.children[0].width;
-            node.getComponent('page').onShowUI(el, Imgs);
+            node.getComponent('PageHandle').onShowUI(el, Imgs);
         });
 
         if (this.flag) {
             this.flag = 0;
             this.pageView && (this.pageView.scrollToPage(this.pageView.getPages().length - 1, 0.01))
         }
-        this.title.string = data.list[GameData.studyBar - 1].title;
+        this.title.string = data.list[SchoolBundle.studyBar - 1].title;
     }
 
 

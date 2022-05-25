@@ -5,10 +5,13 @@ import GameData from '../GameData';
 import GameCfgText from '../GameText';
 import LLWSDK from '../common/sdk/LLWSDK';
 import PopupManager from '../utils/PopupManager';
-import GameCfg from '../game/GameCfg';
+
 import ComUtils from '../utils/ComUtils';
 import GlobalHandle from '../global/GlobalHandle';
 import ActionUtils from '../utils/ActionUtils';
+import LoadUtils from '../utils/LoadUtils';
+import SchoolBundle from './SchoolBundle';
+import GameCfg from '../GameCfg';
 
 const { ccclass, property } = cc._decorator;
 
@@ -33,6 +36,7 @@ export default class HallContent extends cc.Component {
 	userInfo: cc.Node = null;
 
 	onLoad() {
+
 		//发放奖励动画
 		GlobalEvent.on('CmdGoldAwardPrompt', this.CmdGoldAwardPrompt.bind(this), this);
 	}
@@ -379,10 +383,14 @@ export default class HallContent extends cc.Component {
 			name == 'main_study_cjl' || name == 'main_study_macd' ||
 			name == 'main_study_kdj' || name == 'main_study_boll' ||
 			name == 'main_study_rsi' || name == 'main_study_expma') {
-			GlobalEvent.emit(EventCfg.LOADINGSHOW);
+			// GlobalEvent.emit(EventCfg.LOADINGSHOW);
+			// GameCfg.GameType = 'STUDY';
+			// GameData.schoolProgress = data;
+			//	cc.director.loadScene('school');
+			GlobalEvent.emit(EventCfg.SHOWLOADING);
 			GameCfg.GameType = 'STUDY';
-			GameData.schoolProgress = data;
-			cc.director.loadScene('school');
+			SchoolBundle.schoolProgress = data;
+			SchoolBundle.bundleSchool('school');
 		}
 
 		//免费砖石

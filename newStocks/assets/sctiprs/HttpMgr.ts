@@ -52,8 +52,8 @@ export default {
                 GameData.aiStockList = info.data.aiStockList;
                 GameData.stockList = info.data.stockList;
                 GameData.cgdsStockList = info.data.cgdsStockList;
-                GameData.taskStudy = info.data.study || [];
-                GameData.taskDaily = info.data.daily || [];
+                GameData.taskStudy = info.data.tasks.study || [];
+                GameData.taskDaily = info.data.tasks.daily || [];
 
                 if (info.data.isEditedNick) {
                     GameData.userName = info.data.nickname;

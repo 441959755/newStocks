@@ -1,8 +1,6 @@
 import GameData from "../GameData";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
-import LocalStorageUtils from "../utils/LocalStorageUtils";
-
 
 const { ccclass, property } = cc._decorator;
 
@@ -53,6 +51,9 @@ export default class Login extends cc.Component {
                 GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '请输入正确的账号或密码');
                 return;
             }
+
+            GameData.account = this.account.string;
+            GameData.password = this.password.string;
 
             GlobalEvent.emit(EventCfg.LOGINSERVER, { uid: this.account.string, pw: this.password.string });
         }

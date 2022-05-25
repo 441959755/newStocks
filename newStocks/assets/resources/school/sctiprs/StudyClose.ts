@@ -1,7 +1,7 @@
-import { pb } from "../../protos/proto";
-import GameData from "../GameData";
-import GameCfgText from "../GameText";
-import GlobalEvent from "../Utils/GlobalEvent";
+import { pb } from "../../../proto/proto";
+import GameData from "../../../sctiprs/GameData";
+import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
+import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 
@@ -40,10 +40,11 @@ export default class StudyClose extends cc.Component {
     award = 0;
 
     onEnable() {
+
         //用户信息
         this.headImg.spriteFrame = GameData.headImg;
         this.levelLabel.string = 'LV:  ' + GameData.properties[pb.GamePropertyId.Level] || '1';
-        let max_exp = GameCfgText.levelInfoCfg[GameData.properties[pb.GamePropertyId.Level]];
+        let max_exp = GameData.gameConf.level_exp[GameData.properties[pb.GamePropertyId.Level]];
         this.expLabel.string = 'EXP:' + GameData.properties[pb.GamePropertyId.Exp] + '/' + max_exp;
         this.userName.string = GameData.userName;
     }
@@ -73,24 +74,24 @@ export default class StudyClose extends cc.Component {
         else if (zql >= 60 && zql < 80) {
             this.stars[0].active = true;
 
-            this.award = parseInt(GameCfgText.gameConf.task.study[0].gold);
-            par = GameCfgText.gameConf.task.study[0].progress;
+            this.award = parseInt(GameData.gameConf.task.study[0].gold);
+            par = GameData.gameConf.task.study[0].progress;
 
         }
         else if (zql >= 80 && zql < 100) {
             this.stars[0].active = true;
             this.stars[1].active = true;
 
-            this.award = parseInt(GameCfgText.gameConf.task.study[1].gold) + parseInt(GameCfgText.gameConf.task.study[0].gold);
-            par = GameCfgText.gameConf.task.study[1].progress;
+            this.award = parseInt(GameData.gameConf.task.study[1].gold) + parseInt(GameData.gameConf.task.study[0].gold);
+            par = GameData.gameConf.task.study[1].progress;
         }
         else if (zql >= 100) {
             this.stars[0].active = true;
             this.stars[1].active = true;
             this.stars[2].active = true;
 
-            this.award = parseInt(GameCfgText.gameConf.task.study[2].gold) + parseInt(GameCfgText.gameConf.task.study[1].gold) + parseInt(GameCfgText.gameConf.task.study[0].gold);
-            par = GameCfgText.gameConf.task.study[2].progress;
+            this.award = parseInt(GameData.gameConf.task.study[2].gold) + parseInt(GameData.gameConf.task.study[1].gold) + parseInt(GameCfgText.gameConf.task.study[0].gold);
+            par = GameData.gameConf.task.study[2].progress;
         }
 
         if (zql < 60) {
@@ -109,18 +110,18 @@ export default class StudyClose extends cc.Component {
             this.awardLa.node.color = cc.Color.WHITE;
         }
 
-        if (par > GameData.TaskStudy[GameData.schoolProgress - 1].progress) {
+        if (par > GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress) {
 
-            if (GameData.TaskStudy[GameData.schoolProgress - 1].progress == GameCfgText.gameConf.task.study[0].progress) {
-                this.award -= GameCfgText.gameConf.task.study[0].award;
+            if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress == GameData.gameConf.task.study[0].progress) {
+                this.award -= GameData.gameConf.task.study[0].award;
             }
 
-            else if (GameData.TaskStudy[GameData.schoolProgress - 1].progress == GameCfgText.gameConf.task.study[1].progress) {
-                this.award -= (GameCfgText.gameConf.task.study[1].gold + GameCfgText.gameConf.task.study[0].gold);
+            else if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress == GameData.gameConf.task.study[1].progress) {
+                this.award -= (GameData.gameConf.task.study[1].gold + GameData.gameConf.task.study[0].gold);
             }
 
-            else if (GameData.TaskStudy[GameData.schoolProgress - 1].progress == GameCfgText.gameConf.task.study[2].progress) {
-                this.award -= (GameCfgText.gameConf.task.study[2].gold + GameCfgText.gameConf.task.study[1].gold + GameCfgText.gameConf.task.study[0].gold);
+            else if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress == GameData.gameConf.task.study[2].progress) {
+                this.award -= (GameData.gameConf.task.study[2].gold + GameData.gameConf.task.study[1].gold + GameData.gameConf.task.study[0].gold);
             }
         }
         else {
@@ -129,8 +130,8 @@ export default class StudyClose extends cc.Component {
 
         this.awardLa.string = this.award + '金币';
 
-        if (par > (GameData.TaskStudy[GameData.schoolProgress - 1].progress || 0)) {
-            GameData.TaskStudy[GameData.schoolProgress - 1].progress = par;
+        if (par > (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress || 0)) {
+            GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress = par;
             GlobalEvent.emit('UPDATESCHOOLUI');
 
             let obj = {

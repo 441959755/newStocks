@@ -1,8 +1,7 @@
-import GameData from "../GameData";
-import GameCfgText from "../GameText";
-import EventCfg from "../Utils/EventCfg";
-import GlobalEvent from "../Utils/GlobalEvent";
-
+import GameData from "../../../sctiprs/GameData";
+import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
+import EventCfg from "../../../sctiprs/utils/EventCfg";
+import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 
@@ -59,7 +58,6 @@ export default class SchoolHandle extends cc.Component {
                 this.onShowGuide();
             }
         }, this);
-
     }
 
     onShowGuide() {
@@ -69,7 +67,7 @@ export default class SchoolHandle extends cc.Component {
 
         let label = node.children[0].getComponent(cc.Label)
 
-        let contents = this.studyData1.list[GameData.studyBar - 1].contents;
+        let contents = this.studyData1.list[SchoolBundle.studyBar - 1].contents;
 
         this.guideCount = contents.length;
 
@@ -99,29 +97,29 @@ export default class SchoolHandle extends cc.Component {
             el.string = this.studyData.list[index].title;
         })
 
-        if (!GameData.TaskStudy[GameData.schoolProgress - 1].progress) {
+        if (!GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress) {
             this.hisResultLa && (this.hisResultLa.string = '最佳成绩  无')
         }
         else {
             this.hisResultLa && (this.hisResultLa.string = '最佳成绩  ')
 
-            if (GameData.TaskStudy[GameData.schoolProgress - 1].progress >= GameCfgText.gameConf.task.study[2].progress) {
+            if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress >= GameData.gameConf.task.study[2].progress) {
                 this.hisResultLa && (this.hisResultLa.node.children[0].active = true)
                 this.hisResultLa && (this.hisResultLa.node.children[1].active = true)
                 this.hisResultLa && (this.hisResultLa.node.children[2].active = true)
             }
-            else if (GameData.TaskStudy[GameData.schoolProgress - 1].progress >= GameCfgText.gameConf.task.study[1].progress) {
+            else if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress >= GameData.gameConf.task.study[1].progress) {
                 this.hisResultLa && (this.hisResultLa.node.children[0].active = true)
                 this.hisResultLa && (this.hisResultLa.node.children[1].active = true)
             }
-            else if (GameData.TaskStudy[GameData.schoolProgress - 1].progress >= GameCfgText.gameConf.task.study[0].progress) {
+            else if (GameData.taskStudy[SchoolBundle.schoolProgress - 1].progress >= GameData.gameConf.task.study[0].progress) {
 
                 this.hisResultLa && (this.hisResultLa.node.children[0].active = true)
             }
         }
 
         this.studyNodes.forEach((el, index) => {
-            if (index + 1 <= GameData.studyHisBar) {
+            if (index + 1 <= SchoolBundle.studyHisBar) {
                 el.children[0].active = true;
             }
             else {
@@ -135,7 +133,7 @@ export default class SchoolHandle extends cc.Component {
     onBtnClick(event, curData) {
         let name = event.target.name;
         if (name == 'btn_black') {
-            cc.director.loadScene('hall');
+            cc.find('Canvas/schoolLayer').active = false;
         }
 
         else if (name == 'study_cszb1' ||
@@ -144,11 +142,12 @@ export default class SchoolHandle extends cc.Component {
             name == 'study_jdal1') {
             curData = parseInt(curData);
 
-            if (curData > GameData.studyHisBar) {
-                GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '请先学习前一章');
+            if (curData > SchoolBundle.studyHisBar) {
+                GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '请先学习前一章');
                 return;
             }
-            GameData.studyBar = curData;
+
+            SchoolBundle.studyBar = curData;
             GlobalEvent.emit('OPENCURSTUDYBAR');
         }
 

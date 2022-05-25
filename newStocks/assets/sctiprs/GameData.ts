@@ -14,7 +14,7 @@ export default {
 
     set account(val) {
         this._account = val;
-        LocalStorageUtils.setItem('ACCOUNT', this.account.string);
+        LocalStorageUtils.setItem('ACCOUNT', val);
     },
 
     /**
@@ -28,7 +28,7 @@ export default {
 
     set password(val) {
         this._password = val;
-        LocalStorageUtils.setItem('PASSWORD', this.password.string);
+        LocalStorageUtils.setItem('PASSWORD', val);
     },
 
 
@@ -44,6 +44,7 @@ export default {
     token: null,    //token
     gender: null,   //性别
     userName: null,
+    headImg: null,
 
     properties: null,//属性
     smxlState: null,  //双盲状态
@@ -78,8 +79,5 @@ export default {
     fsSet: null,
 
     zbSet: null,
-
-
-
 
 }

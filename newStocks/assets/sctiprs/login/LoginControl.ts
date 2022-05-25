@@ -109,7 +109,8 @@ export default class LoginControl extends cc.Component {
     initConfData() {
 
         GameData.account = LocalStorageUtils.getItem('ACCOUNT') || '';
-        GameData.password = localStorage.getItem('PASSEORD') || '';
+
+        GameData.password = localStorage.getItem('PASSWORD') || '';
 
         GameData.smSet = ConfUtils.getConf('SMSET');
 

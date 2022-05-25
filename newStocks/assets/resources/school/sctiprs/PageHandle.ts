@@ -3,7 +3,7 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class PageHandle extends cc.Component {
 
 
     onShowUI(data, asset) {

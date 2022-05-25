@@ -112,8 +112,18 @@ export default class Socket {
 
         this.hearbeat && (clearInterval(this.hearbeat));
         this.hearbeat = null;
+        let self = this;
         this.hearbeat = setInterval(() => {
-            this.send(pb.MessageId.Sync_C2S_GameHeart, null, null);
+
+            if (self.send) {
+                console.log('心跳');
+                self.send(pb.MessageId.Sync_C2S_GameHeart, null, null);
+            }
+            // else {
+            //     console.log('心跳停止');
+            //     this.hearbeat && (clearInterval(this.hearbeat));
+            //     this.hearbeat = null;
+            // }
         }, 5000);
 
         if (this.preData) {
