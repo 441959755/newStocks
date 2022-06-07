@@ -1,9 +1,10 @@
 
 import { pb } from "../../proto/proto";
 import GameData from "../GameData";
+import ActionUtils from "../utils/ActionUtils";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
-import PopupManager from "../utils/PopupManager";
+import OtherBundle from "./OtherBundle";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -44,8 +45,9 @@ export default class HallCapital extends cc.Component {
     }
 
     openShopLayer(type) {
-        PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/shop/shop', 88, (node) => {
-            type && (node.getComponent('ShopControl').onShow(type));
+        OtherBundle.loadPre('shop/shop', (node) => {
+            ActionUtils.openNode(node);
+            node && (node.getComponent('ShopControl').onShow(type));
         })
     }
 

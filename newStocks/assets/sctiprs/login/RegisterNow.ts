@@ -80,11 +80,7 @@ export default class RegisterNow extends cc.Component {
 
         else if (name == 'labelproto') {
             //用户协议
-
-            PopupManager.openNode(cc.find('Canvas'), null, 'prefabs/prococol', 10, (node) => {
-                let handle = node.getComponent('Prococol');
-                handle && (handle.onShow('用户协议', LLWConfing.LoginUrl + 'user/decripation1000.html'));
-            })
+            PopupManager.loadPrococol('用户协议', LLWConfing.LoginUrl + 'user / decripation1000.html');
         }
 
         else if (name == 'login_zc') {

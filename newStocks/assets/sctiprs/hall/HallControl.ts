@@ -1,6 +1,6 @@
 import FitUtils from "../utils/FitUtils";
 import PopupManager from "../utils/PopupManager";
-import SchoolBundle from "./SchoolBundle";
+
 
 const { ccclass, property } = cc._decorator;
 
@@ -11,6 +11,7 @@ export default class HallControl extends cc.Component {
         FitUtils.resetSize(this.node);
 
         PopupManager.init();
+
     }
 
 
@@ -20,7 +21,10 @@ export default class HallControl extends cc.Component {
 
 
     protected onDestroy(): void {
-        SchoolBundle.removeBundle();
+        // OtherBundle.removeBundle();
+        // SchoolBundle.removeBundle();
+        // WealBundle.removeBundle();
+        // ShiPanBundle.removeBundle();
     }
 
     // update (dt) {}

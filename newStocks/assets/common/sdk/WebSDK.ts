@@ -59,4 +59,18 @@ export default class WebSDK {
         return success;
     }
 
+    showVideoAd(cb) {
+        console.log('观看视频！');
+
+        cb && (cb(true));
+    }
+
+    shareAppMessage(type) {
+        console.log('邀请好友');
+    }
+
+    callWXPayToJava(appid, partnerid, prepayid, nonce_str, timestamp, sign) {
+        console.log('暂无支付');
+    }
+
 }

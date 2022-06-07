@@ -1,17 +1,16 @@
 import GlobalEvent from '../utils/GlobalEvent';
 import EventCfg from '../utils/EventCfg';
-import { pb } from '../../protos/proto';
 import GameData from '../GameData';
-import GameCfgText from '../GameText';
-import LLWSDK from '../common/sdk/LLWSDK';
 import PopupManager from '../utils/PopupManager';
-
 import ComUtils from '../utils/ComUtils';
-import GlobalHandle from '../global/GlobalHandle';
 import ActionUtils from '../utils/ActionUtils';
-import LoadUtils from '../utils/LoadUtils';
 import SchoolBundle from './SchoolBundle';
 import GameCfg from '../GameCfg';
+import WealBundle from './WealBundle';
+import ConfUtils from '../utils/ConfUtils';
+import ShiPanBundle from './ShiPanBundle';
+import { pb } from '../../proto/proto';
+
 
 const { ccclass, property } = cc._decorator;
 
@@ -63,11 +62,11 @@ export default class HallContent extends cc.Component {
 		}
 
 		//奖励弹窗
-		if (GameData.goldAwardPrompt) {
-			setTimeout(() => {
-				this.CmdGoldAwardPrompt();
-			}, 500)
-		}
+		// if (GameData.goldAwardPrompt) {
+		// 	setTimeout(() => {
+		// 		this.CmdGoldAwardPrompt();
+		// 	}, 500)
+		// }
 
 		let userInfoHandle = this.userInfo.getComponent('UserInfo');
 		userInfoHandle.userInfo = {
@@ -91,15 +90,16 @@ export default class HallContent extends cc.Component {
 	//首次上传用户信息
 	upLoadUserInfo() {
 
-		if (!LLWSDK.getSDK().loginPlat) { return }
-
 		if (GameData.gameData.is_edited_nick) {
 			{
 				let data = {
 					uid: GameData.userID,
 					nick: GameData.userName,
-				}
-				socket.send(pb.MessageId.Req_Hall_EditNick, PB.onCmdEditInfoConvertToBuff(data), (info) => {
+				};
+
+				let message = pb.PlayerInfo.create(data);
+				let buff = pb.PlayerInfo.encode(message).finish();
+				(<any>window).socket.send(pb.MessageId.Req_Hall_EditNick, buff, (info) => {
 					console.log('GameData.userName:' + JSON.stringify(info));
 				})
 			}
@@ -108,8 +108,10 @@ export default class HallContent extends cc.Component {
 				let data = {
 					uid: GameData.userID,
 					gender: GameData.gender + '',
-				}
-				socket.send(pb.MessageId.Req_Hall_EditGender, PB.onCmdEditInfoConvertToBuff(data), (info) => {
+				};
+				let message = pb.PlayerInfo.create(data);
+				let buff = pb.PlayerInfo.encode(message).finish();
+				(<any>window).socket.send(pb.MessageId.Req_Hall_EditGender, buff, (info) => {
 					console.log('GameData.gender:' + JSON.stringify(info));
 				})
 			}
@@ -158,7 +160,7 @@ export default class HallContent extends cc.Component {
 		//双盲
 		if (name == 'main_xl_smxl') {
 			//开关
-			GameCfgText.getSwitchModule(1, () => {
+			ConfUtils.getSwitchConf(1, () => {
 				GameCfg.GameType = pb.GameType.ShuangMang;
 				GlobalEvent.emit(EventCfg.OPENSMLAYER);
 			})
@@ -167,7 +169,7 @@ export default class HallContent extends cc.Component {
 		//指标
 		else if (name == 'main_xl_zbxl') {
 
-			GameCfgText.getSwitchModule(4, () => {
+			ConfUtils.getSwitchConf(4, () => {
 				GameCfg.GameType = pb.GameType.ZhiBiao;
 				GlobalEvent.emit(EventCfg.OPENZBLAYER);
 
@@ -177,7 +179,7 @@ export default class HallContent extends cc.Component {
 		//定向
 		else if (name == 'main_xl_dxxl') {
 
-			GameCfgText.getSwitchModule(2, () => {
+			ConfUtils.getSwitchConf(2, () => {
 				GameCfg.GameType = pb.GameType.DingXiang;
 				GlobalEvent.emit(EventCfg.OPENDXLAYER);
 
@@ -187,7 +189,7 @@ export default class HallContent extends cc.Component {
 		//期货
 		else if (name == 'main_xl_qhxl') {
 
-			GameCfgText.getSwitchModule(3, () => {
+			ConfUtils.getSwitchConf(3, () => {
 				GameCfg.GameType = pb.GameType.QiHuo;
 				GlobalEvent.emit(EventCfg.OPENQHLAYER);
 			})
@@ -197,7 +199,7 @@ export default class HallContent extends cc.Component {
 		//分时
 		else if (name == 'main_xl_fsxl') {
 
-			GameCfgText.getSwitchModule(6, () => {
+			ConfUtils.getSwitchConf(6, () => {
 				GameCfg.GameType = pb.GameType.FenShi;
 				GlobalEvent.emit(EventCfg.OPENFENSHI);
 			})
@@ -206,7 +208,7 @@ export default class HallContent extends cc.Component {
 		//条件
 		else if (name == 'main_xl_tjdxl') {
 
-			GameCfgText.getSwitchModule(5, () => {
+			ConfUtils.getSwitchConf(5, () => {
 				GameCfg.GameType = pb.GameType.TiaoJianDan;
 				GlobalEvent.emit(EventCfg.OPENTIAOJIANDAN);
 			})
@@ -217,17 +219,17 @@ export default class HallContent extends cc.Component {
 		//pk
 		else if (name == 'main_jj_pkdz') {
 
-			GameCfgText.getSwitchModule(7, () => {
+			ConfUtils.getSwitchConf(7, () => {
 				if (GameData.properties[pb.GamePropertyId.Gold] < 500) {
-					GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+					GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
 					GlobalEvent.emit('onShowGobroke');
 					return;
 				}
 
 				GameCfg.GameType = pb.GameType.JJ_PK;
-				// let gameStatus = EnterGameControl.onCurWXIsEnterGame();
+				// let gameStatus = ComUtils.onCurWXIsEnterGame();
 				// if (gameStatus.status == 3) {
-				// 	GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '今日次数已用完,请点击在线客服,体验完整版APP');
+				// 	GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '今日次数已用完,请点击在线客服,体验完整版APP');
 				// 	return;
 				// }
 				// else {
@@ -249,20 +251,20 @@ export default class HallContent extends cc.Component {
 		}
 
 		else if (name == 'main_jj_dkdz') {
-			GameCfgText.getSwitchModule(8, () => {
+			ConfUtils.getSwitchConf(8, () => {
 				//s	if (EnterGameControl.onCurPKEnterGame()) {
 				// LLWSDK.getSDK().showVideoAd((flag) => {
 				// 	if (flag) {
 				if (GameData.properties[pb.GamePropertyId.Gold] < 500) {
-					GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+					GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
 					GlobalEvent.emit('onShowGobroke');
 					return;
 				}
 
 				GameCfg.GameType = pb.GameType.JJ_DuoKong;
-				// let gameStatus = EnterGameControl.onCurWXIsEnterGame();
+				// let gameStatus = ComUtils.onCurWXIsEnterGame();
 				// if (gameStatus.status == 3) {
-				// 	GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '今日次数已用完,请点击在线客服,体验完整版APP');
+				// 	GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '今日次数已用完,请点击在线客服,体验完整版APP');
 				// 	return;
 				// }
 				// else {
@@ -285,7 +287,7 @@ export default class HallContent extends cc.Component {
 
 		//打开闯关赛
 		else if (name == 'main_jj_cgs') {
-			GameCfgText.getSwitchModule(9, () => {
+			ConfUtils.getSwitchConf(9, () => {
 				GameCfg.GameType = pb.GameType.JJ_ChuangGuan;
 				GameCfg.GameSet = GameData.JJPKSet;
 				GlobalEvent.emit(EventCfg.OPENCHUANGUAN);
@@ -300,11 +302,11 @@ export default class HallContent extends cc.Component {
 
 		//点击创建对战
 		else if (name == 'main_jj_cjdz') {
-			// GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '暂不开放，敬请期待！');
+			// GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '暂不开放，敬请期待！');
 			// return;
-			GameCfgText.getSwitchModule(10, () => {
+			ConfUtils.getSwitchConf(10, () => {
 				//	if (LLWConfig.PLATTYPE == PlatDefine.PLAT_WECHAT) {
-				GameData.Players = [];
+				GameData.players = [];
 
 				let info = {
 					game: pb.GameType.JJ_PK,
@@ -316,12 +318,12 @@ export default class HallContent extends cc.Component {
 				let message = CmdRoomCreate.create(info);
 				let buff = CmdRoomCreate.encode(message).finish();
 
-				socket.send(pb.MessageId.Req_Room_Create, buff, (res) => {
+				(<any>window).socket.send(pb.MessageId.Req_Room_Create, buff, (res) => {
 					console.log('创建房间应答' + JSON.stringify(res));
 					GlobalEvent.emit(EventCfg.LOADINGHIDE);
 					if (res && res.err) {
 						let err = GlobalHandle.getErrorCodeByCode(res.err.code);
-						GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, err);
+						GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, err);
 						return;
 					}
 					GameData.RoomType = 1;
@@ -333,47 +335,53 @@ export default class HallContent extends cc.Component {
 
 		//加入对战
 		else if (name == 'main_jj_jrdz') {
-			// GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '暂不开放，敬请期待！');
+			// GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '暂不开放，敬请期待！');
 			// return;
-			GameCfgText.getSwitchModule(11, () => {
+			ConfUtils.getSwitchConf(11, () => {
 				GlobalEvent.emit(EventCfg.OPENJRDZ);
 			})
 		}
 
 		//智能选股
 		else if (name == 'main_sp_znxg') {
-			GameCfgText.getSwitchModule(13, () => {
-				GlobalEvent.emit(EventCfg.OPENZNXG);
+			ConfUtils.getSwitchConf(13, () => {
+				ShiPanBundle.loadPre('znxgLayer');
 			})
+		}
+
+		else if (name == 'main_sp_znzg') {
+			ShiPanBundle.loadPre('znzgLayer');
 		}
 
 		//模拟炒股
 		else if (name == 'main_sp_mncg') {
-			GameCfgText.getSwitchModule(14, () => {
-				GlobalEvent.emit(EventCfg.OPENMNXG);
+			ConfUtils.getSwitchConf(14, () => {
+				ShiPanBundle.loadPre('mnxgLayer', (node) => {
+					node.getComponent('MnxgHandle').onShow();
+				});
 			})
 		}
 
 		else if (name == 'main_sp_cgds') {
-			GameCfgText.getSwitchModule(15, () => {
-				GlobalEvent.emit(EventCfg.OPENCGDS);
+			ConfUtils.getSwitchConf(15, () => {
+				ShiPanBundle.loadPre('cgdsLayer');
 			})
 		}
 
 		//大盘竞猜
 		else if (name == 'main_sp_dpjc') {
-			GameCfgText.getSwitchModule(16, () => {
+			ConfUtils.getSwitchConf(16, () => {
 				GameCfg.GameType = pb.GameType.DaPanJingChai;
-				GlobalEvent.emit(EventCfg.LOADINGSHOW);
+				GlobalEvent.emit(EventCfg.SHOWLOADING);
 				cc.director.loadScene('guess');
 			})
 		}
 
 		//个股竞猜
 		else if (name == 'main_sp_ggjc') {
-			GameCfgText.getSwitchModule(16, () => {
+			ConfUtils.getSwitchConf(16, () => {
 				GameCfg.GameType == pb.GameType.GeGuJingChai;
-				GlobalEvent.emit(EventCfg.LOADINGSHOW);
+				GlobalEvent.emit(EventCfg.SHOWLOADING);
 				cc.director.loadScene('guess');
 			})
 		}
@@ -395,25 +403,34 @@ export default class HallContent extends cc.Component {
 
 		//免费砖石
 		else if (name == 'main_fl_mfzs') {
-			PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/fl/dailyWelfare', 10, (node) => {
+
+			WealBundle.loadPre('dailyWelfare', (node) => {
 				let handle = node.getComponent('DailyWelfare');
 				handle && (handle.onShow());
+				ActionUtils.openNode(node);
 			});
 		}
 
 		//每周豪礼
 		else if (name == 'main_fl_mzhl') {
-			PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/fl/weeklyHaoLI', 10, null);
+
+			WealBundle.loadPre('weeklyHaoLI', (node) => {
+				ActionUtils.openNode(node);
+			});
 		}
 
 		//7日奖励
 		else if (name == 'main_fl_7day') {
-			PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/fl/signIn', 10, null);
+
+			WealBundle.loadPre('signIn', (node) => {
+				ActionUtils.openNode(node);
+			});
 		}
 
+		//邀请奖励
 		else if (name == 'main_fl_yqjl') {
-			PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/InviteLayer', 11, (node) => {
-				ActionUtils.openBox(node);
+			WealBundle.loadPre('inviteLayer', (node) => {
+				ActionUtils.openNode(node);
 			})
 		}
 	}

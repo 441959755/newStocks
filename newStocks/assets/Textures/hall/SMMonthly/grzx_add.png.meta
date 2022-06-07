@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "65302d0c-5da6-47ab-9715-ef366dad42ea",
+  "uuid": "a46de27c-52fa-40e5-8d33-6917268b3a44",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -14,9 +14,9 @@
   "subMetas": {
     "grzx_add": {
       "ver": "1.0.6",
-      "uuid": "028414db-4601-44aa-97ad-735fd4862d4d",
+      "uuid": "cded90ae-d3ae-43e5-b321-a012d9bdba2b",
       "importer": "sprite-frame",
-      "rawTextureUuid": "65302d0c-5da6-47ab-9715-ef366dad42ea",
+      "rawTextureUuid": "a46de27c-52fa-40e5-8d33-6917268b3a44",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

@@ -1,10 +1,9 @@
 
 import { pb } from "../proto/proto";
 import GameData from "./GameData";
+import OtherBundle from "./hall/OtherBundle";
 import EventCfg from "./utils/EventCfg";
 import GlobalEvent from "./utils/GlobalEvent";
-import PopupManager from "./utils/PopupManager";
-
 
 const { ccclass, property } = cc._decorator;
 
@@ -41,7 +40,6 @@ export default class UserInfo extends cc.Component {
     }
 
     protected onLoad(): void {
-
         //性别更改
         GlobalEvent.on(EventCfg.GENDERCHANGE, this.setUserGender.bind(this), this);
 
@@ -57,6 +55,7 @@ export default class UserInfo extends cc.Component {
         //vip
         GlobalEvent.on(EventCfg.VIPCHANGE, this.setUserInfo.bind(this), this);
 
+        GameData.imgs['0'] = this.defultHead;
     }
 
     setUserGender() {
@@ -75,6 +74,7 @@ export default class UserInfo extends cc.Component {
     }
 
     setUserHead() {
+
         //自己
         if (this._userInfo.userID == GameData.userID) {
             this.userHead.spriteFrame = GameData.headImg || this.defultHead;
@@ -88,7 +88,7 @@ export default class UserInfo extends cc.Component {
 
 
     setUserInfo() {
-        this.setUserGender();
+
         if (this._userInfo.userID == GameData.userID) {
             this.userLevel.string = 'LV:' + (GameData.properties[pb.GamePropertyId.Level] || 1) + '';
             this.userName.string = GameData.userName || GameData.userID;
@@ -106,6 +106,9 @@ export default class UserInfo extends cc.Component {
 
         //设置用户头像
         this.setUserHead();
+
+        this.setUserGender();
+
     }
 
 
@@ -113,12 +116,13 @@ export default class UserInfo extends cc.Component {
         let name = event.target.name;
         //打开个人中心
         if (name == 'userinfobg') {
-            PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/playeInfo/playerInfoLayer', 5, null);
+            OtherBundle.loadPre('playerInfo/playerInfoLayer');
         }
 
     }
 
     protected onDestroy(): void {
+
         GlobalEvent.off(EventCfg.GENDERCHANGE);
         GlobalEvent.off(EventCfg.HEADIMGCHANGE);
 

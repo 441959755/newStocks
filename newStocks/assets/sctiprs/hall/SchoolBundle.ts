@@ -95,7 +95,6 @@ export default {
             });
 
 
-
             results[1].forEach(element => {
                 if (element.name) {
                     this.assetImgs.set(element.name, element);

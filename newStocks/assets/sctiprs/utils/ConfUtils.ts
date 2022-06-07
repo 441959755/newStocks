@@ -1,3 +1,6 @@
+import GameData from "../GameData";
+import EventCfg from "./EventCfg";
+import GlobalEvent from "./GlobalEvent";
 import LocalStorageUtils from "./LocalStorageUtils"
 
 const confData = {
@@ -99,12 +102,70 @@ export default {
      * 
      * @returns 
      */
-    getSelectBK() {
-        let selectBK = LocalStorageUtils.getItem('SELECTBK');
-        if (selectBK) {
-            return JSON.parse(selectBK);
+    get SelectBk() {
+
+        if (!this._selectBK) {
+            let selectBK = LocalStorageUtils.getItem('SELECTBK');
+            if (selectBK) {
+                this._selectBK = JSON.parse(selectBK);
+            }
+            else {
+                this._selectBK = [1, 1, 1, 1, 1, 1];
+            }
         }
-        return [1, 1, 1, 1, 1, 1];
+
+        return this._selectBK;
+    },
+
+    set SelectBk(val) {
+        this._selectBK = val;
+        LocalStorageUtils.setItem('SELECTBK', val);
+    },
+
+    /**
+     * 
+     * @param id 
+     * @param cb 
+     * @returns 
+     */
+    getSwitchConf(id, cb?) {
+
+        let flag = false;
+
+        GameData.appConf.module.forEach(el => {
+            if (el.id == id) {
+                flag = el.switch;
+            }
+        });
+
+        if (cb && !flag) {
+            cb();
+        }
+        else {
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '暂未开放，敬请期待！');
+        }
+    },
+
+
+    /**
+     * 
+     * @param item 
+     * @returns 
+     */
+    getGPItemInfo(item) {
+        let items;
+        for (let i = 0; i < GameData.stockList.length; i++) {
+            if (GameData.stockList[i] == '') {
+                continue;
+            }
+            let arr = GameData.stockList[i].split('|');
+            if (arr[0].indexOf(item) != -1 || arr[1].indexOf(item) != -1) {
+                items = arr;
+                break;
+            }
+        }
+
+        return items;
     }
 
 }

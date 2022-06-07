@@ -35,14 +35,14 @@ export default {
 
     },
 
-    openLayer(node) {
+    // openLayer(node) {
 
-        let bg = node.getChildByName('bg');
-        bg.y = 1000;
-        cc.tween(bg)
-            .to(0.2, { position: cc.v2(0, 0) })
-            .to(0.1, { scaleY: 0.9 })
-            .to(0.1, { scaley: 1 })
-            .start();
-    }
+    //     let bg = node.getChildByName('bg');
+    //     bg.y = 1000;
+    //     cc.tween(bg)
+    //         .to(0.2, { position: cc.v2(0, 0) })
+    //         .to(0.1, { scaleY: 0.9 })
+    //         .to(0.1, { scaley: 1 })
+    //         .start();
+    // }
 }

@@ -279,11 +279,14 @@ enum MessageId {
 	S2S_Close_Cgds = 10023;					// 关闭炒股大赛：CgdsConf
 	S2S_Reload_Cgds = 10025;				// 重新加载炒股大赛列表
 	S2S_Reload_GameConf = 10027;			// 重新加载游戏配置
+
 	S2S_Sync_ZsjcBetting = 10028;			// 同步指数竞猜的下注信息：CmdBet
 	S2S_Sync_ZsjcState = 10030;				// 同步指数竞猜的游戏状态
 	S2S_Update_DailyTaskProgress = 10032;	// 同步日常任务进度：CmdDailyProgress
 	S2S_Sync_Pay = 10034;					// 支付成功回调处理：CmdPay
 	S2S_Sync_PaymentQuery = 10036;			// 支付状态查询：CmdPay
+
+	S2S_Sync_InviteUser = 10037;			// 邀请用户：InviteUser
 }
 
 message MessageHead {

@@ -237,7 +237,8 @@ export namespace pb {
         S2S_Sync_ZsjcState = 10030,
         S2S_Update_DailyTaskProgress = 10032,
         S2S_Sync_Pay = 10034,
-        S2S_Sync_PaymentQuery = 10036
+        S2S_Sync_PaymentQuery = 10036,
+        S2S_Sync_InviteUser = 10037
     }
 
     /** Properties of a MessageHead. */
@@ -651,6 +652,8 @@ export namespace pb {
         ChaoGuDaSai = 13,
         GeGuJingChai = 7,
         DaPanJingChai = 8,
+        ZhengGu = 17,
+        JianGu = 18,
         MaxGameType = 30
     }
 
@@ -673,7 +676,37 @@ export namespace pb {
         Tester = 27,
         VipExpiration = 28,
         RMB = 29,
-        Max = 30
+        SVip30 = 30,
+        SVip31 = 31,
+        SVip32 = 32,
+        SVip33 = 33,
+        SVip34 = 34,
+        SVip35 = 35,
+        SVip36 = 36,
+        SVip37 = 37,
+        SVip38 = 38,
+        SVip39 = 39,
+        SVip40 = 40,
+        SVip41 = 41,
+        SVip42 = 42,
+        SVip43 = 43,
+        SVip44 = 44,
+        SVip45 = 45,
+        SVip46 = 46,
+        SVip47 = 47,
+        SVip48 = 48,
+        SVip49 = 49,
+        SVip50 = 50,
+        SVip51 = 51,
+        SVip52 = 52,
+        SVip53 = 53,
+        SVip54 = 54,
+        SVip55 = 55,
+        SVip56 = 56,
+        SVip57 = 57,
+        SVip58 = 58,
+        SVip59 = 59,
+        Max = 60
     }
 
     /** EventId enum. */
@@ -2340,6 +2373,9 @@ export namespace pb {
 
         /** GameData inviterState */
         inviterState?: (pb.IInviterState|null);
+
+        /** GameData isBindedMobile */
+        isBindedMobile?: (boolean|null);
     }
 
     /** Represents a GameData. */
@@ -2425,6 +2461,9 @@ export namespace pb {
 
         /** GameData inviterState. */
         public inviterState?: (pb.IInviterState|null);
+
+        /** GameData isBindedMobile. */
+        public isBindedMobile: boolean;
 
         /**
          * Creates a new GameData instance using the specified properties.
@@ -5145,6 +5184,9 @@ export namespace pb {
 
         /** CmdRoomCreate junXian */
         junXian?: (number[]|null);
+
+        /** CmdRoomCreate wxHeadicon */
+        wxHeadicon?: (string|null);
     }
 
     /** Represents a CmdRoomCreate. */
@@ -5173,6 +5215,9 @@ export namespace pb {
 
         /** CmdRoomCreate junXian. */
         public junXian: number[];
+
+        /** CmdRoomCreate wxHeadicon. */
+        public wxHeadicon: string;
 
         /**
          * Creates a new CmdRoomCreate instance using the specified properties.
@@ -5361,6 +5406,9 @@ export namespace pb {
 
         /** CmdRoomEnter junXian */
         junXian?: (number[]|null);
+
+        /** CmdRoomEnter wxHeadicon */
+        wxHeadicon?: (string|null);
     }
 
     /** Represents a CmdRoomEnter. */
@@ -5389,6 +5437,9 @@ export namespace pb {
 
         /** CmdRoomEnter junXian. */
         public junXian: number[];
+
+        /** CmdRoomEnter wxHeadicon. */
+        public wxHeadicon: string;
 
         /**
          * Creates a new CmdRoomEnter instance using the specified properties.
@@ -5760,6 +5811,12 @@ export namespace pb {
 
         /** SyncRoomEnter player */
         player?: (pb.IGameData|null);
+
+        /** SyncRoomEnter junXian */
+        junXian?: (number[]|null);
+
+        /** SyncRoomEnter wxHeadicon */
+        wxHeadicon?: (string|null);
     }
 
     /** Represents a SyncRoomEnter. */
@@ -5779,6 +5836,12 @@ export namespace pb {
 
         /** SyncRoomEnter player. */
         public player?: (pb.IGameData|null);
+
+        /** SyncRoomEnter junXian. */
+        public junXian: number[];
+
+        /** SyncRoomEnter wxHeadicon. */
+        public wxHeadicon: string;
 
         /**
          * Creates a new SyncRoomEnter instance using the specified properties.
@@ -6486,6 +6549,9 @@ export namespace pb {
 
         /** RoomPlayer junXian */
         junXian?: (number[]|null);
+
+        /** RoomPlayer wxHeadicon */
+        wxHeadicon?: (string|null);
     }
 
     /** Represents a RoomPlayer. */
@@ -6517,6 +6583,9 @@ export namespace pb {
 
         /** RoomPlayer junXian. */
         public junXian: number[];
+
+        /** RoomPlayer wxHeadicon. */
+        public wxHeadicon: string;
 
         /**
          * Creates a new RoomPlayer instance using the specified properties.
@@ -12739,6 +12808,9 @@ export namespace pb {
     /** Properties of a CmdRecommendStock. */
     interface ICmdRecommendStock {
 
+        /** CmdRecommendStock channelId */
+        channelId?: (number|null);
+
         /** CmdRecommendStock from */
         from?: (number|Long|null);
 
@@ -12757,6 +12829,9 @@ export namespace pb {
          * @param [properties] Properties to set
          */
         constructor(properties?: pb.ICmdRecommendStock);
+
+        /** CmdRecommendStock channelId. */
+        public channelId: number;
 
         /** CmdRecommendStock from. */
         public from: (number|Long);
@@ -12838,14 +12913,113 @@ export namespace pb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a RecommendItem. */
+    interface IRecommendItem {
+
+        /** RecommendItem code */
+        code?: (number|null);
+
+        /** RecommendItem price */
+        price?: (string|null);
+    }
+
+    /** Represents a RecommendItem. */
+    class RecommendItem implements IRecommendItem {
+
+        /**
+         * Constructs a new RecommendItem.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: pb.IRecommendItem);
+
+        /** RecommendItem code. */
+        public code: number;
+
+        /** RecommendItem price. */
+        public price: string;
+
+        /**
+         * Creates a new RecommendItem instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RecommendItem instance
+         */
+        public static create(properties?: pb.IRecommendItem): pb.RecommendItem;
+
+        /**
+         * Encodes the specified RecommendItem message. Does not implicitly {@link pb.RecommendItem.verify|verify} messages.
+         * @param message RecommendItem message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: pb.IRecommendItem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RecommendItem message, length delimited. Does not implicitly {@link pb.RecommendItem.verify|verify} messages.
+         * @param message RecommendItem message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: pb.IRecommendItem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RecommendItem message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RecommendItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): pb.RecommendItem;
+
+        /**
+         * Decodes a RecommendItem message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RecommendItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): pb.RecommendItem;
+
+        /**
+         * Verifies a RecommendItem message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RecommendItem message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RecommendItem
+         */
+        public static fromObject(object: { [k: string]: any }): pb.RecommendItem;
+
+        /**
+         * Creates a plain object from a RecommendItem message. Also converts values to other types if specified.
+         * @param message RecommendItem
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: pb.RecommendItem, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RecommendItem to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a RecommendStockItem. */
     interface IRecommendStockItem {
+
+        /** RecommendStockItem channelId */
+        channelId?: (number|null);
 
         /** RecommendStockItem ts */
         ts?: (number|Long|null);
 
-        /** RecommendStockItem codeList */
-        codeList?: (number[]|null);
+        /** RecommendStockItem list */
+        list?: (pb.IRecommendItem[]|null);
     }
 
     /** Represents a RecommendStockItem. */
@@ -12857,11 +13031,14 @@ export namespace pb {
          */
         constructor(properties?: pb.IRecommendStockItem);
 
+        /** RecommendStockItem channelId. */
+        public channelId: number;
+
         /** RecommendStockItem ts. */
         public ts: (number|Long);
 
-        /** RecommendStockItem codeList. */
-        public codeList: number[];
+        /** RecommendStockItem list. */
+        public list: pb.IRecommendItem[];
 
         /**
          * Creates a new RecommendStockItem instance using the specified properties.
@@ -12939,6 +13116,9 @@ export namespace pb {
 
         /** CmdRecommendStockReply items */
         items?: (pb.IRecommendStockItem[]|null);
+
+        /** CmdRecommendStockReply ts */
+        ts?: (number|Long|null);
     }
 
     /** Represents a CmdRecommendStockReply. */
@@ -12952,6 +13132,9 @@ export namespace pb {
 
         /** CmdRecommendStockReply items. */
         public items: pb.IRecommendStockItem[];
+
+        /** CmdRecommendStockReply ts. */
+        public ts: (number|Long);
 
         /**
          * Creates a new CmdRecommendStockReply instance using the specified properties.

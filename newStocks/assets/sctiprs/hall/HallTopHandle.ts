@@ -1,6 +1,5 @@
 
 import LLWConfing from "../../common/config/LLWConfing";
-import PlatDefine from "../../common/config/PlatDefine";
 import LLWSDK from "../../common/sdk/LLWSDK";
 import { pb } from "../../proto/proto";
 import GameData from "../GameData";
@@ -9,6 +8,8 @@ import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import PopupManager from "../utils/PopupManager";
 import TimeUtils from "../utils/TimeUtils";
+import OtherBundle from "./OtherBundle";
+import WealBundle from "./WealBundle";
 
 const { ccclass, property } = cc._decorator;
 
@@ -46,26 +47,22 @@ export default class HallTopHandle extends cc.Component {
         let name = event.target.name;
         //设置
         if (name == 'xl_topbtn_xlsz') {
-            PopupManager.openNode(cc.find('Canvas'), null, 'prefabs/hallSetLayer', 11, (node) => {
-                ActionUtils.openNode(node);
-            })
+            OtherBundle.loadPre('hallSetLayer', (node) => { ActionUtils.openNode(node) });
         }
 
         //vip说明
         else if (name == 'main_tb_vip') {
-            PopupManager.loadVipExplain();
+            OtherBundle.loadPre('vipExplain', (node) => { ActionUtils.openNode(node) });
         }
 
         else if (name == 'main_tb_qq') {
 
-            let str = '';
             if (LLWConfing.AppFrom == pb.AppFrom.WeChatMinProgram) {
                 LLWSDK.getSDK().openCustomerServiceConversation();
                 return;
             }
-            else {
-                str = 'Prefabs/sericeBox';
-            }
+            let str = '';
+            str = 'Prefabs/sericeBox';
 
             PopupManager.openNode(this.node.parent, null, str, 11, (node) => {
                 let handle = node.getComponent('SericeBox1');
@@ -97,7 +94,11 @@ export default class HallTopHandle extends cc.Component {
         }
 
         else if (name == 'main_topbt_invite') {
-            PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/InviteLayer', 11, (node) => {
+            // PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/InviteLayer', 11, (node) => {
+            //     ActionUtils.openNode(node);
+            // })
+
+            WealBundle.loadPre('inviteLayer', (node) => {
                 ActionUtils.openNode(node);
             })
         }

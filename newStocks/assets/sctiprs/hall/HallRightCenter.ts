@@ -1,9 +1,7 @@
-import { pb } from "../../protos/proto";
-import LLWConfig from "../common/config/LLWConfig";
-import PlatDefine from "../common/config/PlatDefine";
+
+import LLWConfing from "../../common/config/LLWConfing";
+import { pb } from "../../proto/proto";
 import GameData from "../GameData";
-import GameCfgText from "../GameText";
-import GlobalHandle from "../global/GlobalHandle";
 import ActionUtils from "../utils/ActionUtils";
 import GlobalEvent from "../utils/GlobalEvent";
 import LoadUtils from "../utils/LoadUtils";
@@ -36,8 +34,9 @@ export default class HallRightCenter extends cc.Component {
 
     rewardCenterNode = null;
 
-    onLoad() {
+    activity = [];
 
+    onLoad() {
         this.rewardCenterBtn.active = false;
 
         //获取是否有奖励
@@ -60,12 +59,17 @@ export default class HallRightCenter extends cc.Component {
     }
 
     start() {
-        if (LLWConfig.PLATTYPE == PlatDefine.PLAT_WECHAT) {
+
+        if (LLWConfing.AppFrom == pb.AppFrom.WeChatMinProgram) {
             return;
         }
 
         else {
-            setTimeout(() => {
+
+            (<any>window).socket.send(pb.MessageId.Req_Hall_GetActivityLogs, null, (res) => {
+                this.activity = res.ids;
+                console.log('getActivity:' + JSON.stringify(res));
+
                 //炒股大赛
                 this.setCgdsBtnShowOrHide();
                 //新手礼包
@@ -76,22 +80,24 @@ export default class HallRightCenter extends cc.Component {
                 this.setCgsBtnShowOrHide();
                 //其他
                 this.setOtherBtnShowOrHide();
-            }, 200);
+            })
+
         }
 
         this.getRewardCenter();
     }
 
     setXSBtnShowOrHide() {
+
         //参与过的
-        if (GlobalHandle.Activitys.indexOf(GameCfgText.appConf.pop[4].activity_id) >= 0) {
+        if (this.activity.indexOf(GameData.appConf.pop[4].activity_id) >= 0) {
             this.xsBtn.active = false;
         }
         //没
         else {
             let flag = false;
-            GameData.ActivityConf.forEach(el => {
-                if (el.id == GameCfgText.appConf.pop[4].activity_id) {
+            GameData.activityConf.forEach(el => {
+                if (el.id == GameData.appConf.pop[4].activity_id) {
                     let curTime = new Date().getTime() / 1000;
                     if (curTime < el.to && curTime >= el.from) {
                         this.xsBtn.active = true;
@@ -108,15 +114,15 @@ export default class HallRightCenter extends cc.Component {
 
     setVip7BtnShowOrHide() {
         //参与过的
-        if (GlobalHandle.Activitys.indexOf(GameCfgText.appConf.pop[5].activity_id) >= 0) {
+        if (this.activity.indexOf(GameData.appConf.pop[5].activity_id) >= 0) {
             this.vip7Btn.active = false;
             return;
         }
         //没
         else {
             let flag = false;
-            GameData.ActivityConf.forEach(el => {
-                if (el.id == GameCfgText.appConf.pop[5].activity_id) {
+            GameData.activityConf.forEach(el => {
+                if (el.id == GameData.appConf.pop[5].activity_id) {
                     let curTime = new Date().getTime() / 1000;
                     if (curTime < el.to && curTime >= el.from) {
                         this.vip7Btn.active = true;
@@ -133,21 +139,20 @@ export default class HallRightCenter extends cc.Component {
 
     setCgdsBtnShowOrHide() {
         let flag = false;
-        GameData.ActivityConf.forEach(el => {
-            if (el.title == GameCfgText.appConf.pop[2].name) {
+        GameData.activityConf.forEach(el => {
+            if (el.title == GameData.appConf.pop[2].name) {
                 let curTime = new Date().getTime() / 1000;
                 if (curTime < el.to && curTime >= el.from) {
-                    let iconUrl = LLWConfig.LoginURL + '/img/activity/cgds_icon.png';
-                    LoadUtils.load(iconUrl, (sp) => {
-                        if (sp) {
-                            this.cgdsBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(sp);
-                            this.cgdsBtn.active = true;
-                            flag = true;
-                        }
-                        else {
-                            this.cgdsBtn.active = false;
-                        }
+
+                    let iconUrl = LLWConfing.LoginUrl + '/img/activity/cgds_icon.png';
+                    LoadUtils.loadRemote(iconUrl).then((res) => {
+                        this.cgdsBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(res);
+                        this.cgdsBtn.active = true;
+                        flag = true;
+                    }, () => {
+                        this.cgdsBtn.active = false;
                     })
+
                 }
                 else {
                     this.cgdsBtn.active = false;
@@ -159,23 +164,19 @@ export default class HallRightCenter extends cc.Component {
 
     setCgsBtnShowOrHide() {
         let flag = false;
-        GameData.ActivityConf.forEach(el => {
-            if (el.title == GameCfgText.appConf.pop[3].name) {
+        GameData.activityConf.forEach(el => {
+            if (el.title == GameData.appConf.pop[3].name) {
                 let curTime = new Date().getTime() / 1000;
                 if (curTime < el.to && curTime >= el.from) {
-                    let iconUrl = LLWConfig.LoginURL + '/img/activity/cgs_icon.png';
-                    LoadUtils.load(iconUrl, (sp) => {
-                        if (sp) {
-                            this.cgsBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(sp);
-                            this.cgsBtn.active = true;
-                            flag = true;
-                        }
-                        else {
-                            this.cgsBtn.active = false;
-                            flag = false;
-                        }
+                    let iconUrl = LLWConfing.LoginUrl + '/img/activity/cgs_icon.png';
+                    LoadUtils.loadRemote(iconUrl).then((res) => {
+                        this.cgsBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(res);
+                        this.cgsBtn.active = true;
+                        flag = true;
+                    }, () => {
+                        this.cgsBtn.active = false;
+                        flag = false;
                     })
-
                 }
                 else {
                     this.cgsBtn.active = false;
@@ -188,27 +189,24 @@ export default class HallRightCenter extends cc.Component {
     setOtherBtnShowOrHide() {
         let flag = false;
         let arrstr = ['炒股大赛', '闯关赛', '首充', '7天VIP活动', '7天VIP'];
-        GameData.ActivityConf.forEach(el => {
+        GameData.activityConf.forEach(el => {
 
             if (arrstr.indexOf(el.title) < 0) {
 
                 let curTime = new Date().getTime() / 1000;
 
-                if (GlobalHandle.Activitys.indexOf(el.id) >= 0) {
+                if (this.activity.indexOf(el.id) >= 0) {
                     this.otherBtn.active = false;
                 }
                 else if (curTime < el.to && curTime >= el.from) {
-                    let iconUrl = LLWConfig.LoginURL + '/img/activity/' + el.id + '_icon.png';
-                    LoadUtils.load(iconUrl, (sp) => {
-                        if (sp) {
-                            this.otherBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(sp);
-                            this.otherBtn.active = true;
-                            flag = true;
-                        }
-                        else {
-                            this.otherBtn.active = false;
-                            flag = false;
-                        }
+                    let iconUrl = LLWConfing.LoginUrl + '/img/activity/' + el.id + '_icon.png';
+                    LoadUtils.loadRemote(iconUrl).then((sp) => {
+                        this.otherBtn.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(sp);
+                        this.otherBtn.active = true;
+                        flag = true;
+                    }, () => {
+                        this.otherBtn.active = false;
+                        flag = false;
                     })
                 }
                 else {
@@ -220,7 +218,7 @@ export default class HallRightCenter extends cc.Component {
     }
 
     getRewardCenter(call?) {
-        socket.send(pb.MessageId.Req_Hall_BackBag, null, (info) => {
+        (<any>window).socket.send(pb.MessageId.Req_Hall_BackBag, null, (info) => {
             console.log('getRewardCenter:' + JSON.stringify(info));
             if (info && info.grids.length > 0) {
                 this.rewardCenterBtn.active = true;
@@ -236,8 +234,8 @@ export default class HallRightCenter extends cc.Component {
     onBtnClick(event, data) {
         let name = event.target.name;
         if (name == 'rewardCentertBtn') {
-            PopupManager.openNode(cc.find('Canvas'), this.rewardCenterNode, 'Prefabs/RewardCenter/rewardCenter', 12, (node) => {
-                ActionUtils.openBox(node);
+            PopupManager.openNode(cc.find('Canvas'), this.rewardCenterNode, 'prefabs/RewardCenter/rewardCenter', 12, (node) => {
+                ActionUtils.openNode(node);
                 this.rewardCenterNode = node;
                 let handle = this.rewardCenterNode.getComponent('RewardCenter');
                 if (handle) {

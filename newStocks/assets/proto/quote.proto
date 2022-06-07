@@ -107,16 +107,23 @@ message CmdTradingDayReply {
 
 // 获取推荐股票列表
 message CmdRecommendStock {
-	int64 from = 1;    	// 推荐开始时间戳（from和to不能同时为0，查询日K行情的格式为：YYYYMMDD；）
-    int32 total = 2;   	// 天数（0表示忽略该参数；如果total和to都不为0，则优先使用天数作为查询条件；一次性查询最大天数为256天）
-	int64 to = 3;      	// 推荐结束时间戳（0表示忽略该参数；格式同from）
+	int32 channel_id = 1;	// 推荐频道
+	int64 from = 2;    		// 推荐开始时间戳（from和to不能同时为0，查询日K行情的格式为：YYYYMMDD；）
+    int32 total = 3;   		// 天数（0表示忽略该参数；如果total和to都不为0，则优先使用天数作为查询条件；一次性查询最大天数为256天）
+	int64 to = 4;      		// 推荐结束时间戳（0表示忽略该参数；格式同from）
+}
+message RecommendItem {
+	uint32 code = 1;			// 推荐股票
+	string price = 2;			// 推荐价格
 }
 message RecommendStockItem {
-	int64 ts = 1;					// 推荐日期
-	repeated uint32 code_list = 2;	// 推荐股票代码清单
+	int32 channel_id = 1;					// 推荐频道
+	int64 ts = 2;							// 推荐日期
+	repeated RecommendItem list = 3;		// 推荐清单
 }
 message CmdRecommendStockReply {
 	repeated RecommendStockItem items = 1;
+	int64 ts = 2;							// 服务器当前时间戳，精确到秒
 }
 
 // 查询期货行情

@@ -54,9 +54,13 @@ export default class Socket {
 
         let messageId = pb.MessageHead.decode(new Uint8Array(handleBuf));
 
+        console.log(messageId.messageId);
+
+        let info = PbHelp.selectProtoBlackData(messageId.messageId, beadBuf);
+
         let callback = this.queue[messageId.messageId];
 
-        callback && (callback(PbHelp.selectProtoBlackData(messageId.messageId, beadBuf)));
+        callback && (callback(info));
 
     }
 
@@ -65,7 +69,7 @@ export default class Socket {
         this.reconnectBeat && (clearInterval(this.reconnectBeat));
         this.reconnectBeat = null;
         this.reconnectCount = 0;
-        this.callback && (this.callback(this.onHearbeat));
+        this.callback && (this.callback());
 
     }
 
@@ -119,11 +123,7 @@ export default class Socket {
                 console.log('心跳');
                 self.send(pb.MessageId.Sync_C2S_GameHeart, null, null);
             }
-            // else {
-            //     console.log('心跳停止');
-            //     this.hearbeat && (clearInterval(this.hearbeat));
-            //     this.hearbeat = null;
-            // }
+
         }, 5000);
 
         if (this.preData) {
@@ -153,9 +153,9 @@ export default class Socket {
 
             let buff = pb.MessageHead.encode(message).finish();
 
-            this.ws.send(buff.buffer.slice(buff.byteOffset, buff.byteLength + buff.byteOffset));
+            buff && (this.ws.send(buff.buffer.slice(buff.byteOffset, buff.byteLength + buff.byteOffset)));
 
-            this.ws.send(proto.buffer.slice(proto.byteOffset, proto.byteLength + proto.byteOffset));
+            proto && (this.ws.send(proto.buffer.slice(proto.byteOffset, proto.byteLength + proto.byteOffset)));
         }
         else {
             this.preData = {

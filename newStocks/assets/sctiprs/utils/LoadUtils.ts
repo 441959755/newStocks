@@ -1,3 +1,5 @@
+import LLWConfing from "../../common/config/LLWConfing";
+import GameData from "../GameData";
 
 
 export default {
@@ -78,6 +80,17 @@ export default {
                     reject(err);
                 }
             })
+        })
+    },
+
+    loadHeadImg(icon, sp) {
+        let url = LLWConfing.LoginUrl + '/icon/' + icon + '.png';
+        this.loadRemote(url).then((res) => {
+            let texture = new cc.SpriteFrame(res);
+            sp.spriteFrame = texture;
+            GameData.imgs[icon + ''] = texture;
+        }, () => {
+            GameData.imgs[icon + ''] = GameData.imgs['0'];
         })
     }
 

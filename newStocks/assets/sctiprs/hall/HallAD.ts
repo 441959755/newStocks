@@ -21,13 +21,6 @@ export default class HallAD extends cc.Component {
 
         this.id = GameData.adConf.main[0].id;
 
-        // let version = localStorage.getItem('LAUNCHAD');
-        // if (!version) {
-        //     cc.sys.localStorage.setItem('LAUNCHAD', GameData.adConf.launch[0].version);
-        //     version = GameData.adConf.launch[0].version;
-        // }
-        // this.version = version;
-
         LoadUtils.loadRemote(GameData.adConf.main[0].img).then((texture) => {
             this.imgAd.spriteFrame = new cc.SpriteFrame(texture);
         })

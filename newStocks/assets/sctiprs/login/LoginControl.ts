@@ -46,7 +46,7 @@ export default class LoginControl extends cc.Component {
                     cc.Component.EventHandler.emitEvents(this.clickEvents, t);
                     this.node.emit('click', true);
                 }
-                this._pressed = 1;
+                this._pressed = !1;
                 this._updateState();
                 t.stopPropagation();
             }
@@ -64,6 +64,7 @@ export default class LoginControl extends cc.Component {
         //
         let url = LLWConfing.LoginUrl + '/conf/';
         let url1 = LLWConfing.LoginUrl + '/';
+
         Promise.all([LoadUtils.loadRemote(url1 + 'app.conf'), LoadUtils.loadRemote(url + 'game.conf'), LoadUtils.loadRemote(url + 'ad.conf'), LoadUtils.loadRemote(url + 'stocklist.dat'), LoadUtils.loadRemote(url + 'contractlist.dat')])
             .then((results) => {
 

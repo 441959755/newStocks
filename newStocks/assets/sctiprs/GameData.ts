@@ -1,4 +1,7 @@
 import { pb } from "../proto/proto";
+import GameCfg from "./GameCfg";
+import EventCfg from "./utils/EventCfg";
+import GlobalEvent from "./utils/GlobalEvent";
 import LocalStorageUtils from "./utils/LocalStorageUtils";
 
 export default {
@@ -32,6 +35,32 @@ export default {
     },
 
 
+    _properties: [],
+
+    get properties() {
+        return this._properties;
+    },
+
+    set properties(val) {
+        this._properties = val;
+        GlobalEvent.emit(EventCfg.DIAMONDCHANGE);
+        GlobalEvent.emit(EventCfg.GOLDCHANGE);
+        GlobalEvent.emit(EventCfg.LEVELCHANGE);
+        GlobalEvent.emit(EventCfg.EXPCHANGE);
+        GlobalEvent.emit(EventCfg.VIPCHANGE);
+    },
+
+
+
+    imgs: {},     //下载的所有图片
+    playersInfo: {},  //查询的所有玩家信息
+
+    firstGame: false,  //首次登入
+
+    GameCounters: null,
+
+
+    activityConf: null,
     appConf: null,
     adConf: null,
 
@@ -45,8 +74,9 @@ export default {
     gender: null,   //性别
     userName: null,
     headImg: null,
+    headImgurl: null,
 
-    properties: null,//属性
+
     smxlState: null,  //双盲状态
     cgState: null,    //
 
@@ -60,11 +90,13 @@ export default {
     taskStudy: null,
     taskDaily: null,
 
-    gamedata: null,
+    gameData: null,
 
     get vipStatus() {
-        return (new Date().getTime() / 1000 > this.properties[pb.GamePropertyId.VipExpiration]);
+        return !(new Date().getTime() / 1000 > this.properties[pb.GamePropertyId.VipExpiration]);
     },
+
+    huizhidatas: 0,
 
     smSet: null,
 
@@ -79,5 +111,51 @@ export default {
     fsSet: null,
 
     zbSet: null,
+
+    SmxlState: null,
+
+    todayGameCount: null,
+
+    RoomType: null,
+
+    roomId: null,
+
+    jjCapital: null,
+
+    players: [],
+
+    selfEnterRoomData: null,
+
+    AISignal: {},   //ai操作标识
+
+    mncgDataList: null,  //模拟炒股数据
+
+    selfStockList: [],  //自选收藏列表
+
+    SpStockData: null,
+
+    cgdsStateList: [],
+
+    sysBroadcastLsit: [],
+
+    _adSucceed: 0,
+
+    set adSucceed(val) {
+        if (val < 0) {
+            val = 0;
+        }
+        let time = new Date().toLocaleDateString();
+        LocalStorageUtils.setItem(time + 'AD' + GameCfg.GameType, val);
+        this._adSucceed = val;
+    },
+
+    get adSucceed() {
+        if (!this._adSucceed) {
+            let time = new Date().toLocaleDateString();
+            this._adSucceed = parseInt(LocalStorageUtils.getItem(time + 'AD' + GameCfg.GameType));
+        }
+
+        return this._adSucceed;
+    }
 
 }
