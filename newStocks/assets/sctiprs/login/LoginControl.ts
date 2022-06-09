@@ -56,7 +56,7 @@ export default class LoginControl extends cc.Component {
     loadConf() {
 
         //切换账号
-        if (GameData.appConf && GameData.gameConf && GameData.adConf && GameData.stocklist && GameData.contractlist) {
+        if (GameData.appConf && GameData.gameConf && GameData.adConf && GameData.stockList && GameData.contractlist) {
             this.loginLayer.active = true;
             return;
         }
@@ -81,8 +81,8 @@ export default class LoginControl extends cc.Component {
                 console.log(GameData.adConf);
 
                 LocalStorageUtils.setItem('STOCKLIST', results[3]._nativeAsset);
-                GameData.stocklist = (results[3]._nativeAsset).split('\n');
-                console.log(GameData.stocklist);
+                GameData.stockList = (results[3]._nativeAsset).split('\n');
+                console.log(GameData.stockList);
 
                 LocalStorageUtils.setItem('CONTRACTLIST', results[4]._nativeAsset);
                 GameData.contractlist = (results[4]._nativeAsset).split('\n');
@@ -95,7 +95,7 @@ export default class LoginControl extends cc.Component {
                 GameData.appConf = JSON.parse(LocalStorageUtils.getItem('APPCONF'));
                 GameData.gameConf = JSON.parse(LocalStorageUtils.getItem('GAMECONF'));
                 GameData.adConf = JSON.parse(LocalStorageUtils.getItem('ADCONF'));
-                GameData.stocklist = JSON.parse(LocalStorageUtils.getItem('STOCKLIST'));
+                GameData.stockList = JSON.parse(LocalStorageUtils.getItem('STOCKLIST'));
                 GameData.contractlist = JSON.parse(LocalStorageUtils.getItem('CONTRACTLIST'));
 
                 this.loginAD.active = true;

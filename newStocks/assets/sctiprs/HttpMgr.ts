@@ -50,7 +50,7 @@ export default {
                 GameData.todayGameCount = info.data.todayTimes;
 
                 GameData.aiStockList = info.data.aiStockList;
-                GameData.stockList = info.data.stockList;
+                //  GameData.stockList = info.data.stockList;
                 GameData.cgdsStockList = info.data.cgdsStockList;
                 GameData.taskStudy = info.data.tasks.study || [];
                 GameData.taskDaily = info.data.tasks.daily || [];
