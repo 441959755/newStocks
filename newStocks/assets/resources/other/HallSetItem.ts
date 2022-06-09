@@ -1,9 +1,9 @@
-import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
+import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class Item extends cc.Component {
+export default class HallSetItem extends cc.Component {
 
 
     onItemBtnClick(event, name) {
