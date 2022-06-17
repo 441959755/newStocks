@@ -10,6 +10,7 @@ import WealBundle from './WealBundle';
 import ConfUtils from '../utils/ConfUtils';
 import ShiPanBundle from './ShiPanBundle';
 import { pb } from '../../proto/proto';
+import GameBundle from './GameBundle';
 
 
 const { ccclass, property } = cc._decorator;
@@ -162,7 +163,9 @@ export default class HallContent extends cc.Component {
 			//开关
 			ConfUtils.getSwitchConf(1, () => {
 				GameCfg.GameType = pb.GameType.ShuangMang;
-				GlobalEvent.emit(EventCfg.OPENSMLAYER);
+				GameBundle.loadPre('xl/shuangmangLayer', (node) => {
+					ActionUtils.openNode(node);
+				});
 			})
 		}
 
@@ -171,8 +174,9 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(4, () => {
 				GameCfg.GameType = pb.GameType.ZhiBiao;
-				GlobalEvent.emit(EventCfg.OPENZBLAYER);
-
+				GameBundle.loadPre('xl/shuangmangLayer', (node) => {
+					ActionUtils.openNode(node);
+				});
 			})
 		}
 
@@ -201,7 +205,9 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(6, () => {
 				GameCfg.GameType = pb.GameType.FenShi;
-				GlobalEvent.emit(EventCfg.OPENFENSHI);
+				GameBundle.loadPre('fsxl/fenshi', (node) => {
+					ActionUtils.openNode(node);
+				});
 			})
 		}
 
@@ -350,6 +356,7 @@ export default class HallContent extends cc.Component {
 		}
 
 		else if (name == 'main_sp_znzg') {
+			GameCfg.GameSet = JSON.parse(JSON.stringify(GameData.dxSet));
 			ShiPanBundle.loadPre('znzgLayer');
 		}
 
@@ -391,10 +398,7 @@ export default class HallContent extends cc.Component {
 			name == 'main_study_cjl' || name == 'main_study_macd' ||
 			name == 'main_study_kdj' || name == 'main_study_boll' ||
 			name == 'main_study_rsi' || name == 'main_study_expma') {
-			// GlobalEvent.emit(EventCfg.LOADINGSHOW);
-			// GameCfg.GameType = 'STUDY';
-			// GameData.schoolProgress = data;
-			//	cc.director.loadScene('school');
+
 			GlobalEvent.emit(EventCfg.SHOWLOADING);
 			GameCfg.GameType = 'STUDY';
 			SchoolBundle.schoolProgress = data;
@@ -403,7 +407,6 @@ export default class HallContent extends cc.Component {
 
 		//免费砖石
 		else if (name == 'main_fl_mfzs') {
-
 			WealBundle.loadPre('dailyWelfare', (node) => {
 				let handle = node.getComponent('DailyWelfare');
 				handle && (handle.onShow());

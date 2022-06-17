@@ -66,7 +66,6 @@ export default {
 
     gameConf: null,
 
-    stocklist: null,
     contractlist: null,
 
     userID: null,   //uid

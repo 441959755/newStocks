@@ -1,4 +1,5 @@
 import LLWConfing from "../../common/config/LLWConfing";
+import GameCfg from "../GameCfg";
 import GameData from "../GameData";
 import AudioUtils from "../utils/AudioUtils";
 import ConfUtils from "../utils/ConfUtils";
@@ -124,6 +125,25 @@ export default class LoginControl extends cc.Component {
         GameData.tjdSet = ConfUtils.getConf("TJDSET");
 
         GameData.fsSet = ConfUtils.getConf("FSSET");
+
+        if (GameData.smSet.isMA1) {
+            GameCfg.MAs.push(GameData.smSet.MA1);
+        }
+        if (GameData.smSet.isMA2) {
+            GameCfg.MAs.push(GameData.smSet.MA2);
+        }
+        if (GameData.smSet.isMA3) {
+            GameCfg.MAs.push(GameData.smSet.MA3);
+        }
+        if (GameData.smSet.isMA4) {
+            GameCfg.MAs.push(GameData.smSet.MA4);
+        }
+        if (GameData.smSet.isMA5) {
+            GameCfg.MAs.push(GameData.smSet.MA5);
+        }
+        if (GameData.smSet.isMA6) {
+            GameCfg.MAs.push(GameData.smSet.MA6);
+        }
 
     }
 

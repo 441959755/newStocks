@@ -1,5 +1,10 @@
 import FitUtils from "../utils/FitUtils";
 import PopupManager from "../utils/PopupManager";
+import GameBundle from "./GameBundle";
+import OtherBundle from "./OtherBundle";
+import SchoolBundle from "./SchoolBundle";
+import ShiPanBundle from "./ShiPanBundle";
+import WealBundle from "./WealBundle";
 
 
 const { ccclass, property } = cc._decorator;
@@ -21,11 +26,11 @@ export default class HallControl extends cc.Component {
 
 
     protected onDestroy(): void {
-        // OtherBundle.removeBundle();
-        // SchoolBundle.removeBundle();
-        // WealBundle.removeBundle();
-        // ShiPanBundle.removeBundle();
+        OtherBundle.removeBundle();
+        SchoolBundle.removeBundle();
+        WealBundle.removeBundle();
+        ShiPanBundle.removeBundle();
+        GameBundle.removeBundle();
     }
 
-    // update (dt) {}
 }

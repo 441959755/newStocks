@@ -410,6 +410,7 @@ export default class EventNoticeZB extends cc.Component {
             }
             //   }
         }
+
         if (GameCfg.GameSet.strategy == '股价穿越均线' || GameCfg.GameSet.strategy == '组合训练') {
             let str;
 

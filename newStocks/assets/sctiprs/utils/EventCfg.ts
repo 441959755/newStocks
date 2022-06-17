@@ -114,5 +114,19 @@ export default {
      */
     SMINITFUND: 'SMINITFUND',
 
+    /**
+     * 游戏复盘
+     */
+    GAMEFUPAN: 'GAMEFUPAN',
 
+
+    /**
+     * 
+     */
+    ADDFILLCOLOR: 'ADDFILLCOLOR',
+
+    /**
+     * 离开游戏
+     */
+    LEAVEGAME: 'LEAVEGAME',
 }

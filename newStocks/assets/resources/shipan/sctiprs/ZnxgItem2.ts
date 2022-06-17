@@ -21,7 +21,7 @@ export default class ZnxgItem2 extends cc.Component {
 
             if (this._curData && res1.items[0].code == this._curData.code) {
 
-                tp = TimeUtils.formatTime1(res1.items[0].timestamp);
+                tp = TimeUtils.fromatTime1(res1.items[0].timestamp);
 
                 let me = {
                     code: this._curData.code,

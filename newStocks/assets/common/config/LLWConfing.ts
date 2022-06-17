@@ -9,7 +9,7 @@ const GAMEID = 0;
 const AppFrom = pb.AppFrom.Website3th;
 
 const LoginUrl = 'http://test.cgdr168.com';
-//cosnt LoginUrl='https://www.cgdr168.com';
+//const LoginUrl = 'https://www.cgdr168.com';
 
 const ISLOG = false;
 

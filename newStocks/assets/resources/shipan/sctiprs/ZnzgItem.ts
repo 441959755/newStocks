@@ -17,9 +17,11 @@ export default class ZnzgItem extends cc.Component {
     protected onLoad(): void {
         let self = this;
         GlobalEvent.on(EventCfg.SYNCQUOTEITEM, (info) => {
+
             if (self.info && self.info.code == info.code) {
-                self.labels[4].string = ComUtils.changeTwoDecimal(info.close) + '';
+                self.labels[4].string = ComUtils.changeTwoDecimal(info.price) + '';
             }
+
         }, this);
     }
 
@@ -54,12 +56,21 @@ export default class ZnzgItem extends cc.Component {
 
             GlobalEvent.emit('ZNZGITEMUPDATE');
         }
-        else if (name == 'zg_ckxq') {
+        else if (name == 'item') {
+
             ZnzgControl.searchCode = this.info.code;
 
             ZnzgControl.searchName = this.info.name;
 
+            ZnzgControl.csrc_indu_name = this.info.csrc_indu_name;
+
+            ZnzgControl.searTime = this.info.time;
+            ZnzgControl.pri_biz = this.info.pri_biz;
+
+            ZnzgControl.type = this.info.type;
+
             ZnzgControl.scoreNode.active = true;
+
         }
     }
 

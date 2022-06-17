@@ -23,13 +23,13 @@ export default class ZnzgHandle extends cc.Component {
 
     items = null;
 
-
     protected onLoad(): void {
 
         this.edit.node.on('editing-did-ended', (edit) => {
             this.items = null;
             let str = edit.string;
             if (str == '') { return }
+            str = (str.split(' '))[0]
             let datas = GameData.stockList;
             let flag = false, tt = [];
             for (let i = 0; i < datas.length; i++) {
@@ -68,7 +68,12 @@ export default class ZnzgHandle extends cc.Component {
             this.listv.numItems = ZnzgControl.listData.length;
         }, this);
 
+    }
+
+    protected start(): void {
         ZnzgControl.searchNode = this.node;
+        ZnzgControl.scoreNode = this.node.parent.children[1];
+        ZnzgControl.otherNode = this.node.parent.children[2];
     }
 
     protected onEnable(): void {
@@ -80,9 +85,11 @@ export default class ZnzgHandle extends cc.Component {
         else {
             this.tipsNode.active = false;
         }
-        this.listv.numItems = ZnzgControl.listData.length;
 
-        this.quoteSubscribe(true);
+        setTimeout(() => {
+            this.listv.numItems = ZnzgControl.listData.length;
+            this.quoteSubscribe(true);
+        }, 200);
 
     }
 
@@ -106,7 +113,6 @@ export default class ZnzgHandle extends cc.Component {
                 code = code.slice(1);
             }
 
-
             this.getCodeData(code);
         }
         else if (name == 'blackNode') {
@@ -118,11 +124,11 @@ export default class ZnzgHandle extends cc.Component {
     quoteSubscribe(flag) {
 
         let info = {
-            items: []
+            items: [{ code: '002667', flag: true }]
         }
 
         ZnzgControl.listData.forEach(el => {
-            info.items.push({ code: el.code, flag: flag })
+            info.items.push({ code: el.code + '', flag: flag })
         })
 
         console.log('quoteSubscribe:' + JSON.stringify(info));
@@ -137,7 +143,7 @@ export default class ZnzgHandle extends cc.Component {
     }
 
     getCodeData(code) {
-        let csrc_indu_name;
+
         let url = 'http://f10app.165566.com/';        // pcf10/pstk0003/sz;     //kcpcf10/{rptname}/{stockcode}.json';
         //科创股
         if (code.slice(0, 3) == '688') {
@@ -161,16 +167,38 @@ export default class ZnzgHandle extends cc.Component {
 
         LoadUtils.loadRemote(url + '/pstk0003/' + str).then((ret) => {
 
-            csrc_indu_name = ret.json[0].csrc_indu_name;
+            ZnzgControl.csrc_indu_name = ret.json[0].csrc_indu_name;
 
             let time = new Date().toLocaleDateString();
 
-            ZnzgControl.listData = { name: ret.json[0].a_stocksname, code: ret.json[0].stockcode, csrc_indu_name: csrc_indu_name, time: time };
+            ZnzgControl.listData = {
+                name: ret.json[0].a_stocksname,
+                code: ret.json[0].stockcode,
+                csrc_indu_name: ret.json[0].csrc_indu_name,
+                time: time,
+                pri_biz: ret.json[0].pri_biz,
+                type: ret.json[0].com_cls_code
+            };
 
             this.listv.numItems = ZnzgControl.listData.length;
+
+            if (ZnzgControl.listData.length <= 0) {
+                this.tipsNode.active = true;
+            }
+            else {
+                this.tipsNode.active = false;
+            }
+
             ZnzgControl.searchCode = ret.json[0].stockcode;
             ZnzgControl.searchName = ret.json[0].a_stocksname;
+            ZnzgControl.pri_biz = ret.json[0].pri_biz;
+
+            ZnzgControl.type = ret.json[0].com_cls_code;
+            ZnzgControl.searTime = time;
+
             this.quoteSubscribe(true)
+
+            ZnzgControl.scoreNode.active = true;
 
         })
     }

@@ -28,7 +28,7 @@ export default class SignIn extends cc.Component {
 
     onShow() {
 
-        let ymd = TimeUtils.formatTime1(new Date().getTime() / 1000);
+        let ymd = TimeUtils.fromatTime1(new Date().getTime() / 1000);
 
         let flag = true;
 
@@ -85,7 +85,7 @@ export default class SignIn extends cc.Component {
             })
 
             GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '成功领取！');
-            this.award7.push(TimeUtils.formatTime1(new Date().getTime() / 1000));
+            this.award7.push(TimeUtils.fromatTime1(new Date().getTime() / 1000));
             this.onShow();
         }
     }

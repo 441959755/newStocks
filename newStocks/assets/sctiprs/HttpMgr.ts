@@ -41,7 +41,7 @@ export default {
                 GameData.userID = info.data.uid;
                 GameData.gender = info.data.gender || 0;
                 GameData.properties = info.data.properties;
-                GameData.smxlState = info.data.smxlState;
+                GameData.smxlState = info.data.smlxState;
                 GameData.cgState = info.data.cgState;
 
                 GameData.location = info.data.location || '中国';

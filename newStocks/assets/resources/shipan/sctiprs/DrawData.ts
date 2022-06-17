@@ -124,8 +124,8 @@ export default class DrawData {
             return a.day - b.day;
         })
 
-        console.log('要的时间往下:' + parseInt(TimeUtils.formatTime1(to)));
-        console.log('给的时间:' + parseInt(TimeUtils.formatTime1(arr[0].day)));
+        console.log('要的时间往下:' + parseInt(TimeUtils.fromatTime1(to)));
+        console.log('给的时间:' + parseInt(TimeUtils.fromatTime1(arr[0].day)));
 
         //    console.log(arr);
 
@@ -135,7 +135,7 @@ export default class DrawData {
             //  let time = parseInt(ComUtils.getTimestamp(arr[i].day));
             //   console.log(parseInt(ComUtils.fromatTime1(arr[i].day)));
             //   console.log(parseInt(ComUtils.fromatTime1(to)));
-            if (parseInt(TimeUtils.formatTime1(arr[i].day)) <= parseInt(TimeUtils.formatTime1(to))
+            if (parseInt(TimeUtils.fromatTime1(arr[i].day)) <= parseInt(TimeUtils.fromatTime1(to))
                 && newArr.length <= total) {
                 newArr.unshift(arr[i]);
             }

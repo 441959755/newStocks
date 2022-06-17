@@ -1,4 +1,5 @@
 
+import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import AudioUtils from "../../sctiprs/utils/AudioUtils";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
@@ -136,6 +137,28 @@ export default class HallSetHandle extends cc.Component {
         GameData.smSet = GameData.smSet;
         AudioUtils.setEffectVolume(GameData.smSet.isSound);
         cc.sys.localStorage.setItem('SMSET', JSON.stringify(GameData.smSet));
+
+        GameCfg.MAs = [];
+
+        if (GameData.smSet.isMA1) {
+            GameCfg.MAs.push(GameData.smSet.MA1);
+        }
+        if (GameData.smSet.isMA2) {
+            GameCfg.MAs.push(GameData.smSet.MA2);
+        }
+        if (GameData.smSet.isMA3) {
+            GameCfg.MAs.push(GameData.smSet.MA3);
+        }
+        if (GameData.smSet.isMA4) {
+            GameCfg.MAs.push(GameData.smSet.MA4);
+        }
+        if (GameData.smSet.isMA5) {
+            GameCfg.MAs.push(GameData.smSet.MA5);
+        }
+        if (GameData.smSet.isMA6) {
+            GameCfg.MAs.push(GameData.smSet.MA6);
+        }
+
     }
 
     onBtnClick(event, data) {

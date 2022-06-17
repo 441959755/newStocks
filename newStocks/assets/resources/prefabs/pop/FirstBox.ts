@@ -12,5 +12,4 @@ export default class FristBox extends cc.Component {
         }
     }
 
-
 }

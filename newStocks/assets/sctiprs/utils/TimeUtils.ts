@@ -48,7 +48,7 @@ export default {
      * @param time 
      * @returns 
      */
-    formatTime1(time) {
+    fromatTime1(time) {
 
         time = time + '';
         time = time.replace(/-/g, '');
@@ -102,6 +102,8 @@ export default {
         }
         return time;
     },
+
+
 
     /**
      * 
@@ -173,6 +175,24 @@ export default {
         return h + ':' + m + ':' + s;
     },
 
+
+    /**
+     * 
+     * @param time1 时间戳
+     * @returns //时分
+     */
+    getSFMTamp1(time1) {
+        let time = new Date(parseInt(time1) * 1000);
+        let hours, minute;
+        hours = time.getHours();
+        minute = time.getMinutes();
+
+        if (hours < 10) { hours = '0' + hours }
+        if (minute < 10) { minute = '0' + minute }
+
+        return hours + ':' + minute;
+
+    },
 
     /**
      * 

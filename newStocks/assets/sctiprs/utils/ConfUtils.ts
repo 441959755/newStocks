@@ -166,6 +166,61 @@ export default {
         }
 
         return items;
+    },
+
+    /**
+     * 
+     * @param str 股票名字
+     * @returns 股票时间
+     */
+    getTimeByCodeName1(str) {
+        str = str.split(' ')[0];
+        let items;
+        for (let i = 0; i < GameData.stockList.length; i++) {
+            let arr = GameData.stockList[i].split('|');
+            if (arr[0].indexOf(str) != -1 || arr[1].indexOf(str) != -1) {
+                items = arr;
+                break;
+            }
+        }
+
+        if (!items) {
+            console.log('getTimeByCodeName1 parameters str is err:' + str);
+            return;
+        }
+
+        let data = {
+            start: null,
+            end: null,
+        }
+        data.start = items[2];
+        data.end = items[3];
+        if (items[3] == 0) {
+            let f = new Date();
+            let y = f.getFullYear() + '';
+            let m = f.getMonth() + 1 >= 10 ? f.getMonth() + 1 : '0' + (f.getMonth() + 1);
+            let d = f.getDate() >= 10 ? f.getDate() : '0' + f.getDate();
+            data.end = y + '' + m + '' + d;
+        }
+        return data;
+    },
+
+
+    /**
+     * 
+     * @returns 随机股票
+     */
+    getItemsByTime1() {
+        let le = parseInt(Math.random() * GameData.stockList.length + '');
+        while (le--) {
+            let items = GameData.stockList[le].split('|');
+            if (items[3] == 0) {
+                return items;
+            }
+            if (le <= 0) {
+                le = GameData.stockList.length - 1;
+            }
+        }
     }
 
 }

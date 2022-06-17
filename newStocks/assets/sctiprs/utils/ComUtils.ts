@@ -32,6 +32,31 @@ export default {
     },
 
     /**
+   * 
+   * @param number 
+   * @returns 改变单位
+   */
+    numberConvertUnit1(number) {
+        if (!number) {
+            return 0.00;
+        }
+        let t = number;
+        let str;
+        str = Math.abs(parseInt(number));
+        if (str >= 1000000) {
+            str = (this.changeTwoDecimal(str / 100000000) + '') + '亿';
+        }
+        else if (str >= 10000) {
+            str = (this.changeTwoDecimal(str / 10000) + '') + '万';
+        }
+        if (t < 0) {
+            return '-' + str;
+        }
+
+        return str;
+    },
+
+    /**
      * 
      * @param fame 
      * @returns 
