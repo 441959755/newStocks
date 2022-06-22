@@ -7,7 +7,6 @@ import TimeUtils from "../../../sctiprs/utils/TimeUtils";
 import DrawData from "./DrawData";
 
 
-
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -45,6 +44,7 @@ export default class ZnDrawGraphics extends cc.Component {
     sign = false;
 
     MaList = [];
+
     MinMaList = [];
 
     ktype = null;
@@ -301,8 +301,7 @@ export default class ZnDrawGraphics extends cc.Component {
                 let MAX = ((index - GameCfg.beg_end[0]) * GameCfg.hz_width) + GameCfg.hz_width / 2;
 
                 this.drawMA.strokeColor = GameCfg.MAColor[i];
-                this.drawLine(this.drawMA, preMAX, preMAY, MAX, MAY, i);
-
+                this.drawLine(this.drawMA, preMAX + 2, preMAY, MAX - 2, MAY, i);
             }
         }
     }
@@ -344,7 +343,7 @@ export default class ZnDrawGraphics extends cc.Component {
             }
         }
 
-        DrawUtils.drawRect(ctx, x, y, w - 5, h, col);
+        DrawUtils.drawRect(ctx, x + 2, y, w - 5, h, col);
 
     }
 

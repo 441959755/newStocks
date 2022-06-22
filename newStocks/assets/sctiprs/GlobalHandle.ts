@@ -1,8 +1,16 @@
+import HttpMgr from '../sctiprs/HttpMgr'
 import { pb } from "../proto/proto"
 import GameCfg from "./GameCfg";
+import StockData from './StockData';
 
 export default {
 
+
+    /**
+     * 获取行情
+     * @param obj 
+     * @param cb 
+     */
     getStockQuotes(obj, cb) {
 
         let message = pb.CmdQuoteQuery.create(obj);
@@ -39,5 +47,54 @@ export default {
 
             cb && (cb(1));
         })
+    },
+
+    getHttpGPData(type, code) {
+        if ((code + '').length >= 7) {
+            code = (code + '').slice(1);
+        }
+
+        if (code[0] == 6) {
+            code += '1';
+        }
+        else if (code[0] == 3) {
+            code += '2';
+        }
+        else if (code[0] == 0) {
+            code += '2';
+        }
+
+        let data = {
+            TYPE: type,
+            rtntype: 5,
+            authorityType: false,
+            id: code
+        };
+        HttpMgr.getGPData(data, res => {
+
+            if (!res || res.length <= 0) {
+                console.log(' getHttpGPData res is null:' + JSON.stringify(res));
+                return;
+            }
+
+            if (res.length > 200) {
+                res = res.slice(res.length - 200, res.length);
+            }
+
+            if (type == 'mk') {
+                StockData.gpDataMonth = res;
+            }
+            else if (type == 'wk') {
+                StockData.gpDataDay7 = res;
+            }
+            else if (type == 'k') {
+                StockData.gpDataDay = res;
+            }
+
+        })
+
+
     }
+
+
 }

@@ -39,6 +39,8 @@ export default {
         LocalStorageUtils.setItem('ZNZGLIST', JSON.stringify(this._listData));
     },
 
+    lastStockIndexList: [],
+
     searchCode: null,
 
     searchName: null,
@@ -216,6 +218,8 @@ export default {
     c100000_yoy_gr: null,
 
     sel_nint: null,
+
+
 
     indicatorsShow: {
         '上穿MA均线': '股价由均线下方穿越到均线上方，并且收盘价高于均线，代表短期市场表现偏强。但是持续性如何要看穿越均线的周期大小以及整体大势是上涨还是下跌。',

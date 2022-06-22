@@ -6,6 +6,7 @@ import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
+import TimeUtils from "../../../sctiprs/utils/TimeUtils";
 
 
 const { ccclass, property } = cc._decorator;
@@ -71,7 +72,7 @@ export default class FSFinal extends cc.Component {
         }
         this.gpCode.string = code;
 
-        this.xlTime.string = ComUtils.formatTime(gpData[GameData.huizhidatas - 1].day) + '--' + ComUtils.formatTime(gpData[GameCfg.huizhidatas - 1].day);
+        this.xlTime.string = TimeUtils.formatTime(gpData[GameData.huizhidatas - 1].day) + '--' + TimeUtils.formatTime(gpData[GameCfg.huizhidatas - 1].day);
 
         let tqzf = ((gpData[GameCfg.huizhidatas - 1].close - gpData[GameData.huizhidatas - 1].close) / gpData[GameData.huizhidatas - 1].close * 100).toFixed(2);
         this.tqzf.string = tqzf + '%';
@@ -121,9 +122,9 @@ export default class FSFinal extends cc.Component {
                 gType: GameCfg.GameType,
                 quotesCode: parseInt(GameCfg.data[0].code),
                 kType: pb.KType.Min,
-                kFrom: parseInt(ComUtils.fromatTime1(gpData[GameData.huizhidatas - 1].day)),
+                kFrom: parseInt(TimeUtils.fromatTime1(gpData[GameData.huizhidatas - 1].day)),
 
-                kTo: parseInt(ComUtils.fromatTime1(gpData[GameCfg.huizhidatas - 1].day)),
+                kTo: parseInt(TimeUtils.fromatTime1(gpData[GameCfg.huizhidatas - 1].day)),
                 stockProfitRate: ((gpData[GameCfg.huizhidatas - 1].close - gpData[GameData.huizhidatas - 1].close) / gpData[GameData.huizhidatas - 1].close * 100),
                 userProfitRate: (GameCfg.allRate * 100),
                 userCapital: GameCfg.ziChan,

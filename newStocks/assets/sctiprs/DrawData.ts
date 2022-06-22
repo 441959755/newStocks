@@ -320,7 +320,10 @@ export default {
 
     //}
 
-    //获取涨停盘
+    /**
+     * 获取涨停盘
+     * 
+   **/
     getRaisingLimit(index, flag?) {
 
         if (GameCfg.GameType == pb.GameType.QiHuo) {

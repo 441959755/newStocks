@@ -1,10 +1,11 @@
 
 import GameCfg from "../../../sctiprs/GameCfg";
 import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
+import ShiPanBundle from "../../../sctiprs/hall/ShiPanBundle";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import LoadUtils from "../../../sctiprs/utils/LoadUtils";
 import ZnzgControl from "./ZnzgControl";
-import ZnzgHandle from "./ZnzgSearch";
+import ZnzgStockIndex from "./ZnzgStockIndex";
 
 const { ccclass, property } = cc._decorator;
 
@@ -28,14 +29,15 @@ export default class ZnzgOther extends cc.Component {
 
     tb3 = null;
 
-    protected onLoad(): void {
-
-    }
+    ystb = null;
 
     start() {
         this.toggles[0].isChecked = true;
         this.toggles[1].isChecked = false;
         this.toggles[2].isChecked = false;
+        this.pages[0].active = true;
+        this.pages[1].active = false;
+        this.pages[2].active = false;
     }
 
     setLabelColor(number, label) {
@@ -66,9 +68,9 @@ export default class ZnzgOther extends cc.Component {
         this.pageLabels[7].string = ComUtils.numberConvertUnit1(ZnzgControl.fl_shr * 10000);
         this.pageLabels[8].string = ComUtils.numberConvertUnit1(ZnzgControl.inc_j * 10000);
         this.pageLabels[9].string = ComUtils.numberConvertUnit1(ZnzgControl.net_inc_ded * 10000);
-        this.pageLabels[10].string = ComUtils.changeTwoDecimal(ZnzgControl.syl) + '%';
+        this.pageLabels[10].string = ComUtils.changeTwoDecimal(ZnzgControl.syl);
 
-        this.pageLabels[11].string = ComUtils.changeTwoDecimal(ZnzgControl.rev_yoy_gr);//
+        this.pageLabels[11].string = ComUtils.changeTwoDecimal(ZnzgControl.rev_yoy_gr) + '%';//
         this.pageLabels[12].string = ComUtils.numberConvertUnit1(ZnzgControl.bb100000);//
         this.pageLabels[13].string = ComUtils.changeTwoDecimal(ZnzgControl.bb200000 * 100 / ZnzgControl.bb100000) + '%';//
         this.pageLabels[14].string = ComUtils.changeTwoDecimal(ZnzgControl.roe) + '%';//
@@ -115,7 +117,7 @@ export default class ZnzgOther extends cc.Component {
 
         //page3
 
-        let str = ZnzgControl.searchName + '(' + ZnzgControl.searchCode + ')';
+        let str = ZnzgControl.searchName + '(' + ZnzgControl.searchCode + ') ，';
         let num1 = 0, num2 = 0;
         if (ZnzgControl.shizhi > 30000000000) {
             num1 = 3;
@@ -140,17 +142,93 @@ export default class ZnzgOther extends cc.Component {
         let t = num1 > num2 ? num1 : num2;
 
         if (t == 1) {
-            str += '小盘股';
+            str += '小盘股 ,';
         }
         else if (t == 2) {
-            str += '中盘股';
+            str += '中盘股 ,';
         }
         else if (t == 3) {
-            str += '大盘股';
+            str += '大盘股 ,';
         }
 
-        if (ZnzgControl.total == ZnzgControl.fl_shr) { }
+        if (ZnzgControl.total == ZnzgControl.fl_shr) {
+            str += '全流通股 ,';
+        }
 
+        str += '根据当前季报显示,';
+
+        if (this.ystb > 0) {
+            str += '企业营收同比增加 ,';
+        }
+
+        else {
+            str += '企业营收同比减少 ,';
+        }
+
+        if (ZnzgControl.sel_nint > 0.4) {
+            str += '企业获利能力大幅增强 .'
+        }
+        else if (ZnzgControl.sel_nint > 0) {
+            str += '企业获利能力增强 .';
+        }
+        else {
+            str += '企业获利能力减弱 .';
+        }
+
+        if (ZnzgControl.rev_yoy_gr > 0) {
+            str += '盈利增速步入上升通道, ';
+        }
+        else {
+            str += '盈利增速减退 ,';
+        }
+
+        if (ZnzgControl.roe_yoy_gr > 0) {
+            str += '企业回报股东能力增强 ,';
+        }
+        else {
+            str += '企业回报股东能力减弱 ,';
+        }
+
+
+        if (this.tb3 > 0) {
+            str += '财务杠杆风险加大. ';
+        }
+        else {
+            str += '资产结构得到优化 .';
+        }
+
+        if (ZnzgControl.f137 > 0 && ZnzgControl.f459 > 0 && ZnzgControl.f434 > 0) {
+            str += '过去10日主力资金持续流入' + ComUtils.numberConvertUnit1(ZnzgControl.f459);
+        }
+
+        str += '技术上 ' + ZnzgControl.lastIndexName + '信号,';
+        let gpData = GameCfg.data[0].data;
+        if (gpData.length <= 0) {
+            return;
+        }
+        let flag1 = (gpData[gpData.length - 1].day == ZnzgControl.lastIndexTime);
+
+        let arr = ZnzgStockIndex.maList[ZnzgStockIndex.maList.length - 1];
+
+        let flag2 = false;
+        if (arr[0] > arr[1] && arr[1] > arr[2]) {
+            flag2 = true;
+        }
+
+        if (flag1 && flag2) {
+            str += '均线呈多头排列，股价处于上升行情稳定期，建议买入.';
+        }
+        else if (flag1 && !flag2) {
+            str += '具体信号内容+但股价长期走势不明朗，建议观望或短线操作.';
+        }
+        else if (!flag1 && flag2) {
+            str += '均线呈多头排列，股价处于上升行情稳定期，建议出现具体进场信号进场.';
+        }
+        else {
+            str += '股价长期走势不明朗，同时没有短期进场信号，建议暂时观望.';
+        }
+
+        this.page3Labels[0].string = str;
     }
 
     onBtnClick(event, data) {
@@ -161,7 +239,7 @@ export default class ZnzgOther extends cc.Component {
         }
         //查看
         else if (name == 'zg_jsm_ck') {
-
+            ShiPanBundle.bundleShiPan('znzgDraw');
         }
         //去学院学习
         else if (name == 'zg_jsm_qxyxx') {
@@ -206,21 +284,27 @@ export default class ZnzgOther extends cc.Component {
             secid = '0';
         }
 
-        let post = '', post1 = '';
+        let post = '', post1 = '', post2 = '';
 
-        if (ZnzgControl.type == 1) // 一般类
+        if (ZnzgControl.type == 1) {// 一般类
             post += "/stk0015/";
-        else if (ZnzgControl.type == 2) // 非银行金融
-            post += "/stk0021/";
-        else if (ZnzgControl.type == 3) // 银行
-            post += "/stk0018/";
-
-        if (ZnzgControl.type == 1) // 一般类
             post1 += "/stk0017/";
+            post2 += '/stk0016/';
+        }
+
         else if (ZnzgControl.type == 2) // 非银行金融
+        {
+            post += "/stk0021/";
             post1 += "/stk0023/";
+            post2 += '/stk0022/';
+        }
+
         else if (ZnzgControl.type == 3) // 银行
+        {
+            post += "/stk0018/";
             post1 += "/stk0020/";
+            post2 += '/stk0019/';
+        }
 
 
         let url1 = ' https://push2.eastmoney.com/api/qt/stock/get?secid=' + secid + '.' + code + '&fields=f434,f459,f137,f162,f163,f116';
@@ -233,7 +317,9 @@ export default class ZnzgOther extends cc.Component {
 
             LoadUtils.loadRemote(url + post + str),
             LoadUtils.loadRemote(url + post1 + str),
-            LoadUtils.loadRemote(url1)
+            LoadUtils.loadRemote(url1),
+
+            LoadUtils.loadRemote(url + post2 + str),
             ]).then((ret) => {
 
                 ZnzgControl.total = ret[0].json[0].total;
@@ -315,10 +401,21 @@ export default class ZnzgOther extends cc.Component {
                 ZnzgControl.shizhi = pa.data.f116;
                 ZnzgControl.syl = pa.data.f163 / 100;
 
+                if (ZnzgControl.type == 1) {
+                    this.ystb = ret[7].json[0].p110101_yoy_gr;
+                }
+                else if (ZnzgControl.type == 2) {
+                    this.ystb = ret[7].json[0].fp100000_yoy_gr;
+                }
+                else if (ZnzgControl.type == 3) {
+                    this.ystb = ret[7].json[0].bp100000_yoy_gr;
+                }
+
                 call && (call());
             })
 
     }
+
 
     selectPage(index) {
         this.pages.forEach((el, i) => {
@@ -330,6 +427,5 @@ export default class ZnzgOther extends cc.Component {
             }
         })
     }
-
 
 }

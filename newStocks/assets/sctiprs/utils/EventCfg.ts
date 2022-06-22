@@ -129,4 +129,9 @@ export default {
      * 离开游戏
      */
     LEAVEGAME: 'LEAVEGAME',
+
+    /**
+     * 标签位置
+     */
+    ONMARKUPDATE: 'ONMARKUPDATE',
 }

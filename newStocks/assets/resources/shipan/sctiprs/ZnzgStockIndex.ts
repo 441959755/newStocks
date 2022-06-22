@@ -259,8 +259,6 @@ export default {
             }
         }
 
-
-
     },
 
     judgeMACDIndex(index) {
@@ -284,7 +282,7 @@ export default {
             if (this.difList[index - 1] < 0) {
                 if (this.difList[index] > 0) {
 
-                    this.MACDIndex.push({ index: index, name: 'DIF向上穿越0轴' });
+                    this.MACDIndex.push({ index: index, name: '穿越0轴' });
                     return;
 
                 }
@@ -1471,7 +1469,7 @@ export default {
      */
     getRiseProbability() {
         let list = this.getlastStockIndex();
-
+        ZnzgControl.lastStockIndexList = list;
         ZnzgControl.lastIndexName = list[list.length - 1].name;
         ZnzgControl.lastIndexTime = this.gpData[list[list.length - 1].index].day;
 

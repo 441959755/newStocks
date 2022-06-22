@@ -17,11 +17,11 @@ export default class ZnzgItem extends cc.Component {
     protected onLoad(): void {
         let self = this;
         GlobalEvent.on(EventCfg.SYNCQUOTEITEM, (info) => {
-
-            if (self.info && self.info.code == info.code) {
-                self.labels[4].string = ComUtils.changeTwoDecimal(info.price) + '';
+            if (this.node.active) {
+                if (self.info && self.info.code == info.code) {
+                    self.labels[4].string = ComUtils.changeTwoDecimal(info.price) + '';
+                }
             }
-
         }, this);
     }
 

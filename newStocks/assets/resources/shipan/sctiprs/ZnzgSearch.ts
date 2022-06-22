@@ -66,6 +66,7 @@ export default class ZnzgHandle extends cc.Component {
 
         GlobalEvent.on('ZNZGITEMUPDATE', () => {
             this.listv.numItems = ZnzgControl.listData.length;
+
         }, this);
 
     }
