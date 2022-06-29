@@ -1,0 +1,101 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "boxAnim",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 4.0875,
+  "sample": 80,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "props": {
+      "angle": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.0625,
+          "value": -10
+        },
+        {
+          "frame": 0.125,
+          "value": -20
+        },
+        {
+          "frame": 0.1875,
+          "value": -10
+        },
+        {
+          "frame": 0.25,
+          "value": 0
+        },
+        {
+          "frame": 0.3125,
+          "value": 10
+        },
+        {
+          "frame": 0.375,
+          "value": 20
+        },
+        {
+          "frame": 0.4375,
+          "value": 10
+        },
+        {
+          "frame": 0.5,
+          "value": 0
+        },
+        {
+          "frame": 0.5125,
+          "value": 0
+        },
+        {
+          "frame": 1.8375,
+          "value": 0
+        },
+        {
+          "frame": 2.6375,
+          "value": 0
+        },
+        {
+          "frame": 2.7,
+          "value": -10
+        },
+        {
+          "frame": 2.7625,
+          "value": -20
+        },
+        {
+          "frame": 2.825,
+          "value": -10
+        },
+        {
+          "frame": 2.8875,
+          "value": 0
+        },
+        {
+          "frame": 2.95,
+          "value": 10
+        },
+        {
+          "frame": 3.0125,
+          "value": 20
+        },
+        {
+          "frame": 3.075,
+          "value": 10
+        },
+        {
+          "frame": 3.15,
+          "value": 0
+        },
+        {
+          "frame": 4.0875,
+          "value": 0
+        }
+      ]
+    }
+  },
+  "events": []
+}

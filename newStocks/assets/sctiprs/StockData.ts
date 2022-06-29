@@ -154,12 +154,12 @@ export default {
             if (this.curCount >= this.toCount || interval >= this.time) {
                 this.curCount = 0;
                 this.preTiem = curTime;
-                this.UpGameOpt();
+                this.StockData();
             } else {
                 this.cb = setTimeout(() => {
                     this.curCount = 0;
                     this.preTiem = curTime;
-                    this.UpGameOpt();
+                    this.StockData();
 
                 }, (2 - interval) * 1000);
             }
@@ -167,7 +167,7 @@ export default {
     },
 
     //上传
-    UpGameOpt(end?) {
+    StockData(end?) {
 
         if (GameCfg.GameType == pb.GameType.JJ_PK || GameCfg.GameType == pb.GameType.JJ_DuoKong) {
             if (end) {

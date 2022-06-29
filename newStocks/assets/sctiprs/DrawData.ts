@@ -101,24 +101,28 @@ export default {
             }
 
             //MaList
-            if (index + 1 >= GameCfg.MAs[0]) {
+            if ((index + 1 >= GameCfg.MAs[0])) {
+
                 this.MaList[index] = [];
 
                 for (let i = 0; i < GameCfg.MAs.length; i++) {
-                    //   if (index + 1 >= GameCfg.MAs[i]) {
-                    let MaStart = index + 1 - parseInt(GameCfg.MAs[i] + '');
-                    if (MaStart < 0) {
-                        break;
+
+                    if (GameCfg.MAs[i]) {
+
+                        let MaStart = index + 1 - parseInt(GameCfg.MAs[i] + '');
+                        if (MaStart < 0) {
+                            break;
+                        }
+                        let sumUp = 0;
+                        //天数的总和
+                        for (let t = MaStart; t <= index; t++) {
+                            sumUp += parseFloat(data[t].close);
+                        }
+                        //平均的位置
+                        let MAY = (sumUp / GameCfg.MAs[i]);
+                        this.MaList[index].push(MAY);
+
                     }
-                    let sumUp = 0;
-                    //天数的总和
-                    for (let t = MaStart; t <= index; t++) {
-                        sumUp += parseFloat(data[t].close);
-                    }
-                    //平均的位置
-                    let MAY = (sumUp / GameCfg.MAs[i]);
-                    this.MaList[index].push(MAY);
-                    //  }
                 }
             } else {
                 this.MaList.push(null);
@@ -618,8 +622,15 @@ export default {
             }
         }
         return arr1;
+    },
+
+
+    reseleData() {
+        if (GameCfg.GameSet.ZLine == '5分钟K' || GameCfg.GameSet.ZLine == '15分钟K' || GameCfg.GameSet.ZLine == '30分钟K' || GameCfg.GameSet.ZLine == '60分钟K') {
+            this.arrDay = [];
+        } else {
+            this.arrMin5 = [];
+        }
     }
-
-
 
 }

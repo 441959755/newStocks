@@ -8,7 +8,6 @@ export default {
 
     selectProtoBlackData(id, buff) {
 
-
         switch (id) {
             case pb.MessageId.Rep_Game_Login:
                 return pb.CmdGameLoginReply.decode(new Uint8Array(buff));
@@ -101,7 +100,7 @@ export default {
                 {
                     let data = pb.SmxlState.decode(new Uint8Array(buff));
                     console.log('同步双盲训练状态' + JSON.stringify(data));
-                    GameData.SmxlState = data;
+                    GameData.smxlState = data;
                 }
                 break;
 
@@ -230,7 +229,7 @@ export default {
 
                     if (GameData.userID != data.id) {
 
-                        UpGameOpt.UpdataOtherPlayerOpt(ops);
+                        StockData.UpdataOtherPlayerOpt(ops);
 
                         GlobalEvent.emit(EventCfg.UPDATEOTHERPLAYEROPT, ops);
                     }

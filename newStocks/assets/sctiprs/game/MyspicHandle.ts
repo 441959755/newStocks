@@ -27,11 +27,13 @@ export default class MyspicHandle extends cc.Component {
     myspicData = [];
 
     flag = false;
+
     onLoad() {
 
         GlobalEvent.on(EventCfg.MYSPICCLICK, () => {
             this.flag = !this.flag;
             this.draw.node.active = this.flag;
+
         }, this);
 
         GlobalEvent.on('onDraw', this.onDraw.bind(this), this);

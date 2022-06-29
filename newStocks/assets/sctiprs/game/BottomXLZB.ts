@@ -26,7 +26,7 @@ export default class BottomXLZB extends cc.Component {
         }
         this.la_code.string = GameCfg.data[0].name + ' ' + code;
 
-        this.la_time.string = TimeUtils.formatTime(gpdata[GameData.huizhidatas - 1].day) + '--' + ComUtils.formatTime(gpdata[gpdata.length - 1].day);
+        this.la_time.string = TimeUtils.formatTime(gpdata[GameData.huizhidatas - 1].day) + '--' + TimeUtils.formatTime(gpdata[gpdata.length - 1].day);
 
         this.la_tq.string = '同期涨幅：' + (((gpdata[GameCfg.huizhidatas - 1].close - gpdata[GameData.huizhidatas - 1].close) / gpdata[GameData.huizhidatas - 1].close * 100).toFixed(2)) + '%';
     }

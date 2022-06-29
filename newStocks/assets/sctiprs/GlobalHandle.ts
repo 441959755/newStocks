@@ -6,6 +6,7 @@ import EventCfg from './utils/EventCfg';
 import TimeUtils from './utils/TimeUtils';
 import GameData from './GameData';
 import StockData from './StockData';
+import DrawData from './DrawData';
 
 
 export default {
@@ -193,9 +194,9 @@ export default {
 
             if (!info.items || info.items.length <= 0) {
                 console.log('获取的行情为空');
-                GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '获取的行情为空' + JSON.stringify(data));
+                GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '获取的行情为空' + JSON.stringify(data));
                 GameCfg.GAMEFUPAN = false;
-                GlobalEvent.emit(EventCfg.LOADINGHIDE);
+                GlobalEvent.emit(EventCfg.HIDELOADING);
 
                 return;
             }
@@ -337,7 +338,7 @@ export default {
     },
 
     //游戏结束
-    onCmdGameOverReq(datas, cb) {
+    onCmdGameOverReq(datas, cb?) {
         console.log('上传游戏数据' + JSON.stringify(datas));
 
         let CmdGameOver = pb.CmdGameOver;
@@ -349,6 +350,33 @@ export default {
             console.log('GameOverInfo' + JSON.stringify(info));
         })
 
+    },
+
+
+    //在线邀请
+    onLineInvite() {
+        let str;
+        if (GameCfg.GameType == pb.GameType.JJ_PK) {
+            str = 'PK大战';
+        } else if (GameCfg.GameType == pb.GameType.JJ_DuoKong) {
+            str = '多空大战';
+        }
+        let info = {
+            sender: GameData.userID,
+            receiver: GameData.roomId,
+            type: pb.MessageType.RoomInvite,
+            text: GameData.userName + ',' + str + ',' + GameData.roomId + ',' + GameData.JJCapital,
+            ts: parseInt(new Date().getTime() / 1000 + ''),
+        }
+
+        let Notice = pb.Notice;
+        let message = Notice.create(info);
+        let buff = Notice.encode(message).finish();
+
+        (<any>window).socket.send(pb.MessageId.Sync_C2S_Message, buff, (res) => {
+            console.log('在线邀请：' + JSON.stringify(res));
+
+        })
     }
 
 }

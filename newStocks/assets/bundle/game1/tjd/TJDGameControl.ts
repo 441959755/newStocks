@@ -1,6 +1,7 @@
 
 import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
+import StockData from "../../../sctiprs/StockData";
 
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -78,7 +79,7 @@ export default class TJDGameControl extends cc.Component {
     allRate = null;
 
     onDestroy() {
-        
+
         GlobalEvent.off(EventCfg.GAMEFUPAN);
     }
 
@@ -139,7 +140,7 @@ export default class TJDGameControl extends cc.Component {
 
         if (GameCfg.GAMEFUPAN) {
 
-            let opt = UpGameOpt.player1Opt;
+            let opt = StockData.player1Opt;
             this.onGameFUPANOPT(opt);
 
             this.onShowGameFuPan();
@@ -170,7 +171,7 @@ export default class TJDGameControl extends cc.Component {
                             kOffset: GameCfg.huizhidatas,
                             price: this.viweData[GameCfg.huizhidatas].close,
                         }
-                        UpGameOpt.addOpt(item);
+                        StockData.addOpt(item);
                         let rate = this.onCurPositionRete();
                         if (!GameCfg.fill[GameCfg.fill.length - 1].end) {
                             this.rateItem.end = GameCfg.huizhidatas - 1;
@@ -445,7 +446,7 @@ export default class TJDGameControl extends cc.Component {
                     price: this.buySlg.price,
                 }
 
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
                 type = 1;
                 this.AskOpt();
 
@@ -462,7 +463,7 @@ export default class TJDGameControl extends cc.Component {
                     price: this.sellSlg.price,
                 }
 
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
 
                 type = 2;
                 this.BidOpt();
@@ -477,7 +478,7 @@ export default class TJDGameControl extends cc.Component {
                     kOffset: GameCfg.huizhidatas,
                     price: this.viweData[GameCfg.huizhidatas].close,
                 }
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
 
                 type = 3;
                 this.StopOpt();
@@ -527,7 +528,7 @@ export default class TJDGameControl extends cc.Component {
                         volume: this.chigushuliang,
                         kOffset: GameCfg.huizhidatas,
                     }
-                    UpGameOpt.addOpt(item);
+                    StockData.addOpt(item);
 
                     let rate = this.onCurPositionRete1();
                     if (!GameCfg.fill[GameCfg.fill.length - 1].end) {

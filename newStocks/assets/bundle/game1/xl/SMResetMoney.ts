@@ -24,12 +24,12 @@ export default class SMResetMoney extends cc.Component {
     gold = 0;
 
     //  onEnable() {
-    // if (GameData.SmxlState.gold <= GameCfgText.smxlCfg.capital_min.value) {
+    // if ( GameData.smxlState.gold <= GameCfgText.smxlCfg.capital_min.value) {
     //     this.diamond = Math.abs(GameCfgText.smxlCfg.capital_min.cost[0].v);
     //     this.resetMoneyLa.string = this.diamond + '钻石';
     //     this.resetLa.string = this.diamond + '钻石';
     // }
-    // else if (GameData.SmxlState.gold >= GameCfgText.smxlCfg.capital_max.value) {
+    // else if ( GameData.smxlState.gold >= GameCfgText.smxlCfg.capital_max.value) {
     //     this.gold = Math.abs(GameCfgText.smxlCfg.capital_max.cost[0].v);
     //     this.resetMoneyLa.string = this.gold + '金币';
     //     this.resetLa.string = this.gold + '金币';
@@ -38,18 +38,18 @@ export default class SMResetMoney extends cc.Component {
 
     protected onEnable(): void {
         if (GameData.vipStatus) {
-            if (GameData.SmxlState.gold < 10000) {
+            if (GameData.smxlState.gold < 10000) {
                 this.tipsLabel.string = '您的当前资金不足1万，无法开启训练，重置获赠5万资金';
             }
-            else if (GameData.SmxlState.gold > 1000000000) {
+            else if (GameData.smxlState.gold > 1000000000) {
                 this.tipsLabel.string = '您的资金已经太多了，重置回到初始状态';
             }
         }
         else {
-            if (GameData.SmxlState.gold < 10000) {
+            if (GameData.smxlState.gold < 10000) {
                 this.tipsLabel.string = '您的当前资金不足1万，无法开启训练，观看视频获赠5万资金';
             }
-            else if (GameData.SmxlState.gold > 1000000000) {
+            else if (GameData.smxlState.gold > 1000000000) {
                 this.tipsLabel.string = '您的资金已经太多了，是否消耗1000金币重置到初始状态';
             }
         }
@@ -62,11 +62,11 @@ export default class SMResetMoney extends cc.Component {
         //点击重置
         if (name == 'smxl_btn_cz') {
             // if (this.diamond && GameData.properties[pb.GamePropertyId.Diamond] < this.diamond) {
-            //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '钻石不足');
+            //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '钻石不足');
             //     return;
             // }
             // else if (this.gold && GameData.properties[pb.GamePropertyId.Gold] < this.gold) {
-            //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+            //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
             //     return;
             // }
             let self = this;
@@ -74,7 +74,7 @@ export default class SMResetMoney extends cc.Component {
                 this.sendSmxlReset();
             }
             else {
-                if (GameData.SmxlState.gold < 10000) {
+                if (GameData.smxlState.gold < 10000) {
 
                     LLWSDK.getSDK().showVideoAd((flag) => {
                         if (flag) {
@@ -85,7 +85,7 @@ export default class SMResetMoney extends cc.Component {
                         }
                     })
                 }
-                else if (GameData.SmxlState.gold > 1000000000) {
+                else if (GameData.smxlState.gold > 1000000000) {
                     if (GameData.properties[pb.GamePropertyId.Gold] < 1000) {
                         GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
                         return;

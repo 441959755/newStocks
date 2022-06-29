@@ -83,14 +83,16 @@ export default {
         })
     },
 
-    loadHeadImg(icon, sp) {
+    loadHeadImg(icon, sp, call?) {
         let url = LLWConfing.LoginUrl + '/icon/' + icon + '.png';
         this.loadRemote(url).then((res) => {
             let texture = new cc.SpriteFrame(res);
             sp.spriteFrame = texture;
             GameData.imgs[icon + ''] = texture;
+            call && (call())
         }, () => {
             GameData.imgs[icon + ''] = GameData.imgs['0'];
+
         })
     },
 

@@ -86,7 +86,7 @@ export default class SMYieldCurveHandle extends cc.Component {
     doty = [];
 
     onLoad() {
-        
+
 
         this.monthBg.on('touchstart', (event) => {
             let datas = this.yieldInfo.results;
@@ -299,8 +299,8 @@ export default class SMYieldCurveHandle extends cc.Component {
             else {
 
                 if (tt == day) {
-                    this.daysData[tt - 1].user_capital = GameData.SmxlState.gold;
-                    this.daysData[tt - 1].endMoney = GameData.SmxlState.gold;
+                    this.daysData[tt - 1].user_capital = GameData.smxlState.gold;
+                    this.daysData[tt - 1].endMoney = GameData.smxlState.gold;
                 }
                 else {
                     this.daysData[tt - 1].user_capital = this.daysData[tt].user_capital
@@ -315,19 +315,19 @@ export default class SMYieldCurveHandle extends cc.Component {
         }
 
         // label  
-        this.labels[1].string = GameData.SmxlState.goldInit;
-        this.labels[3].string = GameData.SmxlState.gold - GameData.SmxlState.goldInit + '';
+        this.labels[1].string = GameData.smxlState.goldInit;
+        this.labels[3].string = GameData.smxlState.gold - GameData.smxlState.goldInit + '';
 
-        if (GameData.SmxlState.gold - GameData.SmxlState.goldInit < 0) {
+        if (GameData.smxlState.gold - GameData.smxlState.goldInit < 0) {
             this.labels[3].node.color = new cc.Color().fromHEX('#31a633');
             this.labels[2].node.color = new cc.Color().fromHEX('#31a633');
-        } else if (GameData.SmxlState.gold - GameData.SmxlState.goldInit >= 0) {
+        } else if (GameData.smxlState.gold - GameData.smxlState.goldInit >= 0) {
             this.labels[3].node.color = new cc.Color().fromHEX('#e94343');
             this.labels[2].node.color = new cc.Color().fromHEX('#e94343');
         }
 
-        this.labels[2].string = ((GameData.SmxlState.gold - GameData.SmxlState.goldInit) / GameData.SmxlState.goldInit * 100).toFixed(2) + '%';
-        this.labels[0].string = GameData.SmxlState.gold;
+        this.labels[2].string = ((GameData.smxlState.gold - GameData.smxlState.goldInit) / GameData.smxlState.goldInit * 100).toFixed(2) + '%';
+        this.labels[0].string = GameData.smxlState.gold;
 
         console.log(' xlcvs:' + JSON.stringify(xlcvs));
 

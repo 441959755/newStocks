@@ -8,6 +8,10 @@ import GameData from '../GameData';
 import PopupManager from '../utils/PopupManager';
 
 import LoadUtils from '../utils/LoadUtils';
+import { pb } from '../../protos/proto';
+import StockData from '../StockData';
+import TimeUtils from '../utils/TimeUtils';
+import ConfUtils from '../utils/ConfUtils';
 
 
 const { ccclass, property } = cc._decorator;
@@ -202,7 +206,7 @@ export default class BottomHandle extends cc.Component {
 
 			let otherAllRate = 0, curAskPrice = 0;
 
-			UpGameOpt.player2Opt.forEach(el => {
+			StockData.player2Opt.forEach(el => {
 
 				if (el.opId == pb.GameOperationId.Bid || el.opId == pb.GameOperationId.Long) {
 
@@ -289,14 +293,14 @@ export default class BottomHandle extends cc.Component {
 						}
 					}
 
-					UpGameOpt.addOpt(item);
+					StockData.addOpt(item);
 
 				}
 			}
 			this._kdCount = 0;
 			this._KKCount = 0;
 		}
-		//	UpGameOpt.UpGameOpt(1);
+		//	StockData.StockData(1);
 	}
 
 	onClickCfBtn(percent) {
@@ -337,7 +341,7 @@ export default class BottomHandle extends cc.Component {
 					kOffset: GameCfg.huizhidatas,
 					volFraction: percent,
 				}
-				UpGameOpt.addOpt(item);
+				StockData.addOpt(item);
 			}
 			this.setRoundNumber('mrBtn');
 		}
@@ -374,7 +378,7 @@ export default class BottomHandle extends cc.Component {
 					kOffset: GameCfg.huizhidatas,
 					volFraction: percent,
 				}
-				UpGameOpt.addOpt(item);
+				StockData.addOpt(item);
 			}
 			//	}
 			this.setRoundNumber('mcBtn');
@@ -398,7 +402,7 @@ export default class BottomHandle extends cc.Component {
 			let node = this.node.getChildByName('fupan');
 			node.active = true;
 			node.children[0].getComponent(cc.Label).string = GameCfg.data[0].name;
-			node.children[1].getComponent(cc.Label).string = ComUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day) + '--' + ComUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day);
+			node.children[1].getComponent(cc.Label).string = TimeUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day) + '--' + TimeUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day);
 
 			let tq = ((this.gpData[GameCfg.huizhidatas - 1].close - this.gpData[GameData.huizhidatas - 1].close) / this.gpData[GameData.huizhidatas - 1].close * 100).toFixed(2);
 			node.children[2].getComponent(cc.Label).string = '同期涨幅:' + tq + '%';
@@ -414,9 +418,9 @@ export default class BottomHandle extends cc.Component {
 			if (code.length >= 7) {
 				code = code.slice(1);
 			}
-			this.gpName.string = GameCfgText.getGPPKItemInfo(GameCfg.data[0].code)[1] + ' ' + code;
-			this.timeLabel[0].string = ComUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day);
-			this.timeLabel[1].string = ComUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day);
+			this.gpName.string = ConfUtils.getGPItemInfo(GameCfg.data[0].code)[1] + ' ' + code;
+			this.timeLabel[0].string = TimeUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day);
+			this.timeLabel[1].string = TimeUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day);
 			this.moneyLabel[0].string = '总资产    ：' + GameCfg.ziChan;
 			this.moneyLabel[1].string = '可用资产：' + GameCfg.finalfund;
 			let info = DrawData.getBukoCount();
@@ -447,7 +451,7 @@ export default class BottomHandle extends cc.Component {
 			let node = this.node.getChildByName('fupan');
 			node.active = true;
 			node.children[0].getComponent(cc.Label).string = GameCfg.data[0].name;
-			node.children[1].getComponent(cc.Label).string = ComUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day) + '--' + ComUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day)
+			node.children[1].getComponent(cc.Label).string = TimeUtils.formatTime(this.gpData[GameData.huizhidatas - 1].day) + '--' + TimeUtils.formatTime(this.gpData[GameCfg.huizhidatas - 1].day)
 			let tq = ((this.gpData[GameCfg.huizhidatas - 1].close - this.gpData[GameData.huizhidatas - 1].close) / this.gpData[GameData.huizhidatas - 1].close * 100).toFixed(2);
 			node.children[2].getComponent(cc.Label).string = '同期涨幅:' + tq + '%';
 		}
@@ -656,7 +660,7 @@ export default class BottomHandle extends cc.Component {
 		}
 		//复盘的情况
 		else {
-			let opt = UpGameOpt.player1Opt;
+			let opt = StockData.player1Opt;
 
 			this.onGameFUPANOPT(opt);
 		}
@@ -664,7 +668,7 @@ export default class BottomHandle extends cc.Component {
 		//断线重连的情况
 		if (GameCfg.GAMEFRTD) {
 
-			UpGameOpt.ChanagekOffset(GameData.selfEnterRoomData.players[0].ops.items);
+			StockData.ChanagekOffset(GameData.selfEnterRoomData.players[0].ops.items);
 
 			this.onGameFUPANOPT(GameData.selfEnterRoomData.players[0].ops.items);
 		}
@@ -875,7 +879,7 @@ export default class BottomHandle extends cc.Component {
 
 				let rate = this.onCurPositionRete(1);
 
-				if (UpGameOpt.player1Opt[UpGameOpt.player1Opt.length - 1] && UpGameOpt.player1Opt[UpGameOpt.player1Opt.length - 1].opId == pb.GameOperationId.Short) {
+				if (StockData.player1Opt[StockData.player1Opt.length - 1] && StockData.player1Opt[StockData.player1Opt.length - 1].opId == pb.GameOperationId.Short) {
 					rate = -rate;
 
 					let item = {
@@ -884,22 +888,22 @@ export default class BottomHandle extends cc.Component {
 						kOffset: GameCfg.huizhidatas,
 
 					}
-					UpGameOpt.addOpt(item);
+					StockData.addOpt(item);
 				}
-				else if (UpGameOpt.player1Opt[UpGameOpt.player1Opt.length - 1] && UpGameOpt.player1Opt[UpGameOpt.player1Opt.length - 1].opId == pb.GameOperationId.Ask) {
+				else if (StockData.player1Opt[StockData.player1Opt.length - 1] && StockData.player1Opt[StockData.player1Opt.length - 1].opId == pb.GameOperationId.Ask) {
 					let item = {
 						opId: pb.GameOperationId.Bid,
 						volume: 1,
 						kOffset: GameCfg.huizhidatas,
 					}
-					UpGameOpt.addOpt(item);
+					StockData.addOpt(item);
 				}
 
 				GameCfg.allRate = (GameCfg.allRate + 1) * (rate + 1) - 1;
 
 				GlobalEvent.emit(EventCfg.UPDATERATE, [0, GameCfg.allRate]);
 
-				UpGameOpt.UpGameOpt(1);
+				StockData.StockData(1);
 			}
 			else {
 				GlobalEvent.emit(EventCfg.GAMEOVEER);
@@ -943,7 +947,7 @@ export default class BottomHandle extends cc.Component {
 							kOffset: GameCfg.huizhidatas,
 
 						}
-						UpGameOpt.addOpt(item);
+						StockData.addOpt(item);
 					}
 				} else {
 					GlobalEvent.emit(EventCfg.ONADDMARK, { type: 3, index: GameCfg.huizhidatas });
@@ -962,7 +966,7 @@ export default class BottomHandle extends cc.Component {
 							kOffset: GameCfg.huizhidatas,
 
 						}
-						UpGameOpt.addOpt(item);
+						StockData.addOpt(item);
 					}
 				}
 				this.setRoundNumber(name);
@@ -978,7 +982,7 @@ export default class BottomHandle extends cc.Component {
 						volume: 1,
 						kOffset: GameCfg.huizhidatas,
 					}
-					UpGameOpt.addOpt(item);
+					StockData.addOpt(item);
 				}
 			}
 
@@ -999,7 +1003,7 @@ export default class BottomHandle extends cc.Component {
 					volume: 1,
 					kOffset: GameCfg.huizhidatas,
 				}
-				UpGameOpt.addOpt(item);
+				StockData.addOpt(item);
 			}
 
 			if (this._KKCount != 0) {
@@ -1068,7 +1072,7 @@ export default class BottomHandle extends cc.Component {
 					kOffset: GameCfg.huizhidatas,
 
 				}
-				UpGameOpt.addOpt(item);
+				StockData.addOpt(item);
 			}
 			GlobalEvent.emit(EventCfg.ONADDMARK, { type: 3, index: GameCfg.huizhidatas });
 			if (this._kdCount != 0) {
@@ -1140,7 +1144,7 @@ export default class BottomHandle extends cc.Component {
 					volume: 1,
 					kOffset: GameCfg.huizhidatas,
 				}
-				UpGameOpt.addOpt(item);
+				StockData.addOpt(item);
 			}
 			if (this._kdCount != 0) {
 				this.curMcCount = 3;
@@ -1200,9 +1204,9 @@ export default class BottomHandle extends cc.Component {
 		//
 		else if (name == 'zhangBtn' || name == 'dieBtn') {
 			if (this.limitUP == 1) {
-				GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '涨停板不能买入！');
+				GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '涨停板不能买入！');
 			} else if (this.limitUP == 2) {
-				GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '跌停板不能卖出！');
+				GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '跌停板不能卖出！');
 			}
 		}
 	}

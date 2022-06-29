@@ -135,7 +135,6 @@ export default class HallContent extends cc.Component {
 	}
 
 
-
 	initToggle() {
 		this.toggles.forEach((el, index) => {
 			this.Layers[index].active = el.isChecked;
@@ -174,7 +173,7 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(4, () => {
 				GameCfg.GameType = pb.GameType.ZhiBiao;
-				GameBundle.loadPre('xl/shuangmangLayer', (node) => {
+				GameBundle.loadPre('xl/zhibiaoLayer', (node) => {
 					ActionUtils.openNode(node);
 				});
 			})
@@ -185,8 +184,10 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(2, () => {
 				GameCfg.GameType = pb.GameType.DingXiang;
-				GlobalEvent.emit(EventCfg.OPENDXLAYER);
-
+				//	GlobalEvent.emit(EventCfg.OPENDXLAYER);
+				GameBundle.loadPre('xl/DXLayer', (node) => {
+					ActionUtils.openNode(node);
+				});
 			})
 		}
 
@@ -195,7 +196,10 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(3, () => {
 				GameCfg.GameType = pb.GameType.QiHuo;
-				GlobalEvent.emit(EventCfg.OPENQHLAYER);
+				//GlobalEvent.emit(EventCfg.OPENQHLAYER);
+				GameBundle.loadPre('xl/qiHuoLayer', (node) => {
+					ActionUtils.openNode(node);
+				});
 			})
 
 		}
@@ -216,7 +220,7 @@ export default class HallContent extends cc.Component {
 
 			ConfUtils.getSwitchConf(5, () => {
 				GameCfg.GameType = pb.GameType.TiaoJianDan;
-				GlobalEvent.emit(EventCfg.OPENTIAOJIANDAN);
+				//GlobalEvent.emit(EventCfg.OPENTIAOJIANDAN);
 			})
 		}
 
@@ -240,8 +244,8 @@ export default class HallContent extends cc.Component {
 				// }
 				// else {
 				// 	let cb = () => {
-				GlobalEvent.emit(EventCfg.LOADINGSHOW);
-				GameCfg.GameSet = GameData.JJPKSet;
+				GlobalEvent.emit(EventCfg.SHOWLOADING);
+				GameCfg.GameSet = GameData.jjpkSet;
 				GlobalEvent.emit(EventCfg.OPENMATCHPK);
 				// }
 				// 		if (GameData.adSucceed) {
@@ -275,8 +279,8 @@ export default class HallContent extends cc.Component {
 				// }
 				// else {
 				// 	let cb = () => {
-				GlobalEvent.emit(EventCfg.LOADINGSHOW);
-				GameCfg.GameSet = GameData.JJPKSet;
+				GlobalEvent.emit(EventCfg.SHOWLOADING);
+				GameCfg.GameSet = GameData.jjpkSet;
 				GlobalEvent.emit(EventCfg.OPENMATCHPK);
 				// 	}
 				// 	if (GameData.adSucceed) {
@@ -295,8 +299,12 @@ export default class HallContent extends cc.Component {
 		else if (name == 'main_jj_cgs') {
 			ConfUtils.getSwitchConf(9, () => {
 				GameCfg.GameType = pb.GameType.JJ_ChuangGuan;
-				GameCfg.GameSet = GameData.JJPKSet;
-				GlobalEvent.emit(EventCfg.OPENCHUANGUAN);
+				GameCfg.GameSet = GameData.jjpkSet;
+
+				GameBundle.loadPre('pk/CGSPK', (node) => {
+					ActionUtils.openNode(node);
+				});
+
 			})
 		}
 
@@ -318,7 +326,7 @@ export default class HallContent extends cc.Component {
 					game: pb.GameType.JJ_PK,
 					uid: GameData.userID,
 					capital: 0,
-					junXian: ComUtils.getJJXunXian(),
+					junXian: ComUtils.getJJJunXian(),
 				}
 				let CmdRoomCreate = pb.CmdRoomCreate;
 				let message = CmdRoomCreate.create(info);
@@ -326,7 +334,7 @@ export default class HallContent extends cc.Component {
 
 				(<any>window).socket.send(pb.MessageId.Req_Room_Create, buff, (res) => {
 					console.log('创建房间应答' + JSON.stringify(res));
-					GlobalEvent.emit(EventCfg.LOADINGHIDE);
+					GlobalEvent.emit(EventCfg.HIDELOADING);
 					if (res && res.err) {
 						let err = GlobalHandle.getErrorCodeByCode(res.err.code);
 						GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, err);

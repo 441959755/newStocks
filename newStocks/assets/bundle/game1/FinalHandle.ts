@@ -76,10 +76,6 @@ export default class FinalHandle extends cc.Component {
     vipNode: cc.Node = null;
 
     onShow() {
-
-
-
-
         let gpData = GameCfg.data[0].data;
 
         if (!gpData || gpData.length <= 0) { return }
@@ -120,11 +116,11 @@ export default class FinalHandle extends cc.Component {
                 this.boxs[1].active = true;
                 this.boxs[2].active = true;
 
-                if (GameData.SmxlState.gold >= 1000000000) {
+                if (GameData.smxlState.gold >= 1000000000) {
                     this.boxs[0].children[1].getComponent(cc.Label).string = '10亿+';
                 }
                 else {
-                    this.boxs[0].children[1].getComponent(cc.Label).string = GameData.SmxlState.gold;
+                    this.boxs[0].children[1].getComponent(cc.Label).string = GameData.smxlState.gold;
                 }
 
                 if (parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') >= 1000000000) {
@@ -134,11 +130,11 @@ export default class FinalHandle extends cc.Component {
                     this.boxs[1].children[1].getComponent(cc.Label).string = parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') + ''
                 }
 
-                if (GameData.SmxlState.gold + parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') >= 1000000000) {
+                if (GameData.smxlState.gold + parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') >= 1000000000) {
                     this.boxs[2].children[1].getComponent(cc.Label).string = '10亿+';
                 }
                 else {
-                    this.boxs[2].children[1].getComponent(cc.Label).string = GameData.SmxlState.gold + parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') + '';
+                    this.boxs[2].children[1].getComponent(cc.Label).string = GameData.smxlState.gold + parseInt((GameCfg.finalfund - GameCfg.ziChan) + '') + '';
                 }
             }
             else {
@@ -168,7 +164,7 @@ export default class FinalHandle extends cc.Component {
                 kTo: parseInt(TimeUtils.fromatTime1(gpData[GameCfg.huizhidatas - 1].day)),
                 stockProfitRate: ((gpData[GameCfg.huizhidatas - 1].close - gpData[GameData.huizhidatas - 1].close) / gpData[GameData.huizhidatas - 1].close * 100),
                 userProfitRate: (GameCfg.allRate * 100),
-                userCapital: GameData.SmxlState.gold,
+                userCapital: GameData.smxlState.gold,
                 userProfit: (GameCfg.finalfund - GameCfg.ziChan),
                 ts: parseInt(new Date().getTime() / 1000 + ''),
                 rank: 0,
@@ -177,7 +173,7 @@ export default class FinalHandle extends cc.Component {
                 kStop: GameCfg.huizhidatas - 1,
             }
             if (GameCfg.GameType == pb.GameType.ShuangMang) {
-                datas.userCapital = GameData.SmxlState.gold;
+                datas.userCapital = GameData.smxlState.gold;
             } else {
                 datas.userCapital = GameCfg.ziChan;
             }
@@ -501,7 +497,7 @@ export default class FinalHandle extends cc.Component {
         // }
 
         // if (GameData.properties[pb.GamePropertyId.Gold] < 500) {
-        //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+        //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
         //     return false;
         // }
 

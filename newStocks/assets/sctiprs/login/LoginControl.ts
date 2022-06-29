@@ -126,6 +126,11 @@ export default class LoginControl extends cc.Component {
 
         GameData.fsSet = ConfUtils.getConf("FSSET");
 
+        GameData.zbSet = ConfUtils.getConf('ZBSET');
+
+        GameCfg.MAs = [];
+        GameCfg.MAs.length = 0;
+
         if (GameData.smSet.isMA1) {
             GameCfg.MAs.push(GameData.smSet.MA1);
         }
@@ -147,5 +152,5 @@ export default class LoginControl extends cc.Component {
 
     }
 
-    
+
 }

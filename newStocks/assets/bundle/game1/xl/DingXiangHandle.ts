@@ -2,11 +2,15 @@
 
 import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
-
 import GameData from "../../../sctiprs/GameData";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
+import GameBundle from "../../../sctiprs/hall/GameBundle";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
+import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
+import PopupManager from "../../../sctiprs/utils/PopupManager";
+import TimeUtils from "../../../sctiprs/utils/TimeUtils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -157,14 +161,6 @@ export default class DingXiangHandle extends cc.Component {
 
 		let gameCount = ComUtils.onCurWXIsEnterGame();
 
-		// this.tipsLabel2.string = '训练费用：' + Math.abs(GameCfgText.gameConf.dxxl.cost[0].v) + '金币';
-		// this.mfxlBtn.active = true;
-		// if (gameCount.status == 0) {
-		// 	this.curState = 0;
-		// 	this.tipsLabel1.node.active = false;
-		// 	this.tipsLabel2.node.active = false;
-		// 	this.mfxlBtn.active = false;
-		// }
 		this.tipsLabel1.node.active = true;
 		this.tipsLabel2.node.active = true;
 
@@ -194,6 +190,7 @@ export default class DingXiangHandle extends cc.Component {
 	}
 
 	onShow() {
+
 		if (!GameData.dxSet) {
 			return;
 		}
@@ -269,7 +266,7 @@ export default class DingXiangHandle extends cc.Component {
 			let y = f.getFullYear() + '';
 			let m = f.getMonth() + 1 >= 10 ? f.getMonth() + 1 : '0' + (f.getMonth() + 1);
 			let d = f.getDate() >= 10 ? f.getDate() : '0' + f.getDate();
-			let sc = ComUtils.GetPreMonthDay(y + '-' + m + '-' + d, 2);
+			let sc = TimeUtils.GetPreMonthDay(y + '-' + m + '-' + d, 2);
 			y = sc.y;
 			m = sc.m;
 			d = sc.d;
@@ -306,14 +303,14 @@ export default class DingXiangHandle extends cc.Component {
 				}
 			})
 		} else {
-			let date = GameCfgText.getTimeByCodeName(GameData.dxSet.search);
+			let date = ConfUtils.getTimeByCodeName1(GameData.dxSet.search);
 			if (parseInt(date.start) < 20100101) {
 				date.start = '20100101';
 			}
 			let ly = date.start.slice(0, 4);
 			let lm = date.start.slice(4, 6);
 			let ld = date.start.slice(6);
-			let dd = ComUtils.GetAddDay(ly + '-' + lm + ' - ' + ld, 200);
+			let dd = TimeUtils.GetAddDay(ly + '-' + lm + ' - ' + ld, 200);
 			console.log(JSON.stringify(dd));
 			ly = dd.y + '';
 			lm = dd.m + '';
@@ -450,11 +447,11 @@ export default class DingXiangHandle extends cc.Component {
 				GameData.dxSet.search = str;
 				if (GameData.dxSet.year != '随机') {
 					if (GameData.dxSet.search != '随机选股') {
-						let date = GameCfgText.getTimeByCodeName(GameData.dxSet.search);
+						let date = ConfUtils.getTimeByCodeName1(GameData.dxSet.search);
 						let ly = date.start.slice(0, 4);
 						let lm = date.start.slice(4, 6);
 						let ld = date.start.slice(6);
-						let dd = ComUtils.GetAddDay(ly + '-' + lm + '-' + ld, 200);
+						let dd = TimeUtils.GetAddDay(ly + '-' + lm + '-' + ld, 200);
 						console.log(JSON.stringify(dd));
 						ly = dd.y + '';
 						lm = dd.m + '';
@@ -494,7 +491,7 @@ export default class DingXiangHandle extends cc.Component {
 					GameData.dxSet.day = '随机';
 				} else {
 					if (GameData.dxSet.search != '随机选股') {
-						let date = GameCfgText.getTimeByCodeName(GameData.dxSet.search);
+						let date = ConfUtils.getTimeByCodeName1(GameData.dxSet.search);
 						let ly = date.start.slice(0, 4);
 						let lm = date.start.slice(4, 6);
 						let ld = date.start.slice(6);
@@ -542,14 +539,20 @@ export default class DingXiangHandle extends cc.Component {
 
 				//   if(GameData.dxSet.ZLine!='')
 			}
-		} else if (name == 'setDXBtnDX') {
-			GlobalEvent.emit(EventCfg.OPENSETLAYER);
-		} else if (name == 'historyDXBtn') {
-			GlobalEvent.emit(EventCfg.OPENHISTORYLAYER);
-		} else if (name == 'startDXBtn') {
+		}
 
-			if (GameData.properties[pb.GamePropertyId.Gold] < Math.abs(GameCfgText.gameConf.dxxl.cost[0].v) && !GameData.vipStatus) {
-				GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+		else if (name == 'setDXBtnDX') {
+			GameBundle.openSetLayer();
+		}
+
+		else if (name == 'historyDXBtn') {
+			GameBundle.openHisLayer();
+		}
+
+		else if (name == 'startDXBtn') {
+
+			if (GameData.properties[pb.GamePropertyId.Gold] < Math.abs(GameData.gameConf.dxxl.cost[0].v) && !GameData.vipStatus) {
+				GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
 				GlobalEvent.emit('onShowGobroke');
 				return;
 			}
@@ -559,7 +562,7 @@ export default class DingXiangHandle extends cc.Component {
 
 				PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/unlockBox', 22, (node) => {
 					node.getComponent('UnlockBox').callback = () => {
-						GlobalEvent.emit(EventCfg.LOADINGSHOW);
+						GlobalEvent.emit(EventCfg.SHOWLOADING);
 						self.onGameCountShow();
 					}
 				});
@@ -568,7 +571,7 @@ export default class DingXiangHandle extends cc.Component {
 			}
 
 			else if (this.curState == 3) {
-				GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '今日次数已用完,请明天再来吧！');
+				GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '今日次数已用完,请明天再来吧！');
 			}
 
 			else {
@@ -576,7 +579,7 @@ export default class DingXiangHandle extends cc.Component {
 				// cc.sys.localStorage.setItem(time + 'ADSUCCEED' + GameCfg.GameType, 0);
 
 
-				GlobalEvent.emit(EventCfg.LOADINGSHOW);
+				GlobalEvent.emit(EventCfg.SHOWLOADING);
 
 				GameCfg.GAMEFUPAN = false;
 
@@ -672,9 +675,9 @@ export default class DingXiangHandle extends cc.Component {
 
 			if (GameData.dxSet.year == '随机') {
 
-				let le = parseInt(Math.random() * GameCfgText.stockList.length + '');
+				let le = parseInt(Math.random() * GameData.stockList.length + '');
 
-				items = GameCfgText.stockList[le].split('|');
+				items = GameData.stockList[le].split('|');
 
 				data.code = items[0];
 			}
@@ -692,7 +695,7 @@ export default class DingXiangHandle extends cc.Component {
 				}
 
 				let seletTime = GameData.dxSet.year + '' + m + '' + d;
-				items = GameCfgText.getItemsByTime(seletTime);
+				items = ConfUtils.getItemsByTime1();
 				data.code = items[0];
 			}
 
@@ -700,7 +703,7 @@ export default class DingXiangHandle extends cc.Component {
 			let dex = -1;
 			let arrStr = (GameData.dxSet.search + '').split(' ');
 
-			items = GameCfgText.getGPItemInfo(arrStr[0])
+			items = ConfUtils.getGPItemInfo(arrStr[0])
 			data.code = items[0];
 
 			let code = data.code + '';

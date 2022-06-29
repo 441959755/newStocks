@@ -113,9 +113,7 @@ export default class ShuangmangHandle extends cc.Component {
 
         //点击历史记录
         else if (name == 'historySMBtn') {
-            GameBundle.loadPre('xl/HistoryLayerSM', (node) => {
-                ActionUtils.openNode(node);
-            });
+            GameBundle.openHisLayer();
         }
 
         //点击月报
@@ -189,7 +187,7 @@ export default class ShuangmangHandle extends cc.Component {
 
         GlobalHandle.enterGameSetout(GameCfg.enterGameConf, () => {
             GlobalEvent.emit(EventCfg.HIDELOADING);
-            GameBundle.loadPre('gameLayer');
+            GlobalEvent.emit('LOADGAME');
         });
     }
 

@@ -104,7 +104,7 @@ export default class PKBottomHandle extends cc.Component {
                         }
                         StockData.addOpt(item);
                     }
-                    StockData.UpGameOpt(1);
+                    StockData.StockData(1);
                 }
             }
         }, this);

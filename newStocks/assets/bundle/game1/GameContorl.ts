@@ -1,16 +1,32 @@
 
 import { pb } from "../../protos/proto";
 import DrawData from "../../sctiprs/DrawData";
+import StrategyAIData from "../../sctiprs/game/StrategyAIData";
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import GameBundle from "../../sctiprs/hall/GameBundle";
-import PopupManager from "../../sctiprs/utils/PopupManager";
+import EventCfg from "../../sctiprs/utils/EventCfg";
+import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
+
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 
 export default class GameContorl extends cc.Component {
+
+    finalLayer = {};
+
+    url = '';
+
+    protected onLoad(): void {
+
+        //进入结算页
+        GlobalEvent.on(EventCfg.GAMEOVEER, this.GameOver.bind(this), this);
+
+        //放回大厅
+        GlobalEvent.on(EventCfg.LEAVEGAME, this.leaveGame.bind(this), this);
+    }
 
 
     onEnable() {
@@ -43,6 +59,46 @@ export default class GameContorl extends cc.Component {
         else {
             GameBundle.nodes['selectLine'] && (GameBundle.nodes['selectLine'].active = false)
         }
+
+        this.onLoadFinalLayer();
+    }
+
+    //加载结算页
+    onLoadFinalLayer() {
+
+        // GlobalEvent.emit(EventCfg.SHOWLOADING);
+
+        if (GameCfg.GameType == pb.GameType.ShuangMang ||
+            GameCfg.GameType == pb.GameType.ZhiBiao ||
+            GameCfg.GameType == pb.GameType.DingXiang ||
+            GameCfg.GameType == pb.GameType.QiHuo ||
+            GameCfg.GameType == pb.GameType.FenShi) {
+            this.url = 'finalLayer';
+            // this.index = 0;
+        } else if (GameCfg.GameType == pb.GameType.TiaoJianDan) {
+            this.url = 'TjdFinalLayer';
+            // this.index = 1;
+        } else if (GameCfg.GameType == pb.GameType.JJ_ChuangGuan && !GameCfg.JJ_XUNLIAN) {
+            this.url = 'CGSFinalLayer';
+            // this.index = 2;
+        } else if (GameCfg.GameType == pb.GameType.JJ_DuoKong ||
+            GameCfg.GameType == pb.GameType.JJ_PK) {
+            this.url = 'PKFinalLayer';
+            // this.index = 3;
+        } else if (GameCfg.JJ_XUNLIAN) {
+            this.url = 'lxFinalLayer';
+            // this.index = 4;
+        }
+
+        GameBundle.loadPre(this.url, (node) => {
+            this.finalLayer[this.url] = node;
+            node.active = false;
+        }, 51, this.node);
+
+        // PopupManager.openNode(this.node, this.finalLayer[this.index], this.url, 51, (node) => {
+        //     this.finalLayer[this.index] = node;
+        //     this.finalLayer[this.index].active = false;
+        // })
     }
 
     setColor() {
@@ -152,7 +208,8 @@ export default class GameContorl extends cc.Component {
             GameCfg.hz_width = mixWidth;
         }
 
-        GameCfg.MAs = [];
+        // GameCfg.MAs = [];
+
         let j = 0;
 
         //双盲 定向   
@@ -164,28 +221,34 @@ export default class GameContorl extends cc.Component {
             GameCfg.GameType == pb.GameType.JJ_ChuangGuan ||
             GameCfg.GameType == pb.GameType.TiaoJianDan ||
             GameCfg.JJ_XUNLIAN) {
-            for (let i = 1; i <= 6; i++) {
-                if (GameCfg.GameSet['isMA' + i]) {
-                    GameCfg.MAs[j++] = parseInt(GameCfg.GameSet['MA' + i + 'Date']);
-                }
-            }
+
+            GameCfg.MAs = [GameCfg.GameSet.MA1, GameData.smSet.MA2, GameData.smSet.MA3, GameData.smSet.MA4, GameData.smSet.MA5, GameData.smSet.MA6]
         }
 
         //指标
         else if (GameCfg.GameType == pb.GameType.ZhiBiao) {
+            let MA = [];
             if (GameCfg.GameSet.select == '均线') {
+
                 if (GameCfg.GameSet.strategy == '股价穿越均线') {
-                    GameCfg.MAs.push(GameCfg.GameSet.MA[0]);
-                } else if (GameCfg.GameSet.strategy == '均线交叉') {
-                    GameCfg.MAs.push(Math.min(GameCfg.GameSet.MA[1], GameCfg.GameSet.MA[2]));
-                    GameCfg.MAs.push(Math.max(GameCfg.GameSet.MA[1], GameCfg.GameSet.MA[2]));
-                } else if (GameCfg.GameSet.strategy == '组合训练') {
+                    MA.push(GameCfg.GameSet.MA[0]);
+                }
+                else if (GameCfg.GameSet.strategy == '均线交叉') {
+
+                    MA.push(Math.min(GameCfg.GameSet.MA[1], GameCfg.GameSet.MA[2]));
+                    MA.push(Math.max(GameCfg.GameSet.MA[1], GameCfg.GameSet.MA[2]));
+
+                }
+                else if (GameCfg.GameSet.strategy == '组合训练') {
                     let ma = [];
                     ma.push(GameCfg.GameSet.MA[0], GameCfg.GameSet.MA[1], GameCfg.GameSet.MA[2])
                     ma.sort((a, b) => { return a - b; })
                     ma = Array.from(new Set(ma));
-                    GameCfg.MAs = ma;
+                    MA = ma;
                 }
+
+                GameCfg.MAs = MA;
+
             } else if (GameCfg.GameSet.select == 'MACD') {
                 GameCfg.MACD = GameCfg.GameSet.MACD;
                 if (GameCfg.GameSet.strategy == 'MACD金叉') {
@@ -245,6 +308,98 @@ export default class GameContorl extends cc.Component {
                 }
             }
             GameCfg.VOLGraph = GameCfg.GameSet.VOL;
+        }
+    }
+
+    //游戏结束
+    GameOver(flag) {
+
+        // if (!this.node || !this.node.active || flag) {
+        //     return
+        // }
+
+        setTimeout(() => {
+
+            if (GameCfg.GameType == pb.GameType.JJ_PK || GameCfg.GameType == pb.GameType.JJ_DuoKong) {
+
+                if (GameCfg.RoomGameData) {
+                    let handle = this.finalLayer[this.url].getComponent('PKFinalHandle');
+                    handle.onShow();
+                }
+
+                this.finalLayer[this.url].active = true;
+            }
+
+            else if (GameCfg.GameType == pb.GameType.JJ_ChuangGuan && !GameCfg.JJ_XUNLIAN) {
+
+                this.finalLayer[this.url].getComponent('CGSFinalHandle').onShow();
+
+                this.finalLayer[this.url].active = true;
+            }
+
+            else {
+                if (GameCfg.JJ_XUNLIAN) {
+                    this.finalLayer[this.url].getComponent('LXFinalandle').onShow();
+                    this.finalLayer[this.url].active = true;
+                } else {
+                    this.finalLayer[this.url].getComponent('FinalHandle').onShow();
+                    this.finalLayer[this.url].active = true;
+                }
+            }
+
+        }, 200)
+    }
+
+    leaveGame() {
+        GameCfg.beg_end[0] = 0;
+
+        GameCfg.beg_end[1] = 0;
+
+        this.finalLayer[this.url] && (this.finalLayer[this.url].active = false);
+        this.node.active = false;
+
+
+        GameCfg.fill = [];
+
+        GameCfg.mark = [];
+
+        GameCfg.notice = [];
+
+        GameCfg.allRate = 0;
+
+        GameCfg.blockHistoy = [];
+
+        GameCfg.finalfund = 0;
+
+        GameCfg.GAMEFUPAN = false;
+
+        GameCfg.GAMEWAIT = false;
+
+        GameCfg.JJ_XUNLIAN = false;
+
+        StrategyAIData.onClearData();
+
+        GameCfg.GAMEFUPANDATA = null;
+
+        GameCfg.RoomGameData = null;
+
+        //跟新闯关赛数据
+        GlobalEvent.emit('UPDATEGAMEDATE');
+
+        setTimeout(() => {
+
+            //跟新获取的奖励消息
+            GlobalEvent.emit('getRewardCenter');
+
+            //破产补助
+            if (GameData.properties[pb.GamePropertyId.Gold] < 1000) {
+                GlobalEvent.emit('onShowGobroke');
+            }
+        }, 800);
+
+        if (GameData.haoYouFangData) {
+            GameCfg.GameType = pb.GameType.JJ_PK;
+            GameCfg.GameSet = JSON.parse(JSON.stringify(GameData.jjpkSet));
         }
     }
 

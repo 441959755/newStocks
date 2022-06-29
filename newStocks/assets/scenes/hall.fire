@@ -1080,7 +1080,7 @@
   {
     "__type__": "cc.Node",
     "_name": "main_tb_vip",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 9
     },
@@ -15560,7 +15560,7 @@
   {
     "__type__": "cc.Node",
     "_name": "hallAD",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -15876,7 +15876,7 @@
   {
     "__type__": "cc.Node",
     "_name": "rightbg",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },

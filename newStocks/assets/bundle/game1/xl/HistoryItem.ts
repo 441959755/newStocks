@@ -1,8 +1,9 @@
 
 import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
-
 import GameData from "../../../sctiprs/GameData";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
+import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
@@ -17,7 +18,7 @@ export default class HistoryItem extends cc.Component {
     labels: cc.Label[] = [];
 
     onShow(info, index?) {
-        
+
         this.infoData = info;
         this.labels[0].string = (index + 1) + '';
 
@@ -31,11 +32,11 @@ export default class HistoryItem extends cc.Component {
         this.labels[1].string = codes;
 
         if (GameCfg.GameType == pb.GameType.QiHuo) {
-            items = GameCfgText.getQHItemInfo(info.quotesCode);
+            items = ConfUtils.getQHItemInfo(info.quotesCode);
             this.labels[1].string = items[2] + items[3];
         }
         else {
-            items = GameCfgText.getGPItemInfo(info.quotesCode);
+            items = ConfUtils.getGPItemInfo(info.quotesCode);
         }
 
         this.labels[2].string = items[1];
@@ -144,6 +145,7 @@ export default class HistoryItem extends cc.Component {
                 ts: ts,
             }
 
+
             GlobalHandle.GetGameOperations(info, () => {
 
                 let data = {
@@ -152,9 +154,9 @@ export default class HistoryItem extends cc.Component {
 
                 let dex = -1, items;
                 if (GameCfg.GameType == pb.GameType.QiHuo) {
-                    items = GameCfgText.getQHItemInfo(data.code);
+                    items = ConfUtils.getQHItemInfo(data.code);
                 } else {
-                    items = GameCfgText.getGPItemInfo(data.code);
+                    items = ConfUtils.getGPItemInfo(data.code);
                 }
 
                 data.code = items[0];
@@ -202,20 +204,17 @@ export default class HistoryItem extends cc.Component {
                 GameCfg.historyType = GameCfg.GameType;
 
                 if (GameCfg.GameType == pb.GameType.QiHuo) {
-                    GlobalHandle.onCmdGameStartQuoteQueryQH(GameCfg.enterGameConf, this.loadGame.bind(this));
+                    GlobalHandle.getStockQuotesQH(GameCfg.enterGameConf, this.loadGame.bind(this));
                 }
-                // else if (GameCfg.GameType == pb.GameType.TiaoJianDan) {
 
-                // }
                 else {
-                    GlobalHandle.onCmdGameStartQuoteQuery(GameCfg.enterGameConf, this.loadGame.bind(this))
+                    GlobalHandle.getStockQuotes(GameCfg.enterGameConf, this.loadGame.bind(this))
                 }
             });
         }
     }
 
     loadGame() {
-
         GameData.huizhidatas = this.infoData.kStartup + 1;
         GameCfg.huizhidatas = this.infoData.kStop + 1;
         if (GameCfg.GameType == pb.GameType.TiaoJianDan) {

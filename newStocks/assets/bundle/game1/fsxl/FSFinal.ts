@@ -4,7 +4,8 @@ import DrawData from "../../../sctiprs/DrawData";
 import GameCfg from "../../../sctiprs/GameCfg";
 
 import GameData from "../../../sctiprs/GameData";
-import ComUtils from "../../../sctiprs/utils/ComUtils";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
+
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 import TimeUtils from "../../../sctiprs/utils/TimeUtils";
@@ -61,7 +62,7 @@ export default class FSFinal extends cc.Component {
         //用户信息
         this.headSp.spriteFrame = GameData.headImg;
         this.levelLa.string = 'LV:' + GameData.properties[pb.GamePropertyId.Level] || '1';
-        let max_exp = GameData.appConf.levelInfoCfg[GameData.properties[pb.GamePropertyId.Level]];
+        let max_exp = GameData.gameConf.level_exp[GameData.properties[pb.GamePropertyId.Level]];
         this.expLa.string = 'EXP:' + GameData.properties[pb.GamePropertyId.Exp] + '/' + max_exp;
         this.nameLa.string = GameData.userName;
 
@@ -167,11 +168,11 @@ export default class FSFinal extends cc.Component {
         if (name == 'lx_jsbt_zlyj') {
 
             // if (GameData.properties[pb.GamePropertyId.Gold] < GameCfgText.gameConf.tjdxl.cost[0].v) {
-            //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '金币不足');
+            //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '金币不足');
             //     return;
             // }
             // else if (this.curState == 3) {
-            //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '今日次数已用完,开启VIP或解锁该功能取消次数限制');
+            //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '今日次数已用完,开启VIP或解锁该功能取消次数限制');
             //     return;
             // }
             GlobalEvent.emit(EventCfg.LEAVEGAME);

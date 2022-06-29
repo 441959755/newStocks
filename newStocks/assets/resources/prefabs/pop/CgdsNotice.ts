@@ -29,7 +29,7 @@ export default class CgdsNotice extends cc.Component {
 
         let bgurl = LLWConfing.LoginUrl + '/img/activity/cgds_bg.png';
         let btnUrl = LLWConfing.LoginUrl + '/img/activity/cgds_btn.png'
-        //GlobalEvent.emit(EventCfg.LOADINGSHOW);
+        //GlobalEvent.emit(EventCfg.SHOWLOADING);
 
         Promise.all([LoadUtils.loadRemote(bgurl), LoadUtils.loadRemote(btnUrl)]).then((res) => {
             this.bgSp = new cc.SpriteFrame(res[0]);
@@ -45,7 +45,7 @@ export default class CgdsNotice extends cc.Component {
         this.bg.spriteFrame = this.bgSp;
         this.btn.spriteFrame = this.btnSp;
         this.tips.string = GameData.appConf.pop[2].text;
-        // GlobalEvent.emit(EventCfg.LOADINGHIDE);
+        // GlobalEvent.emit(EventCfg.HIDELOADING);
     }
 
 

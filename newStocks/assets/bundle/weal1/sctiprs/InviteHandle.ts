@@ -158,7 +158,7 @@ export default class InviteHandle extends cc.Component {
 
     //     console.log('卖出下单应答:' + JSON.stringify(res));
 
-    //     GlobalEvent.emit(EventCfg.LOADINGHIDE);
+    //     GlobalEvent.emit(EventCfg.HIDELOADING);
 
     //     if (res.orderId) {
 

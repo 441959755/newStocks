@@ -4,10 +4,13 @@ import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 
 import GameData from "../../../sctiprs/GameData";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
+import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 import PopupManager from "../../../sctiprs/utils/PopupManager";
+import TimeUtils from "../../../sctiprs/utils/TimeUtils";
 
 
 const { ccclass, property } = cc._decorator;
@@ -45,7 +48,7 @@ export default class QiHuoHandle extends cc.Component {
 	mfxlBtn: cc.Node = null;
 
 	onLoad() {
-		
+
 		this.DCArr = {
 			name: '大连商品',
 
@@ -101,7 +104,7 @@ export default class QiHuoHandle extends cc.Component {
 			],
 		};
 
-		GameData.qihuoList.forEach(el => {
+		GameData.contractlist.forEach(el => {
 
 			let items = el.split('|');
 
@@ -260,7 +263,7 @@ export default class QiHuoHandle extends cc.Component {
 
 	onEnable() {
 
-		GlobalEvent.emit(EventCfg.LOADINGHIDE);
+		GlobalEvent.emit(EventCfg.HIDELOADING);
 		GameCfg.GameType = pb.GameType.QiHuo;
 		let setDatas = GameData.qhSet;
 		this.box[0].getChildByName('label').getComponent(cc.Label).string = setDatas.JYS;
@@ -309,7 +312,7 @@ export default class QiHuoHandle extends cc.Component {
 			let y = f.getFullYear() + '';
 			let m = f.getMonth() + 1 >= 10 ? f.getMonth() + 1 : '0' + (f.getMonth() + 1);
 			let d = f.getDate() >= 10 ? f.getDate() : '0' + f.getDate();
-			let sc = ComUtils.GetPreMonthDay(y + '-' + m + '-' + d, 3);
+			let sc = TimeUtils.GetPreMonthDay(y + '-' + m + '-' + d, 3);
 			y = sc.y;
 			m = sc.m;
 			d = sc.d;
@@ -355,7 +358,7 @@ export default class QiHuoHandle extends cc.Component {
 			})
 
 		} else {
-			let date = GameCfgText.QHGetTimeByCodeName(GameData.qhSet.HY);
+			let date = ConfUtils.QHGetTimeByCodeName(GameData.qhSet.HY);
 
 			let ly = date.start.slice(0, 4);
 			let lm = date.start.slice(4, 6);
@@ -646,7 +649,7 @@ export default class QiHuoHandle extends cc.Component {
 	onAutoSetTime() {
 		if (GameData.qhSet.year != '随机') {
 			if (GameData.qhSet.HY != '随机') {
-				let date = GameCfgText.QHGetTimeByCodeName(GameData.qhSet.HY);
+				let date = ConfUtils.QHGetTimeByCodeName(GameData.qhSet.HY);
 				let ly = date.start.slice(0, 4);
 				let lm = date.start.slice(4, 6);
 				let ld = date.start.slice(6);
@@ -746,13 +749,13 @@ export default class QiHuoHandle extends cc.Component {
 						GameData.qhSet.day = '随机';
 					} else {
 						if (GameData.qhSet.HY != '随机') {
-							let date = GameCfgText.QHGetTimeByCodeName(GameData.qhSet.HY);
+							let date = ConfUtils.QHGetTimeByCodeName(GameData.qhSet.HY);
 
 							let ly = date.start.slice(0, 4);
 							let lm = date.start.slice(4, 6);
 							let ld = date.start.slice(6);
 
-							let obj = ComUtils.GetAddDay(ly + '-' + lm + '-' + ld, 100);
+							let obj = TimeUtils.GetAddDay(ly + '-' + lm + '-' + ld, 100);
 
 							ly = obj.y;
 							lm = obj.m;
@@ -986,7 +989,7 @@ export default class QiHuoHandle extends cc.Component {
 		let items, index;
 
 
-		items = GameCfgText.getQHItemInfo(hy);
+		items = ConfUtils.getQHItemInfo(hy);
 		if (!items || items[7] == 0) {
 			this.QHStartGameSet();
 			return;
@@ -994,9 +997,15 @@ export default class QiHuoHandle extends cc.Component {
 
 		data.code = items[0];
 
+		data.code = data.code + '';
+
+		if (data.code.length >= 7) {
+			data.code = data.code.slice(1, 7);
+		}
+
 		// 合约代码|合约中文名称|合约英文名称|合约种类|所在交易所|第一个日K日期（YYYYMMDD）|最后一个日K//日期（YYYYMMDD）|第一个分时时间戳（精确到秒）|最后一个分时时间戳（精确到秒）
 
-		let tim = GameCfgText.QHGetTimeByCodeName(data.code)
+		let tim = ConfUtils.QHGetTimeByCodeName(data.code)
 
 		if (GameData.qhSet.year == '随机') {
 
@@ -1041,7 +1050,7 @@ export default class QiHuoHandle extends cc.Component {
 
 			} else {
 
-				let start = parseInt(ComUtils.getTimestamp(tim.start)), end = parseInt(ComUtils.getTimestamp(tim.end)), sc;
+				let start = parseInt(TimeUtils.getTimestamp(tim.start)), end = parseInt(TimeUtils.getTimestamp(tim.end)), sc;
 
 				let tt;
 				if (GameData.qhSet.ZLine == '60分钟K') {
@@ -1106,8 +1115,8 @@ export default class QiHuoHandle extends cc.Component {
 					this.QHStartGameSet();
 
 				} else {
-					GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '时间不能早与期货创建时间');
-					GlobalEvent.emit(EventCfg.LOADINGHIDE);
+					GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '时间不能早与期货创建时间');
+					GlobalEvent.emit(EventCfg.HIDELOADING);
 				}
 				return;
 			} else if (parseInt(end) < parseInt(year + month + day)) {
@@ -1116,8 +1125,8 @@ export default class QiHuoHandle extends cc.Component {
 
 				}
 				else {
-					GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '时间不能大与期货结束时间');
-					GlobalEvent.emit(EventCfg.LOADINGHIDE);
+					GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '时间不能大与期货结束时间');
+					GlobalEvent.emit(EventCfg.HIDELOADING);
 				}
 				return;
 			}
@@ -1127,7 +1136,6 @@ export default class QiHuoHandle extends cc.Component {
 			} else {
 				data.from = new Date(year + '-' + month + '-' + day).getTime() / 1000;
 			}
-
 		}
 
 		if (GameData.qhSet.ZLine == '日线') {
@@ -1153,7 +1161,7 @@ export default class QiHuoHandle extends cc.Component {
 		//游戏开始
 		GlobalHandle.onCmdGameStartReq(() => {
 			//游戏行情获取
-			GlobalHandle.onCmdGameStartQuoteQueryQH(data, this.onEnterGame.bind(this));
+			GlobalHandle.getStockQuotesQH(data, this.onEnterGame.bind(this));
 		})
 	}
 

@@ -180,4 +180,19 @@ export default {
 
     CGSConfData: null,
 
+    haoYouFangData: null,
+
+    zhibiaoHisSet: {},
+
+    //保存选择的股票
+    DXHistoryInfo: [],
+
+    QHHistoryInfo: [],
+
+    ZBHistoryInfo: [],
+
+    CGSSAVELEVEL: null,
+
+    otherHead: null,
+
 }

@@ -9,6 +9,9 @@ import { pb } from "../../../protos/proto";
 import GameBundle from "../../../sctiprs/hall/GameBundle";
 import ActionUtils from "../../../sctiprs/utils/ActionUtils";
 import GameCfg from "../../../sctiprs/GameCfg";
+import TimeUtils from "../../../sctiprs/utils/TimeUtils";
+import ConfUtils from "../../../sctiprs/utils/ConfUtils";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
 
 const { ccclass, property } = cc._decorator;
 
@@ -43,7 +46,7 @@ export default class ZhiBiaoHandle extends cc.Component {
     curState = 0;
 
     tips = [
-        
+
         ['股价穿越均线', '均线交叉', '组合训练'],
         ['MACD金叉', '0轴穿越', '柱最大值转向', 'MACD背离', '经典用法'],
         ['布林带中轨', '单边突破上轨', '上下轨间震荡', '经典用法'],
@@ -235,7 +238,7 @@ export default class ZhiBiaoHandle extends cc.Component {
             let y = f.getFullYear() + '';
             let m = f.getMonth() + 1 >= 10 ? f.getMonth() + 1 : '0' + (f.getMonth() + 1);
             let d = f.getDate() >= 10 ? f.getDate() : '0' + f.getDate();
-            let sc = ComUtils.GetPreMonthDay(y + '-' + m + '-' + d, 2);
+            let sc = TimeUtils.GetPreMonthDay(y + '-' + m + '-' + d, 2);
             y = sc.y;
             m = sc.m;
             d = sc.d;
@@ -275,7 +278,7 @@ export default class ZhiBiaoHandle extends cc.Component {
 
         } else {
 
-            let date = GameCfgText.getTimeByCodeName(GameData.zbSet.search);
+            let date = ConfUtils.getTimeByCodeName1(GameData.zbSet.search);
             let ly = date.start.slice(0, 4);
             let lm = date.start.slice(4, 6);
             let ld = date.start.slice(6);
@@ -429,7 +432,7 @@ export default class ZhiBiaoHandle extends cc.Component {
                 GameData.zbSet.search = str;
                 if (GameData.zbSet.year != '随机') {
                     if (GameData.zbSet.search != '随机选股') {
-                        let date = GameCfgText.getTimeByCodeName(GameData.zbSet.search);
+                        let date = ConfUtils.getTimeByCodeName1(GameData.zbSet.search);
                         let ly = date.start.slice(0, 4);
                         let lm = date.start.slice(4, 6);
                         let ld = date.start.slice(6);
@@ -452,7 +455,7 @@ export default class ZhiBiaoHandle extends cc.Component {
                         }
 
                         if (parseInt(st) < parseInt(date.start) || parseInt(st) > parseInt(date.end)) {
-                            let ts = ComUtils.GetPreMonthDay(ly + '-' + lm + '-' + ld, -2);
+                            let ts = TimeUtils.GetPreMonthDay(ly + '-' + lm + '-' + ld, -2);
                             GameData.zbSet.year = ts.y;
                             GameData.zbSet.month = ts.m;
                             GameData.zbSet.day = ts.d;
@@ -473,7 +476,7 @@ export default class ZhiBiaoHandle extends cc.Component {
                     GameData.zbSet.day = '随机';
                 } else {
                     if (GameData.zbSet.search != '随机选股') {
-                        let date = GameCfgText.getTimeByCodeName(GameData.zbSet.search);
+                        let date = ConfUtils.getTimeByCodeName1(GameData.zbSet.search);
                         let ly = date.start.slice(0, 4);
                         let lm = date.start.slice(4, 6);
                         let ld = date.start.slice(6);
@@ -526,7 +529,7 @@ export default class ZhiBiaoHandle extends cc.Component {
             //     let self = this;
             //     PopupManager.openNode(cc.find('Canvas'), null, 'Prefabs/unlockBox', 22, (node) => {
             //         node.getComponent('UnlockBox').callback = () => {
-            //             GlobalEvent.emit(EventCfg.LOADINGSHOW);
+            //             GlobalEvent.emit(EventCfg.SHOWLOADING);
             //             self.onGameCountSow();
             //         }
             //     });
@@ -535,7 +538,7 @@ export default class ZhiBiaoHandle extends cc.Component {
             // }
 
             // else if (this.curState == 3) {
-            //     GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '今日次数已用完,请点击在线客服,体验完整版APP');
+            //     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '今日次数已用完,请点击在线客服,体验完整版APP');
             // }
 
             // else {
@@ -566,13 +569,11 @@ export default class ZhiBiaoHandle extends cc.Component {
 
         } else if (name == 'setZBBtn') {
 
-            GameBundle.loadPre('xl/HistoryLayerSM', (node) => {
-                ActionUtils.openNode(node);
-            });
+            GameBundle.openSetLayer();
 
         } else if (name == 'historyZBBtn') {
             GameCfg.GameType = pb.GameType.ZhiBiao;
-            GlobalEvent.emit(EventCfg.OPENHISTORYLAYER);
+            GameBundle.openHisLayer();
         }
 
         else if (name == 'sys_helpbig1') {
@@ -616,8 +617,8 @@ export default class ZhiBiaoHandle extends cc.Component {
 
         if (GameData.zbSet.search == '随机选股') {
             if (GameData.zbSet.year == '随机') {
-                let le = parseInt(Math.random() * GameCfgText.stockList.length + '');
-                items = GameCfgText.stockList[le].split('|');
+                let le = parseInt(Math.random() * GameData.stockList.length + '');
+                items = GameData.stockList[le].split('|');
                 data.code = items[0];
             } else {
                 let m, d;
@@ -634,13 +635,13 @@ export default class ZhiBiaoHandle extends cc.Component {
                     d = GameData.zbSet.day;
                 }
                 let seletTime = GameData.zbSet.year + '' + m + '' + d;
-                items = GameCfgText.getTimeByItems(seletTime);
+                items = ConfUtils.getTimeByItems(seletTime);
                 data.code = items[0];
             }
 
         } else {
             let arrStr = GameData.zbSet.search.split(' ');
-            items = GameCfgText.getGPItemInfo(arrStr[0]);
+            items = ConfUtils.getGPItemInfo(arrStr[0]);
             data.code = items[0];
             let code = data.code + '';
             if (code.length >= 7) {

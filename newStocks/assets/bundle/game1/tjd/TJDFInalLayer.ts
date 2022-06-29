@@ -5,6 +5,8 @@ import GameCfg from "../../../sctiprs/GameCfg";
 // import DrawData from "../../../sctiprs/game/DrawData";
 // import GameCfg from "../../../sctiprs/game/GameCfg";
 import GameData from "../../../sctiprs/GameData";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
+import StockData from "../../../sctiprs/StockData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -148,7 +150,7 @@ export default class TJDFinalLayer extends cc.Component {
             let CmdGameOver = {
                 result: datas,
                 operations: {
-                    items: UpGameOpt.arrOpt,
+                    items: StockData.arrOpt,
                 }
             }
 
@@ -163,7 +165,7 @@ export default class TJDFinalLayer extends cc.Component {
 
         if (name == 'closeBtn') {
             this.node.parent.parent.active = false;
-            UpGameOpt.clearGameOpt();
+            StockData.clearGameOpt();
         }
 
         //复盘
@@ -178,7 +180,7 @@ export default class TJDFinalLayer extends cc.Component {
             GameCfg.GAMEFUPAN = false;
             this.node.active = false;
             this.node.parent.parent.active = false;
-            UpGameOpt.clearGameOpt();
+            StockData.clearGameOpt();
             GlobalEvent.emit('TOAGAME');
 
         }

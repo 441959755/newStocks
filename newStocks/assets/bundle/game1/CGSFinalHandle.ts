@@ -121,7 +121,7 @@ export default class CGSFinalHandle extends cc.Component {
             loseSp.active = false;
             winSp.active = false;
 
-            // if (GameCfg.allRate == 0 && UpGameOpt.arrOpt.length == 0) {
+            // if (GameCfg.allRate == 0 && StockData.arrOpt.length == 0) {
             //     this.selfRank = 2;
             //     //    xj.active = true;
             //     loseSp.active = true;
@@ -343,7 +343,7 @@ export default class CGSFinalHandle extends cc.Component {
                 //     this.flag = false;
                 //     this.EnterGameLayer = cc.instantiate(pre);
                 //     this.node.addChild(this.EnterGameLayer);
-                //     GlobalEvent.emit(EventCfg.LOADINGHIDE);
+                //     GlobalEvent.emit(EventCfg.HIDELOADING);
                 // })
 
 

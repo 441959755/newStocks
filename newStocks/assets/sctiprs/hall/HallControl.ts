@@ -1,4 +1,6 @@
+import GameData from "../GameData";
 import FitUtils from "../utils/FitUtils";
+import GlobalEvent from "../utils/GlobalEvent";
 import PopupManager from "../utils/PopupManager";
 import GameBundle from "./GameBundle";
 import OtherBundle from "./OtherBundle";
@@ -12,18 +14,24 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class HallControl extends cc.Component {
 
+    leaveRoomFlag = false;
+
     onLoad() {
         FitUtils.resetSize(this.node);
 
         PopupManager.init();
 
+        GlobalEvent.on('LOADGAME', this.onLoadGame.bind(this), this);
+
+        GlobalEvent.on('onShowGobroke', this.onShowGobroke.bind(this), this);
     }
 
-
-    start() {
-
+    onLoadGame() {
+        GameData.haoYouFangData && (GameData.haoYouFangData = null)
+        ///  this.gameLayer.zIndex = 50;
+        GameBundle.loadPre('gameLayer');
+        this.leaveRoomFlag = true;
     }
-
 
     protected onDestroy(): void {
         OtherBundle.removeBundle();
@@ -31,6 +39,10 @@ export default class HallControl extends cc.Component {
         WealBundle.removeBundle();
         ShiPanBundle.removeBundle();
         GameBundle.removeBundle();
+    }
+
+    onShowGobroke() {
+        PopupManager.openNode(this.node, null, 'Prefabs/pop/gobrokeBox', 48, null);
     }
 
 }

@@ -136,7 +136,7 @@ export default class HisItem extends cc.Component {
                 console.log(JSON.stringify(junXian));
 
                 if (GameCfg.GameType != pb.GameType.JJ_ChuangGuan) {
-                    UpGameOpt.ChanagekOffset(UpGameOpt.player1Opt);
+                    StockData.ChanagekOffset(StockData.player1Opt);
                 }
 
                 GameCfg.GameSet.isMA1 = !!junXian[0];
@@ -188,7 +188,7 @@ export default class HisItem extends cc.Component {
 
     onGamenterStart(flag?) {
 
-        GlobalEvent.emit(EventCfg.LOADINGSHOW);
+        GlobalEvent.emit(EventCfg.SHOWLOADING);
         let data = { code: this.itemData.quotesCode }
         let items;
         if (GameCfg.GameType == pb.GameType.QiHuo) {

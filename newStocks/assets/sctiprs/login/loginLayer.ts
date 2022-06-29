@@ -1,6 +1,5 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import LLWSDK from "../../common/sdk/LLWSDK";
-
 import GameData from "../GameData";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";

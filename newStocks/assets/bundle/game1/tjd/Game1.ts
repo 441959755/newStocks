@@ -16,9 +16,8 @@ export default class Game1 extends cc.Component {
         this.initData();
         this.setColor();
         //绘制的数据
-        let data = GameCfg.data[0].data;
 
-        DrawData.initData(data);
+        DrawData.initDrawData(GameCfg.data[0].data);
 
         let drawWidth = cc.winSize.width - 180 - 100 - 25;
 

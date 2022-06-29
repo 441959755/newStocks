@@ -4,6 +4,7 @@ import GameData from "../../sctiprs/GameData";
 import ComUtils from "../../sctiprs/utils/ComUtils";
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
+import LoadUtils from "../../sctiprs/utils/LoadUtils";
 import PopupManager from "../../sctiprs/utils/PopupManager";
 
 const { ccclass, property } = cc._decorator;
@@ -83,15 +84,18 @@ export default class FriendItem extends cc.Component {
             this.head.spriteFrame = GameData.imgs[obj.uid + '']
         }
         else {
-            LoadImg.onLoadHeadByUid(obj.uid, (texture) => {
-                if (texture) {
-                    GameData.imgs[obj.uid + ''] = new cc.SpriteFrame(texture);
-                    this.head.spriteFrame = GameData.imgs[obj.uid + '']
-                }
-                else {
-                    GameData.imgs[obj.uid + ''] = this.defaultImg;
-                }
-            })
+            // LoadImg.onLoadHeadByUid(obj.uid, (texture) => {
+            //     if (texture) {
+            //         GameData.imgs[obj.uid + ''] = new cc.SpriteFrame(texture);
+            //         this.head.spriteFrame = GameData.imgs[obj.uid + '']
+            //     }
+            //     else {
+            //         GameData.imgs[obj.uid + ''] = this.defaultImg;
+            //     }
+            // })
+
+
+            LoadUtils.loadHeadImg(obj.uid, this.head);
         }
     }
 

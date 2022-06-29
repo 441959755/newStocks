@@ -75,6 +75,7 @@ export default class NewClass extends cc.Component {
     }
 
     onUptateCCAsset(info) {
+
         let data = {
             account: 0,
             orderList: null,
@@ -189,7 +190,6 @@ export default class NewClass extends cc.Component {
 
     upDateAsset(data) {
         let arr = [], curGold = 0;
-
 
         GameData.cgdsStateList.forEach(el => {
             if (el.id == GameData.SpStockData.id) {

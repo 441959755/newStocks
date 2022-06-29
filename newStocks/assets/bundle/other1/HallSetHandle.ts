@@ -139,24 +139,48 @@ export default class HallSetHandle extends cc.Component {
         cc.sys.localStorage.setItem('SMSET', JSON.stringify(GameData.smSet));
 
         GameCfg.MAs = [];
+        GameCfg.MAs.length = 0;
 
         if (GameData.smSet.isMA1) {
             GameCfg.MAs.push(GameData.smSet.MA1);
         }
+        else {
+            GameCfg.MAs.push(0);
+        }
+
         if (GameData.smSet.isMA2) {
             GameCfg.MAs.push(GameData.smSet.MA2);
         }
+        else {
+            GameCfg.MAs.push(0);
+        }
+
         if (GameData.smSet.isMA3) {
             GameCfg.MAs.push(GameData.smSet.MA3);
         }
+        else {
+            GameCfg.MAs.push(0);
+        }
+
         if (GameData.smSet.isMA4) {
             GameCfg.MAs.push(GameData.smSet.MA4);
         }
+        else {
+            GameCfg.MAs.push(0);
+        }
+
         if (GameData.smSet.isMA5) {
             GameCfg.MAs.push(GameData.smSet.MA5);
         }
+        else {
+            GameCfg.MAs.push(0);
+        }
+
         if (GameData.smSet.isMA6) {
             GameCfg.MAs.push(GameData.smSet.MA6);
+        }
+        else {
+            GameCfg.MAs.push(0);
         }
 
     }

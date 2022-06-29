@@ -157,7 +157,7 @@ export default class OtherPlayerItem extends cc.Component {
                 console.log(JSON.stringify(junXian));
 
                 if (GameCfg.GameType != pb.GameType.JJ_ChuangGuan) {
-                    UpGameOpt.ChanagekOffset(UpGameOpt.player1Opt);
+                    StockData.ChanagekOffset(StockData.player1Opt);
                 }
 
                 GameCfg.GameSet.isMA1 = !!junXian[0];
@@ -241,7 +241,7 @@ export default class OtherPlayerItem extends cc.Component {
                 ts: ts,
             }
 
-            GlobalEvent.emit(EventCfg.LOADINGSHOW);
+            GlobalEvent.emit(EventCfg.SHOWLOADING);
 
             GlobalHandle.GetGameOperations(info, (junXian) => {
 
@@ -250,7 +250,7 @@ export default class OtherPlayerItem extends cc.Component {
                         { gd: {} },
                         {
                             gd: this.playeInfo || GameData.players[1],
-                            ops: { items: UpGameOpt.player1Opt },
+                            ops: { items: StockData.player1Opt },
                             result: this.itemData,
                             junXian: junXian,
                         }],
@@ -296,7 +296,7 @@ export default class OtherPlayerItem extends cc.Component {
 
         GameCfg.enterGameConf = cache;
 
-        GlobalEvent.emit(EventCfg.LOADINGSHOW);
+        GlobalEvent.emit(EventCfg.SHOWLOADING);
 
         GlobalHandle.onCmdGameStartQuoteQuery(cache, () => {
             GlobalEvent.emit('LOADGAME');

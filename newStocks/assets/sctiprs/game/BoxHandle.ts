@@ -3,6 +3,8 @@ import EventCfg from "../utils/EventCfg";
 import GameCfg from "../GameCfg";
 import ComUtils from '../utils/ComUtils';
 import DrawData from "../DrawData";
+import TimeUtils from "../utils/TimeUtils";
+import { pb } from "../../protos/proto";
 
 const { ccclass, property } = cc._decorator;
 
@@ -70,12 +72,12 @@ export default class BoxHandle extends cc.Component {
             let info = [];
             if (datas[inde]) {
                 if (GameCfg.GAMEFUPAN) {
-                    info.push(ComUtils.formatTime(datas[inde].day));
+                    info.push(TimeUtils.formatTime(datas[inde].day));
                 } else {
                     if (GameCfg.GameSet.year == '随机') {
                         info.push('****/**/**');
                     } else {
-                        info.push(ComUtils.formatTime(datas[inde].day));
+                        info.push(TimeUtils.formatTime(datas[inde].day));
                     }
                 }
 

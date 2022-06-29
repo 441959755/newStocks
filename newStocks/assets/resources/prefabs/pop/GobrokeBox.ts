@@ -12,7 +12,7 @@ export default class GobrokeBox extends cc.Component {
         // GlobalEvent.on('CmdGoldAwardPrompt', () => {
         //     if (this.node.active) {
 
-        //         GlobalEvent.emit(EventCfg.LOADINGHIDE);
+        //         GlobalEvent.emit(EventCfg.HIDELOADING);
         //         GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '领取成功');
         //     }
         // }, this);

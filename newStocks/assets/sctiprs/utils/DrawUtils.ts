@@ -33,6 +33,15 @@ export default {
         ctx.fillColor.a = 60;
         ctx.fill();
         ctx.stroke();
+    },
+
+    drawRectFill(ctx, x, y, w, h, color?) {
+        ctx.rect(x, y, w, h);
+        if (color) {
+            ctx.fillColor = color;
+            ctx.fill();
+        }
+        ctx.stroke();
     }
 
 }

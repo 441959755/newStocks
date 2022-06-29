@@ -3,6 +3,7 @@ import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 //import GameCfg from "../../../sctiprs/game/GameCfg";
 import GameData from "../../../sctiprs/GameData";
+import GlobalHandle from "../../../sctiprs/GlobalHandle";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -40,7 +41,7 @@ export default class TiaoJianDan extends cc.Component {
     _type = 0;
 
     onLoad() {
-        
+
         GlobalEvent.on(EventCfg.GMAECOUNTERSCHANGE, this.initCount.bind(this), this);
     }
 

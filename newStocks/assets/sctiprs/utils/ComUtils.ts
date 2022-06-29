@@ -147,6 +147,7 @@ export default {
         return arr;
     },
 
+
     onCurWXIsEnterGame(type?) {
         let data = {
             status: 0,
@@ -182,7 +183,36 @@ export default {
         }
         data.count = curCount;
         return data;
+    },
+
+
+    //保存缓存
+    saveHistory(code) {
+
+        if (GameCfg.GameType == pb.GameType.DingXiang) {
+
+            if (GameData.DXHistoryInfo.indexOf(code) == -1) {
+                GameData.DXHistoryInfo.push(code);
+            }
+
+            if (GameData.DXHistoryInfo.length > 20) {
+                GameData.DXHistoryInfo.shift();
+            }
+
+            GameData.DXHistoryInfo = GameData.DXHistoryInfo;
+
+        }
+        else if (GameCfg.GameType == pb.GameType.ZhiBiao) {
+            if (GameData.ZBHistoryInfo.indexOf(code) == -1) {
+                GameData.ZBHistoryInfo.push(code);
+            }
+
+            if (GameData.ZBHistoryInfo.length > 20) {
+                GameData.ZBHistoryInfo.shift();
+            }
+
+            GameData.ZBHistoryInfo = GameData.ZBHistoryInfo;
+        }
+
     }
-
-
 }

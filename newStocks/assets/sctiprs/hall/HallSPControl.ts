@@ -127,7 +127,7 @@ export default class NewClass extends cc.Component {
     }
 
     openZNDraw(code, str) {
-        GlobalEvent.emit(EventCfg.LOADINGSHOW);
+        GlobalEvent.emit(EventCfg.SHOWLOADING);
         if (!this.flag) {
             this.flag = true;
             this.znDraw.active = true;
@@ -136,14 +136,14 @@ export default class NewClass extends cc.Component {
                 let handle = this.znDraw.getComponent('ZnDraw');
                 this.znDraw.active = true;
                 handle.onShow(code, str);
-                GlobalEvent.emit(EventCfg.LOADINGHIDE);
+                GlobalEvent.emit(EventCfg.HIDELOADING);
             }, 50)
         }
         else {
             this.znDraw.active = true;
             let handle = this.znDraw.getComponent('ZnDraw');
             handle.onShow(code, str);
-            GlobalEvent.emit(EventCfg.LOADINGHIDE);
+            GlobalEvent.emit(EventCfg.HIDELOADING);
         }
 
     }

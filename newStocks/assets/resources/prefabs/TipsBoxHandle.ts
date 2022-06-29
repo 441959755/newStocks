@@ -2,7 +2,7 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class TipsBoxHandle extends cc.Component {
+export default class NewClass extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
@@ -15,12 +15,13 @@ export default class TipsBoxHandle extends cc.Component {
 
     _call = null;
 
-    onShow(text, call?) {
-        this.label.string = text;
-        this._call = call;
-        this.btnCancel.active = this._call;
+    onLoad() {
+        this.node.on('contentText', (data) => {
+            this.label.string = data.text;
+            this._call = data.call;
+            this.btnCancel.active = this._call;
+        }, this);
     }
-
 
     onClick(event, data) {
         let name = event.target.name;
@@ -29,6 +30,7 @@ export default class TipsBoxHandle extends cc.Component {
             this._call && (this._call());
         } else if (name == 'qxBtn') {
             this.node.active = false;
+            // this._call && (this._call(false));
         }
     }
 

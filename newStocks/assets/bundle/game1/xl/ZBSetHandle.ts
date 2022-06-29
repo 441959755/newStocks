@@ -1,5 +1,4 @@
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
-import ActionUtils from "../../../sctiprs/utils/ActionUtils";
 import GameData from '../../../sctiprs/GameData';
 
 const { ccclass, property } = cc._decorator;

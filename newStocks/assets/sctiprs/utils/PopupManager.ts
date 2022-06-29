@@ -87,6 +87,19 @@ export default {
     },
 
 
+    //其他玩家信息
+    openOtherPlayerInfoLayer(info) {
+
+        let call = (node) => {
+            if (node) {
+                ActionUtils.openNode(node);
+                node.getComponent('OtherPlayerInfoBox').onShow(info)
+            }
+        }
+        this.openNode(cc.find('Canvas'), this.nodes['prefabs/otherPlayerInfo'], 'Prefabs/otherPlayerInfo', 60, call);
+    },
+
+
 
     openNode(prent, selfNode, url, zIndex?, call?) {
         if (this.nodes[url]) {

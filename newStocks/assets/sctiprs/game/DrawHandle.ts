@@ -104,7 +104,7 @@ export default class DrawHandle extends cc.Component {
         //ma boll pcm
         GlobalEvent.on('on_off', (flagData) => {
 
-            this.drawMA.node.active = flagData.ma;
+            this.drawMA.node.active = !!flagData.ma;
 
             this.MAla.forEach(el => {
                 el.node.active = flagData.ma;
@@ -413,17 +413,18 @@ export default class DrawHandle extends cc.Component {
         GlobalEvent.emit('updataLabel', index);
     }
 
-    // ma boll
+    // ma 
     setMALabelInfo(index) {
         if (this.MaList[index]) {
             this.MAla.forEach((el, t) => {
-                if (this.MaList[index][t]) {
+
+                if (GameCfg.MAs[t] && this.MaList[index][t]) {
                     //   el.node.color = GameCfg.MAColor[t];
                     if (t == 0) {
                         if (GameCfg.GameType == pb.GameType.QiHuo) {
                             el.string = ' MA' + GameCfg.MAs[t] + ': ' + this.MaList[index][t].toFixed(2);
                         } else {
-                            el.string = GameCfg.GameSet.ZLine + ' MA' + GameCfg.MAs[t] + ': ' + this.MaList[index][t].toFixed(2);
+                            el.string = ' MA' + GameCfg.MAs[t] + ': ' + this.MaList[index][t].toFixed(2);
                         }
                     } else {
                         el.string = 'MA' + GameCfg.MAs[t] + ': ' + this.MaList[index][t].toFixed(2);
@@ -575,17 +576,19 @@ export default class DrawHandle extends cc.Component {
         //每段数据绘制
         for (let i = 0; i < GameCfg.MAs.length; i++) {
 
-            if (index >= GameCfg.MAs[i]) {
-                //平均的位置
-                let preMAY = (this.MaList[index - 1][i] - this.bottomValue) / this.disValue * drawBox + initY;
-                let preMAX = 10 + ((index - 1 - GameCfg.beg_end[0]) * GameCfg.hz_width) + GameCfg.hz_width / 2;
+            if (index >= GameCfg.MAs[i] && GameCfg.MAs[i]) {
 
-                let MAY = (this.MaList[index][i] - this.bottomValue) / this.disValue * drawBox + initY;
-                let MAX = 10 + ((index - GameCfg.beg_end[0]) * GameCfg.hz_width) + GameCfg.hz_width / 2;
+                if (this.MaList[index - 1]) {
+                    //平均的位置
+                    let preMAY = (this.MaList[index - 1][i] - this.bottomValue) / this.disValue * drawBox + initY;
+                    let preMAX = 10 + ((index - 1 - GameCfg.beg_end[0]) * GameCfg.hz_width) + GameCfg.hz_width / 2;
 
-                this.drawMA.strokeColor = GameCfg.MAColor[i];
-                this.drawLine(this.drawMA, preMAX, preMAY, MAX, MAY, i);
+                    let MAY = (this.MaList[index][i] - this.bottomValue) / this.disValue * drawBox + initY;
+                    let MAX = 10 + ((index - GameCfg.beg_end[0]) * GameCfg.hz_width) + GameCfg.hz_width / 2;
 
+                    this.drawMA.strokeColor = GameCfg.MAColor[i];
+                    this.drawLine(this.drawMA, preMAX, preMAY, MAX, MAY, i);
+                }
             }
         }
     }
@@ -742,7 +745,6 @@ export default class DrawHandle extends cc.Component {
                 this.drawRect(this.drawBg, startX, by, GameCfg.hz_width, hy - by, flag);
 
             }
-
 
             //画最高价、
             if (el.high >= highPrice) {
