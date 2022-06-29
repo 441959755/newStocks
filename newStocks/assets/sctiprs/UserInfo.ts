@@ -1,5 +1,5 @@
 
-import { pb } from "../proto/proto";
+import { pb } from "../protos/proto";
 import GameData from "./GameData";
 import OtherBundle from "./hall/OtherBundle";
 import EventCfg from "./utils/EventCfg";

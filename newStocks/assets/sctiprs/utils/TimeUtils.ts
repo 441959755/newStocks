@@ -1,4 +1,4 @@
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
 import GameCfg from "../GameCfg";
 import GameData from "../GameData";
 
@@ -219,10 +219,27 @@ export default {
         let day = f.getDate() >= 10 ? f.getDate() : '0' + f.getDate();
 
         return year + '' + month + '' + day;
+    },
+
+    /**
+     * 数字变成02：00
+     **/
+    onNumChangeTime(sec) {
+        let hour, minute, second;
+        hour = Math.floor(sec / 3600);
+        minute = Math.floor((sec - hour * 3600) / 60);
+        second = sec - hour * 3600 - minute * 60;
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minute < 10) {
+            minute = "0" + minute;
+        }
+        if (second < 10) {
+            second = "0" + second;
+        }
+        return minute + ":" + second;
     }
-
-
-
 
 
 

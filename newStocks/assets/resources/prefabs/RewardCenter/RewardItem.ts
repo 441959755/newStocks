@@ -1,5 +1,5 @@
 
-import { pb } from "../../../proto/proto";
+import { pb } from "../../../protos/proto";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 

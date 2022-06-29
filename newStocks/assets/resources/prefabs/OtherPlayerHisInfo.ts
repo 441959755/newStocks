@@ -1,5 +1,6 @@
 
-import { pb } from "../../proto/proto";
+
+import { pb } from "../../protos/proto";
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import EventCfg from "../../sctiprs/utils/EventCfg";
@@ -32,6 +33,7 @@ export default class OtherPlayerHisInfo extends cc.Component {
     toggle: cc.Toggle = null;
 
     onToggleClick(event) {
+
         this.content.children.forEach(el => {
             let handle = el.getComponent('OtherPlayerItem');
             handle.onHisItemRate(event.isChecked);

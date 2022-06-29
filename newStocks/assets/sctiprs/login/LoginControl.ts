@@ -147,5 +147,5 @@ export default class LoginControl extends cc.Component {
 
     }
 
-
+    
 }

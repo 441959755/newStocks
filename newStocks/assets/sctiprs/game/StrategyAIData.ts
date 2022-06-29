@@ -1,4 +1,5 @@
-import GameCfg from './GameCfg';
+
+import GameCfg from '../GameCfg';
 import EventCfg from '../utils/EventCfg';
 import GlobalEvent from '../utils/GlobalEvent';
 
@@ -24,6 +25,7 @@ export default class StrategyAIData {
 
     //策略买入
     public static onBuyFunc() {
+
         this.AICount++;
 
         this.buyCount++;

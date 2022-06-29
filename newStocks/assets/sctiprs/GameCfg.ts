@@ -1,5 +1,4 @@
 
-
 export default {
 
     /**
@@ -47,7 +46,7 @@ export default {
     /**
      * 均线
      */
-    MAs: [],
+    MAs: [10, 20, 30],
 
     BOLL: [20],
 
@@ -66,5 +65,44 @@ export default {
     GAMEFUPANDATA: null,
 
     data: [{ name: '', code: '', data: [], circulate: 0, ktype: 0, tsGameFrom: null, tsGameCur: null }],
+
+    history: { //游戏记录
+        huizhidatas: 0,
+        allRate: 0,       //总利率
+    },
+
+    // TIMETEMP: [],   //玩的记录时间戳
+
+    mark: [], //标签信息
+
+    notice: [],      //通知栏
+
+    fill: [],         //bg填充颜色
+
+    GAMEWAIT: false,  //游戏走完，等待游戏结果
+
+    eachHand: 0,    //每手
+
+    enterGameConf: null,  //进入游戏的选择
+
+    historyType: null,   //哪进入复盘的
+
+    blockHistoy: [],
+
+    RoomGameData: null,//游戲結果
+
+    GAMEFRTD: false,  //是否断线重连
+
+    JJ_XUNLIAN: false,  //
+
+    ziChan: null,
+
+    allRate: null,
+
+    finalfund: null,
+
+    labelRed: new cc.Color().fromHEX('#e94343'),
+    labelGreen: new cc.Color().fromHEX('#31a633'),
+
 
 }   

@@ -25,6 +25,7 @@ export default class LoginAD extends cc.Component {
     }
 
     protected onEnable(): void {
+
         if (GameData.adConf) {
 
             LoadUtils.loadRemote(GameData.adConf.launch[0].img).then((texture) => {

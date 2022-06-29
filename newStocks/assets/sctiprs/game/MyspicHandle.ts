@@ -1,9 +1,8 @@
 import GlobalEvent from '../utils/GlobalEvent';
 import EventCfg from '../utils/EventCfg';
-import GameCfg from './GameCfg';
-
 import DrawUtils from '../utils/DrawUtils';
-import { pb } from '../../proto/proto';
+import { pb } from '../../protos/proto';
+import GameCfg from '../GameCfg';
 
 const { ccclass, property } = cc._decorator;
 
@@ -184,12 +183,12 @@ export default class MyspicHandle extends cc.Component {
             let buff = pb.CmdQuoteQuery.encode(message).finish();
             console.log(JSON.stringify(infoPre));
 
-            socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {
+            (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {
                 if (!info.items || info.items.length <= 0) {
                     console.log('获取的行情为空');
                     // console.log(JSON.stringify(GameCfg.data));
                     GameCfg.GAMEFUPAN = false;
-                    GlobalEvent.emit(EventCfg.LOADINGHIDE);
+                    GlobalEvent.emit(EventCfg.HIDELOADING);
                     return;
                 }
                 info.items.forEach(el => {

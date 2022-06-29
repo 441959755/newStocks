@@ -1,6 +1,5 @@
 
-
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
 import GameData from "../../sctiprs/GameData";
 import ComUtils from "../../sctiprs/utils/ComUtils";
 import EventCfg from "../../sctiprs/utils/EventCfg";
@@ -32,6 +31,7 @@ export default class Broadcast extends cc.Component {
     cb = null;
 
     onShow(data?) {
+
 
         data && (this.dataArr.push(data))
 

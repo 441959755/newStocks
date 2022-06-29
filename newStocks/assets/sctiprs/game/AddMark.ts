@@ -1,10 +1,10 @@
 import GlobalEvent from '../utils/GlobalEvent';
 import EventCfg from '../utils/EventCfg';
-
 import GameData from '../GameData';
 import StrategyAIData from './StrategyAIData';
-import GameCfg from './GameCfg';
-import { pb } from '../../proto/proto';
+
+import { pb } from '../../protos/proto';
+import GameCfg from '../GameCfg';
 
 const { ccclass, property } = cc._decorator;
 
@@ -577,6 +577,5 @@ export default class AddMark extends cc.Component {
         GlobalEvent.off(EventCfg.PKFUPAN);
         GlobalEvent.off(EventCfg.LEAVEGAME);
     }
-
 
 }

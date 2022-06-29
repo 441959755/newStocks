@@ -1,7 +1,7 @@
 
 import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import PopupManager from "../utils/PopupManager";
@@ -119,8 +119,10 @@ export default class RegisterNow extends cc.Component {
             let buff = pb.CmdRegistry.encode(message).finish();
             HttpUtils.sendRequest({ data: buff, url: url, method: 'POST' }).then((res) => {
                 let decode = pb.CmdLoginReply.decode(new Uint8Array(res));
+
                 if (decode.err.err) {
                     GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, decode.err.err);
+                    GlobalEvent.emit(EventCfg.HIDELOADING);
                     return;
                 }
                 this.node.active = false;

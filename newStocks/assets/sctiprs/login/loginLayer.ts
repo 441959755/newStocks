@@ -1,12 +1,12 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import LLWSDK from "../../common/sdk/LLWSDK";
-import { pb } from "../../proto/proto";
+
 import GameData from "../GameData";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import Socket from '../../common/net/Socket';
 import HttpMgr from "../HttpMgr";
-
+import { pb } from "../../protos/proto";
 
 const { ccclass, property } = cc._decorator;
 
@@ -70,13 +70,16 @@ export default class LoginLayer extends cc.Component {
 
     }
 
+
     protected onEnable(): void {
+
         this.qq.active = true;
         this.wechat.active = true;
 
         if (LLWConfing.AppFrom == pb.AppFrom.WeChatMinProgram) {
             this.qq.active = false;
         }
+
         else if (LLWConfing.AppFrom == pb.AppFrom.Website3th) {
             this.qq.active = false;
             this.wechat.active = false;
@@ -86,6 +89,19 @@ export default class LoginLayer extends cc.Component {
         this.login.active = true;
         this.reset.active = false;
         this.reg.active = false;
+
+        if (LLWConfing.AppFrom == pb.AppFrom.WeChatMinProgram) {
+            LLWSDK.getSDK().login();
+        }
+    }
+
+    onBtnClick(event, data) {
+        let name = event.target.name;
+
+        if (name == 'login_wxdl') {
+            //微信
+            LLWSDK.getSDK().getUserInfo1(GameData.loginCode, null, this.loginResultCallback);
+        }
     }
 
     protected onDestroy(): void {

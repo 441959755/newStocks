@@ -1,9 +1,9 @@
 import GlobalEvent from '../utils/GlobalEvent';
 import EventCfg from '../utils/EventCfg';
-import GameCfg from './GameCfg';
+import GameCfg from '../GameCfg';
 
 import ComUtils from '../utils/ComUtils';
-import DrawData from './DrawData';
+import DrawData from '../DrawData';
 import GameData from '../GameData';
 import PopupManager from '../utils/PopupManager';
 
@@ -142,6 +142,7 @@ export default class BottomHandle extends cc.Component {
 		GlobalEvent.on(
 
 			EventCfg.GAMEOVEER,
+
 			() => {
 
 				if (GameCfg.GameType != pb.GameType.JJ_DuoKong) {

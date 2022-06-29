@@ -134,4 +134,66 @@ export default {
      * 标签位置
      */
     ONMARKUPDATE: 'ONMARKUPDATE',
+
+    /**
+     * 跟新指标label
+     */
+    UPDATEINDEXLABEL: 'UPDATEINDEXLABEL',
+
+    /**
+     * 切换分、天、周、月
+     */
+    CUTKTYPE: 'CUTKTYPE',
+
+    /**
+     * 切换指标 ma  boll ...
+     */
+    CUTINDEX: 'CUTINDEX',
+
+    /**
+     * 跟新盈利率
+     */
+    UPDATERATE: 'UPDATERATE',
+
+    /**
+     * 跟新其他玩家盈利率
+     */
+    UPDATEOTHERRATE: 'UPDATEOTHERRATE',
+
+    /**
+     * 切换复盘界面
+     */
+    CUTGAMEFUPAN: 'CUTGAMEFUPAN',
+
+    /**
+     * 游戏结束
+     */
+    GAMEOVEER: 'GAMEOVEER',
+
+    MYSPICCLICK: 'MYSPICCLICK',
+
+    OPENOTHERPLAYERINFO: 'OPENOTHERPLAYERINFO',
+
+    ONADDMARK: 'ONADDMARK',
+
+    RAISINGLIMIT: 'RAISINGLIMIT',
+
+    CLEARINTERVAL: 'CLEARINTERVAL',
+
+    GAMEWAIT: 'GAMEWAIT',
+
+    PKFUPAN: 'PKFUPAN',
+
+    NOTICEDRAWMOVW: 'NOTICEDRAWMOVW',
+
+    FILLNODEISSHOW: 'FILLNODEISSHOW',
+
+    ADDMARKHIDEORSHOW: 'ADDMARKHIDEORSHOW',
+
+    OPENMATCHPK: "OPENMATCHPK",
+
+
+    GAMEFUPANOPT: 'GAMEFUPANOPT',
+
+
 }

@@ -1,7 +1,7 @@
 
 
+import { pb } from "../../protos/proto";
 import LLWConfing from "../../common/config/LLWConfing";
-import { pb } from "../../proto/proto";
 import GameData from "../../sctiprs/GameData";
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";

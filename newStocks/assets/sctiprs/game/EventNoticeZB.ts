@@ -1,11 +1,11 @@
 
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
-import DrawData from "./DrawData";
-import GameCfg from "./GameCfg";
 import StrategyAIData from "./StrategyAIData";
 import List from "../utils/List";
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
+import GameCfg from "../GameCfg";
+import DrawData from "../DrawData";
 
 const { ccclass, property } = cc._decorator;
 
@@ -301,9 +301,9 @@ export default class EventNoticeZB extends cc.Component {
         this.deaList = DrawData.DEAList;
         this.macdList = DrawData.MACDList;
 
-        this.KList = DrawData.Klist;
-        this.DList = DrawData.Dlist;
-        this.JList = DrawData.jList;
+        this.KList = DrawData.KList;
+        this.DList = DrawData.DList;
+        this.JList = DrawData.JList;
 
         this.BollList = DrawData.BollList;
 

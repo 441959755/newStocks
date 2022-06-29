@@ -1,12 +1,13 @@
 //import PlatDefine from "./PlatDefine";
 
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
+
 
 const VERSION = 0;
 const GAMEID = 0;
 
-//const PLATTYPE = PlatDefine.PLAT_WEB;
 const AppFrom = pb.AppFrom.Website3th;
+//const AppFrom = pb.AppFrom.WeChatMinProgram;
 
 const LoginUrl = 'http://test.cgdr168.com';
 //const LoginUrl = 'https://www.cgdr168.com';
@@ -17,6 +18,7 @@ const ISLOG = false;
 export default class LLWConfing {
 
     public static get VERSION() {
+
         return VERSION;
     }
 

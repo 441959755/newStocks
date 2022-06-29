@@ -9,7 +9,7 @@ import GameCfg from '../GameCfg';
 import WealBundle from './WealBundle';
 import ConfUtils from '../utils/ConfUtils';
 import ShiPanBundle from './ShiPanBundle';
-import { pb } from '../../proto/proto';
+import { pb } from '../../protos/proto';
 import GameBundle from './GameBundle';
 
 
@@ -356,6 +356,7 @@ export default class HallContent extends cc.Component {
 		}
 
 		else if (name == 'main_sp_znzg') {
+			GameCfg.GameType = 'ZNZG';
 			GameCfg.GameSet = JSON.parse(JSON.stringify(GameData.dxSet));
 			ShiPanBundle.loadPre('znzgLayer');
 		}

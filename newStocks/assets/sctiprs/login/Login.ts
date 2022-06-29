@@ -30,6 +30,7 @@ export default class Login extends cc.Component {
     }
 
     onBtnClick(event, curtomData) {
+
         let name = event.target.name;
 
         //忘记密码

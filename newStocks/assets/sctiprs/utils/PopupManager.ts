@@ -9,6 +9,7 @@ export default {
     nodes: {},
 
     init() {
+
         GlobalEvent.on(EventCfg.SHOWLOADING, () => { this.nodes['prefabs/loading'] && (this.nodes['prefabs/loading'].active = true) }, this);
         GlobalEvent.on(EventCfg.HIDELOADING, () => { this.nodes['prefabs/loading'] && (this.nodes['prefabs/loading'].active = false) }, this);
 
@@ -75,6 +76,12 @@ export default {
 
     openactiveTheme() {
         this.openNode(cc.find('Canvas'), this.nodes['prefabs/pop/activityTheme'], 'prefabs/pop/activityTheme', 90, (node) => {
+            ActionUtils.openNode(node);
+        })
+    },
+
+    openEnterXlGame() {
+        this.openNode(cc.find('Canvas'), this.nodes['prefabs/enterXLGame'], 'prefabs/enterXLGame', 90, (node) => {
             ActionUtils.openNode(node);
         })
     },

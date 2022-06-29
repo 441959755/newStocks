@@ -31,11 +31,12 @@ export default {
        * 
        * @param url 
        */
-    loadPre(url, cb?) {
+    loadPre(url, cb?, index?) {
+        index = index ? index : 0;
         let callback = () => {
             this._bundle.load(url, cc.Prefab, (err, pre) => {
                 if (!err) {
-                    cc.find('Canvas').addChild(this.nodes[url] = cc.instantiate(pre), 30);
+                    cc.find('Canvas').addChild(this.nodes[url] = cc.instantiate(pre), 30 + index);
                     cb && (cb(this.nodes[url]))
                 }
             })

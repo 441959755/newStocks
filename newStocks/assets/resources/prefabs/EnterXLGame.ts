@@ -1,10 +1,14 @@
 
-import { pb } from "../../proto/proto";
+
+import { pb } from "../../protos/proto";
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
+import StockData from "../../sctiprs/StockData";
+import ComUtils from "../../sctiprs/utils/ComUtils";
 
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
+//import ZnzgControl from "../shipan/sctiprs/ZnzgControl";
 
 const { ccclass, property } = cc._decorator;
 
@@ -26,28 +30,39 @@ export default class EnterXLGame extends cc.Component {
 
     onEnable() {
 
+        this.xlname.string = '前往定向训练场训练该股票';
+        let code;
+        //xl
         if (GameCfg.GameType == pb.GameType.JJ_PK ||
             GameCfg.GameType == pb.GameType.JJ_DuoKong ||
             GameCfg.GameType == pb.GameType.JJ_ChuangGuan) {
-            this.xlname.string = '前往定向训练场训练该股票';
-            let code = GameCfg.data[0].code + '';
+
+            code = GameCfg.data[0].code + '';
+
             this.name = GameCfg.data[0].name;
+
             this.code = code;
 
             if (code.length >= 7) {
                 code = code.slice(1);
             }
+        }
+        //sp
+        else if (GameCfg.GameType == 'ZNZG') {
+            code = ZnzgControl.searchCode;
 
-            this.codename.string = code + '     ' + this.name;
+            this.name = ZnzgControl.searchName;
+            this.code = code;
 
+            if (code.length >= 7) {
+                code = code.slice(1);
+            }
         }
 
-        if (GameData.vipStatus) {
-            this.tipsLabel.string = '0';
-        }
-        else {
-            this.tipsLabel.string = '500';
-        }
+        this.codename.string = code + '     ' + this.name;
+
+        GameData.vipStatus ? this.tipsLabel.string = '0' : this.tipsLabel.string = '500';
+
     }
 
     onShow(code, name, list) {

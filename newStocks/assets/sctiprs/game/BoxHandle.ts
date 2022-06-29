@@ -1,8 +1,8 @@
 import GlobalEvent from "../utils/GlobalEvent";
 import EventCfg from "../utils/EventCfg";
-import GameCfg from "./GameCfg";
+import GameCfg from "../GameCfg";
 import ComUtils from '../utils/ComUtils';
-import DrawData from "./DrawData";
+import DrawData from "../DrawData";
 
 const { ccclass, property } = cc._decorator;
 

@@ -29,7 +29,7 @@ export default {
 
 
             if (method == 'GET') {
-                let str = '';
+                var str = "?";
                 for (let k in options.data) {
                     if (str != '?') {
                         str += '&';

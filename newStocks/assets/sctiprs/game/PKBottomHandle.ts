@@ -1,10 +1,11 @@
 
 import GameData from "../GameData";
-
-import ComUtils from "../utils/ComUtils";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
-import GameCfg from "./GameCfg";
+import GameCfg from "../GameCfg";
+import { pb } from "../../protos/proto";
+import StockData from "../StockData";
+import TimeUtils from "../utils/TimeUtils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -84,25 +85,26 @@ export default class PKBottomHandle extends cc.Component {
         GlobalEvent.on(EventCfg.GAMEWAIT, this.onGameWaitShow.bind(this), this);
 
         GlobalEvent.on(EventCfg.GAMEOVEER, () => {
+
             if (GameCfg.GameType == pb.GameType.JJ_DuoKong) {
-                let le = UpGameOpt.player1Opt.length;
+                let le = StockData.player1Opt.length;
                 if (le > 0) {
-                    if (UpGameOpt.player1Opt[le - 1].opId == pb.GameOperationId.Ask) {
+                    if (StockData.player1Opt[le - 1].opId == pb.GameOperationId.Ask) {
                         let item = {
                             opId: pb.GameOperationId.Bid,
                             volume: 1,
                             kOffset: GameCfg.huizhidatas,
                         }
-                        UpGameOpt.addOpt(item);
-                    } else if (UpGameOpt.player1Opt[le - 1].opId == pb.GameOperationId.Short) {
+                        StockData.addOpt(item);
+                    } else if (StockData.player1Opt[le - 1].opId == pb.GameOperationId.Short) {
                         let item = {
                             opId: pb.GameOperationId.Long,
                             volume: 1,
                             kOffset: GameCfg.huizhidatas,
                         }
-                        UpGameOpt.addOpt(item);
+                        StockData.addOpt(item);
                     }
-                    UpGameOpt.UpGameOpt(1);
+                    StockData.UpGameOpt(1);
                 }
             }
         }, this);
@@ -120,7 +122,7 @@ export default class PKBottomHandle extends cc.Component {
 
         let kTo = gpData[GameCfg.huizhidatas - 1].day;
 
-        this.waitCodeTime.string = ComUtils.formatTime(kFrom) + '--' + ComUtils.formatTime(kTo);
+        this.waitCodeTime.string = TimeUtils.formatTime(kFrom) + '--' + TimeUtils.formatTime(kTo);
     }
 
     onDestroy() {
@@ -148,7 +150,7 @@ export default class PKBottomHandle extends cc.Component {
 
             pkFP.children[0].getComponent(cc.Label).string = GameCfg.data[0].name + '    ' + code;
             let gpData = GameCfg.data[0].data;
-            pkFP.children[1].getComponent(cc.Label).string = ComUtils.formatTime(gpData[GameData.huizhidatas - 1].day) + '--' + ComUtils.formatTime(gpData[GameCfg.huizhidatas - 1].day);
+            pkFP.children[1].getComponent(cc.Label).string = TimeUtils.formatTime(gpData[GameData.huizhidatas - 1].day) + '--' + TimeUtils.formatTime(gpData[GameCfg.huizhidatas - 1].day);
 
             let tq = ((gpData[GameCfg.huizhidatas - 1].close - gpData[GameData.huizhidatas - 1].close) / gpData[GameData.huizhidatas - 1].close * 100).toFixed(2);
 
@@ -204,8 +206,8 @@ export default class PKBottomHandle extends cc.Component {
                             clearInterval(this.cb1);
                         }
                         if (num <= 180) {
-                            timeLabel.string = '倒计时：' + ComUtils.onNumChangeTime(num);
-                            this.waitTime.string = '倒计时：' + ComUtils.onNumChangeTime(num);
+                            timeLabel.string = '倒计时：' + TimeUtils.onNumChangeTime(num);
+                            this.waitTime.string = '倒计时：' + TimeUtils.onNumChangeTime(num);
                         }
 
                         num--;
@@ -222,8 +224,8 @@ export default class PKBottomHandle extends cc.Component {
                             }
                             clearInterval(this.cb1);
                         }
-                        timeLabel.string = '倒计时：' + ComUtils.onNumChangeTime(num);
-                        this.waitTime.string = '倒计时：' + ComUtils.onNumChangeTime(num);
+                        timeLabel.string = '倒计时：' + TimeUtils.onNumChangeTime(num);
+                        this.waitTime.string = '倒计时：' + TimeUtils.onNumChangeTime(num);
                         num--;
                     }, 1000)
                 }
@@ -259,7 +261,7 @@ export default class PKBottomHandle extends cc.Component {
                     kOffset: GameCfg.huizhidatas,
 
                 }
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
             }
             this.bself.setRoundNumber('mrBtn')
         } else if (name == 'mdBtn') {
@@ -280,7 +282,7 @@ export default class PKBottomHandle extends cc.Component {
                     kOffset: GameCfg.huizhidatas,
 
                 }
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
             }
             this.bself.setRoundNumber('mrBtn1')
         } else if (name == 'pcBtn1') {
@@ -303,7 +305,7 @@ export default class PKBottomHandle extends cc.Component {
                     volume: 1,
                     kOffset: GameCfg.huizhidatas,
                 }
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
             }
             this.bself.setRoundNumber('mcBtn1', 1)
         } else if (name == 'pcBtn') {
@@ -325,19 +327,18 @@ export default class PKBottomHandle extends cc.Component {
                     kOffset: GameCfg.huizhidatas,
 
                 }
-                UpGameOpt.addOpt(item);
+                StockData.addOpt(item);
             }
             this.bself.setRoundNumber('mcBtn', 1)
         } else if (name == 'dkdz_mz2') {
-            GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '涨停板不能买涨！')
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '涨停板不能买涨！')
         } else if (name == 'dkdz_md2') {
-            GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '跌停板不能买跌！')
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '跌停板不能买跌！')
         } else if (name == 'dkdz_pc1') {
-            GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '涨停板不能买跌中平仓!')
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '涨停板不能买跌中平仓!')
         } else if (name == 'dkdz_pc2') {
-            GlobalEvent.emit(EventCfg.TIPSTEXTSHOW, '跌停板不能买涨中平仓！')
+            GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, '跌停板不能买涨中平仓！')
         }
-
     }
 
     //获取涨停板

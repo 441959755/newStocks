@@ -1,7 +1,7 @@
 import GlobalEvent from "../utils/GlobalEvent";
 import EventCfg from "../utils/EventCfg";
 import DrawUtils from "../utils/DrawUtils";
-import GameCfg from "../game/GameCfg";
+import GameCfg from "../GameCfg";
 
 const { ccclass, property } = cc._decorator;
 

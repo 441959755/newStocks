@@ -1,10 +1,12 @@
-import { pb } from "../proto/proto";
+import { pb } from "../protos/proto";
 import GameCfg from "./GameCfg";
 import EventCfg from "./utils/EventCfg";
 import GlobalEvent from "./utils/GlobalEvent";
 import LocalStorageUtils from "./utils/LocalStorageUtils";
 
 export default {
+
+    loginCode: null,
 
     /**
      * 账号
@@ -155,6 +157,27 @@ export default {
         }
 
         return this._adSucceed;
-    }
+    },
+
+    /**
+     * 邀请ID
+     */
+    queryUid: null,
+
+    query: null,
+
+    queryType: null,
+
+    /**
+     * 玩家信息
+     */
+    Players: [],
+
+    /**
+     * 报名费
+     */
+    JJCapital: 0,
+
+    CGSConfData: null,
 
 }

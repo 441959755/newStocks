@@ -1,6 +1,6 @@
 import LLWConfing from "../common/config/LLWConfing"
 import HttpUtils from "../common/net/HttpUtils";
-import { pb } from "../proto/proto";
+import { pb } from "../protos/proto";
 import GameData from "./GameData";
 import LoadUtils from "./utils/LoadUtils";
 

@@ -4,7 +4,7 @@ export default {
 
     _bundle: null,
 
-    url: 'game',
+    url: 'game1',
 
     opt: null,
 
@@ -32,11 +32,16 @@ export default {
      * @param url 
      * @param cb 
      */
-    loadPre(url, cb?, index?) {
+    loadPre(url, cb?, index?, parent?) {
         let callback = () => {
             this._bundle.load(url, cc.Prefab, (err, pre) => {
                 if (!err) {
-                    cc.find('Canvas').addChild(this.nodes[url] = cc.instantiate(pre), this.index + index);
+
+                    if (!parent) {
+                        parent = cc.find('Canvas');
+                    }
+
+                    parent.addChild(this.nodes[url] = cc.instantiate(pre), this.index + index);
                     this.nodes[url].active = true;
                     cb && (cb(this.nodes[url]))
                 }

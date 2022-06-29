@@ -1,5 +1,5 @@
 
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import ComUtils from "../../sctiprs/utils/ComUtils";
@@ -37,6 +37,7 @@ export default class OtherPlayerItem extends cc.Component {
     playeInfo = null;
 
     onHisItemRate(flag) {
+
         this.recLabel.string = '****';
         flag && (this.recLabel.string = (this.itemData.userProfitRate).toFixed(2) + '%')
         this.flag = flag;

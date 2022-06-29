@@ -92,6 +92,10 @@ export default {
         }, () => {
             GameData.imgs[icon + ''] = GameData.imgs['0'];
         })
+    },
+
+    releaseRes(str) {
+        cc.resources.release(str);
     }
 
 }

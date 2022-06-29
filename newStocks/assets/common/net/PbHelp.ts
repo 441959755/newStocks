@@ -1,4 +1,4 @@
-import { pb } from "../../proto/proto"
+import { pb } from "../../protos/proto"
 import GameData from "../../sctiprs/GameData";
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
@@ -229,6 +229,9 @@ export default {
                     let ops = pb.GameOperations.decode(new Uint8Array(data.ops));
 
                     if (GameData.userID != data.id) {
+
+                        UpGameOpt.UpdataOtherPlayerOpt(ops);
+
                         GlobalEvent.emit(EventCfg.UPDATEOTHERPLAYEROPT, ops);
                     }
                 }
@@ -517,10 +520,5 @@ export default {
                 break;
 
         }
-
-
-
     }
-
-
 }

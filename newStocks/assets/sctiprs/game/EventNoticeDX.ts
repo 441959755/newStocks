@@ -1,11 +1,11 @@
 import GlobalEvent from '../utils/GlobalEvent';
 import EventCfg from '../utils/EventCfg';
 
-import GameCfg from './GameCfg';
-
-import DrawData from './DrawData';
 import List from "../utils/List";
-import { pb } from '../../proto/proto';
+import { pb } from '../../protos/proto';
+
+import GameCfg from '../GameCfg';
+import DrawData from '../DrawData';
 
 const { ccclass, property } = cc._decorator;
 
@@ -23,7 +23,7 @@ export default class EventNoticeDX extends cc.Component {
     listV: List = null;
 
     onLoad() {
-
+        
         GlobalEvent.on(EventCfg.SLGEVENTNOTICE, () => {
             if (GameCfg.GameType == pb.GameType.DingXiang) {
                 if (GameCfg.GameSet.jx_notice) {

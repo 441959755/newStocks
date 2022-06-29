@@ -1,8 +1,9 @@
 import GlobalEvent from "../utils/GlobalEvent";
 import DrawUtils from "../utils/DrawUtils";
-import GameCfg from "./GameCfg";
-import DrawData from "./DrawData";
-import { pb } from "../../proto/proto";
+
+import { pb } from "../../protos/proto";
+import GameCfg from "../GameCfg";
+import DrawData from "../DrawData";
 
 
 const { ccclass, property } = cc._decorator;
@@ -189,9 +190,9 @@ export default class Drsw1Handle extends cc.Component {
         this.DIFList = DrawData.DIFList;
         this.DEAList = DrawData.DEAList;
         this.MACDList = DrawData.MACDList;
-        this.Klist = DrawData.Klist;
-        this.Dlist = DrawData.Dlist;
-        this.jList = DrawData.jList;
+        this.Klist = DrawData.KList;
+        this.Dlist = DrawData.DList;
+        this.jList = DrawData.JList;
         this.UPRS = DrawData.UPRS;
         this.DOWNRS = DrawData.DOWNRS;
         this.Rs6 = DrawData.Rs6;

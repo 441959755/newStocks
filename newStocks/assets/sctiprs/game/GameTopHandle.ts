@@ -1,12 +1,15 @@
 import GlobalEvent from "../utils/GlobalEvent";
 import EventCfg from "../utils/EventCfg";
 import PopupManager from "../utils/PopupManager";
-import GameCfg from "./GameCfg";
 import GameData from '../GameData';
 import ComUtils from "../utils/ComUtils";
-
 import ActionUtils from "../utils/ActionUtils";
-import { pb } from "../../proto/proto";
+import { pb } from "../../protos/proto";
+import GameCfg from "../GameCfg";
+import StockData from "../StockData";
+import GlobalHandle from "../GlobalHandle";
+import TimeUtils from "../utils/TimeUtils";
+import GameBundle from "../hall/GameBundle";
 
 const { ccclass, property } = cc._decorator;
 
@@ -419,7 +422,7 @@ export default class GameTopHandle extends cc.Component {
         let name = event.target.name;
         //点击帮组
         if (name == 'helpBtn') {
-            GlobalEvent.emit(EventCfg.HELPSHOW);
+            // GlobalEvent.emit(EventCfg.HELPSHOW);
         }
 
         //点击终止
@@ -437,7 +440,7 @@ export default class GameTopHandle extends cc.Component {
                         str = '  您正在比赛中，现在退出会被认定为逃跑用户，请确认在退出';
                     }
 
-                    PopupManager.LoadTipsBox('tipsBox', str, () => {
+                    PopupManager.LoadTipsBox(str, () => {
 
                         GlobalEvent.emit(EventCfg.GAMEOVEER, 1);
 
@@ -465,7 +468,7 @@ export default class GameTopHandle extends cc.Component {
 
                     } else {
 
-                        PopupManager.LoadTipsBox('tipsBox', '  是否终止当前训练，查看训练结果？', () => {
+                        PopupManager.LoadTipsBox('  是否终止当前训练，查看训练结果？', () => {
 
                             GlobalEvent.emit('recover');
                             GlobalEvent.emit(EventCfg.GAMEOVEER);
@@ -496,9 +499,10 @@ export default class GameTopHandle extends cc.Component {
         }
 
         else if (name == 'statBtn') {
-            PopupManager.openNode(this.node.parent, null, 'Prefabs/game/statLayer', 7, (node) => {
-                ActionUtils.openBox(node);
-            });
+
+            GameBundle.loadPre('statLayer', (node) => {
+                ActionUtils.openNode(node);
+            }, this.node.parent, 7);
         }
 
         else if (name == 'otherPlayerNode') {
@@ -527,14 +531,14 @@ export default class GameTopHandle extends cc.Component {
         if (GameCfg.GameType == pb.GameType.JJ_ChuangGuan && !GameCfg.JJ_XUNLIAN) {
 
             let gpData = GameCfg.data[0].data;
-            let arr = ComUtils.getJJXunXian();
+            let arr = ComUtils.getJJJunXian();
             let datas = {
                 uid: GameData.userID,
                 gType: GameCfg.GameType,
                 quotesCode: GameCfg.data[0].code,
                 kType: GameCfg.data[0].ktype,
-                kFrom: parseInt(ComUtils.fromatTime1(gpData[GameData.huizhidatas - 1].day)),
-                kTo: parseInt(ComUtils.fromatTime1(gpData[GameCfg.huizhidatas - 1].day)),
+                kFrom: parseInt(TimeUtils.fromatTime1(gpData[GameData.huizhidatas - 1].day)),
+                kTo: parseInt(TimeUtils.fromatTime1(gpData[GameCfg.huizhidatas - 1].day)),
                 stockProfitRate: ((gpData[GameCfg.huizhidatas - 1].close - gpData[GameData.huizhidatas - 1].close) / gpData[GameData.huizhidatas - 1].close * 100),
                 userProfitRate: (GameCfg.allRate),
                 ts: parseInt(new Date().getTime() / 1000 + ''),
@@ -547,7 +551,7 @@ export default class GameTopHandle extends cc.Component {
             let CmdGameOver = {
                 result: datas,
                 operations: {
-                    items: UpGameOpt.arrOpt,
+                    items: StockData.arrOpt,
                     junXian: arr,
                 }
             }

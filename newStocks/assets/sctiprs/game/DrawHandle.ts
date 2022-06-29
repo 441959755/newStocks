@@ -1,9 +1,10 @@
 import GlobalEvent from "../utils/GlobalEvent";
 import EventCfg from "../utils/EventCfg";
 import DrawUtils from "../utils/DrawUtils";
-import GameCfg from "./GameCfg";
+import GameCfg from "../GameCfg";
 
-import DrawData from "./DrawData";
+import DrawData from "../DrawData";
+import { pb } from "../../protos/proto";
 //import ComUtils from "../Utils/ComUtils";
 
 const { ccclass, property } = cc._decorator;
@@ -562,7 +563,7 @@ export default class DrawHandle extends cc.Component {
 
         this.EXPMA2 = DrawData.EXPMA2;
 
-        this.btx = DrawData.btx;
+        this.btx = DrawData.BTX;
     }
 
     //曲线MA
