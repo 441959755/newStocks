@@ -4,7 +4,7 @@ import GameCfg from "../GameCfg";
 import ComUtils from '../utils/ComUtils';
 import DrawData from "../DrawData";
 import TimeUtils from "../utils/TimeUtils";
-import { pb } from "../../protos/proto";
+
 
 const { ccclass, property } = cc._decorator;
 

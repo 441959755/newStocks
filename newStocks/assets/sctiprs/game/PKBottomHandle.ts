@@ -3,7 +3,7 @@ import GameData from "../GameData";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import GameCfg from "../GameCfg";
-import { pb } from "../../protos/proto";
+
 import StockData from "../StockData";
 import TimeUtils from "../utils/TimeUtils";
 

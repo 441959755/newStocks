@@ -1,4 +1,4 @@
-import { pb } from "../../protos/proto";
+
 import PbHelp from "./PbHelp";
 export default class Socket {
 
@@ -144,10 +144,10 @@ export default class Socket {
 
             let le = proto ? proto.length : 0;
 
-            let message = pb.MessageHead.create({
+            let message = {
                 messageId: actionCode,
                 messageLen: le + 10,
-            })
+            }
 
             this.queue[++actionCode] = callback;
 

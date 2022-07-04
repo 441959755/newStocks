@@ -3,7 +3,6 @@ import GameData from "../../../sctiprs/GameData";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
 
 const { ccclass, property } = cc._decorator;
 
@@ -65,8 +64,8 @@ export default class DefHead extends cc.Component {
             icon: new Uint8Array(tex),
         }
 
-        let message = pb.CmdUploadIcon.create(data);
-        let buff = pb.CmdUploadIcon.encode(message).finish();
+      //  let message = pb.CmdUploadIcon.create(data);
+        let buff = pb.CmdUploadIcon.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Hall_UploadIcon, buff, (info) => {
             if (info.err) {

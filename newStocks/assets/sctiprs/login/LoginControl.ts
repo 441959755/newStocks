@@ -1,13 +1,12 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import GameCfg from "../GameCfg";
-import GameData from "../GameData";
 import AudioUtils from "../utils/AudioUtils";
 import ConfUtils from "../utils/ConfUtils";
 import FitUtils from "../utils/FitUtils";
 import LoadUtils from "../utils/LoadUtils";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
 import PopupManager from "../utils/PopupManager";
-
+import GameData from "../GameData";
 
 const { ccclass, property } = cc._decorator;
 

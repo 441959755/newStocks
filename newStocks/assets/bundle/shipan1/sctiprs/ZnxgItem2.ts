@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -27,8 +27,8 @@ export default class ZnxgItem2 extends cc.Component {
                     code: this._curData.code,
                 }
 
-                let message1 = pb.CmdQueryAiSignal.create(me);
-                let buff1 = pb.CmdQueryAiSignal.encode(message1).finish();
+               // let message1 = pb.CmdQueryAiSignal.create(me);
+                let buff1 = pb.CmdQueryAiSignal.encode(me).finish();
 
                 (<any>window).socket.send(pb.MessageId.Req_QueryAiSignal, buff1)
             }
@@ -102,8 +102,8 @@ export default class ZnxgItem2 extends cc.Component {
                 to: t,
                 total: 1,
             }
-            let message = pb.CmdQuoteQuery.create(info1);
-            let buff = pb.CmdQuoteQuery.encode(message).finish();
+          //  let message = pb.CmdQuoteQuery.create(info1);
+            let buff = pb.CmdQuoteQuery.encode(info1).finish();
             (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff);
         }
     }
@@ -118,9 +118,9 @@ export default class ZnxgItem2 extends cc.Component {
                 isAiStock: true,
             }
 
-            let CmdMncgEditStock = pb.CmdMncgEditStock;
-            let message = CmdMncgEditStock.create(info);
-            let buff = CmdMncgEditStock.encode(message).finish();
+            //let CmdMncgEditStock = pb.CmdMncgEditStock;
+          //  let message = CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_EditAiStockList, buff, (res) => {
 

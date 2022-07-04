@@ -251,7 +251,7 @@ export default class ZnzgOther extends cc.Component {
 
             GameCfg.GameType = 'STUDY';
             SchoolBundle.schoolProgress = data;
-            SchoolBundle.bundleSchool('school');
+            SchoolBundle.bundleSchool('school1');
         }
     }
 

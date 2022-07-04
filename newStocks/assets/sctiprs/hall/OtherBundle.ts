@@ -4,7 +4,7 @@ export default {
 
     _bundle: null,
 
-    url: 'other',
+    url: 'other1',
 
     opt: null,
 

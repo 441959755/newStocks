@@ -1,7 +1,5 @@
 //import PlatDefine from "./PlatDefine";
 
-import { pb } from "../../protos/proto";
-
 
 const VERSION = 0;
 const GAMEID = 0;

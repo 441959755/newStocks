@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";

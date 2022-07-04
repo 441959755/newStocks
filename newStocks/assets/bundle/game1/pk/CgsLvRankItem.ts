@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";

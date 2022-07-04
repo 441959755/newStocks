@@ -1,5 +1,6 @@
+import GameData from "../../../sctiprs/GameData";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
-import GameData from '../../../sctiprs/GameData';
+// import GameData from '../../../sctiprs/GameData';
 
 const { ccclass, property } = cc._decorator;
 

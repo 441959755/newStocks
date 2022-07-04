@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import GlobalHandle from "../../../sctiprs/GlobalHandle";
@@ -176,9 +175,9 @@ export default class HallPKMatch extends cc.Component {
 
             console.log('进入房间' + JSON.stringify(data));
 
-            let CmdRoomEnter = pb.CmdRoomEnter;
-            let message = CmdRoomEnter.create(data);
-            let buff = CmdRoomEnter.encode(message).finish();
+            // let CmdRoomEnter = pb.CmdRoomEnter;
+            // let message = CmdRoomEnter.create(data);
+            let buff = pb.CmdRoomEnter.encode(data).finish();
 
             //进入房间请求
             (<any>window).socket.send(pb.MessageId.Req_Room_Enter, buff, (res) => {

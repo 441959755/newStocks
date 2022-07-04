@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import ShiPanBundle from "../../../sctiprs/hall/ShiPanBundle";
@@ -192,9 +192,9 @@ export default class ZNXGHandle extends cc.Component {
     //AI收益信号
     getAIProfitList(data) {
 
-        let CmdQueryaiStockList = pb.CmdQueryAiStockList;
-        let message = CmdQueryaiStockList.create(data);
-        let buff = CmdQueryaiStockList.encode(message).finish();
+        // let CmdQueryaiStockList = pb.CmdQueryAiStockList;
+        // let message = CmdQueryaiStockList.create(data);
+        let buff = pb.CmdQueryAiStockList.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QueryAiStockList, buff, (res) => {
             this.AIProfitList = [];
@@ -230,8 +230,8 @@ export default class ZNXGHandle extends cc.Component {
 
         console.log(JSON.stringify(info));
 
-        let message = pb.CmdQueryAiStockList.create(info);
-        let buff = pb.CmdQueryAiStockList.encode(message).finish();
+      //  let message = pb.CmdQueryAiStockList.create(info);
+        let buff = pb.CmdQueryAiStockList.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QueryAiStockList, buff, (res) => {
 

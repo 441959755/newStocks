@@ -1,4 +1,4 @@
-import { pb } from "../protos/proto";
+
 import GameCfg from "./GameCfg";
 import EventCfg from "./utils/EventCfg";
 import GlobalEvent from "./utils/GlobalEvent";
@@ -35,7 +35,6 @@ export default {
         this._password = val;
         LocalStorageUtils.setItem('PASSWORD', val);
     },
-
 
     _properties: [],
 

@@ -1,6 +1,7 @@
 import GlobalEvent from '../../../sctiprs/utils/GlobalEvent';
 import ActionUtils from '../../../sctiprs/utils/ActionUtils';
 import GameData from '../../../sctiprs/GameData';
+//import GameData from '../../../sctiprs/GameData';
 
 const { ccclass, property } = cc._decorator;
 
@@ -32,6 +33,7 @@ export default class QHSetHandle extends cc.Component {
 	UIScrollControl = null;
 
 	onLoad() {
+
 		this.content.removeAllChildren();
 	}
 

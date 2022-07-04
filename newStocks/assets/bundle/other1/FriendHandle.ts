@@ -1,5 +1,4 @@
 
-import { pb } from "../../protos/proto";
 import GameData from "../../sctiprs/GameData";
 import OtherBundle from "../../sctiprs/hall/OtherBundle";
 import ActionUtils from "../../sctiprs/utils/ActionUtils";

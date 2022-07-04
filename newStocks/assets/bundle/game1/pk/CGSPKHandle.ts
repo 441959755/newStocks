@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import GameBundle from "../../../sctiprs/hall/GameBundle";
@@ -169,9 +169,9 @@ export default class CGSPKHandle extends cc.Component {
                 stage: parseInt(data) - 1,
             }
 
-            let CmdCgsGetStageAward = pb.CmdCgsGetStageAward;
-            let message = CmdCgsGetStageAward.create(info);
-            let buff = CmdCgsGetStageAward.encode(message).finish();
+            // let CmdCgsGetStageAward = pb.CmdCgsGetStageAward;
+            // let message = CmdCgsGetStageAward.create(info);
+            let buff = pb.CmdCgsGetStageAward.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_CgsGetStageAward, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);
@@ -477,9 +477,9 @@ export default class CGSPKHandle extends cc.Component {
             id: id,
             stage: stage,
         }
-        let CmdCgsRanking = pb.CmdCgdsRanking;
-        let message = CmdCgsRanking.create(data);
-        let buff = CmdCgsRanking.encode(message).finish();
+        // let CmdCgsRanking = pb.CmdCgdsRanking;
+        // let message = CmdCgsRanking.create(data);
+        let buff = pb.CmdCgdsRanking.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_CgsGetSeasonRank, buff, (res) => {
             console.log('闯关赛排行榜' + JSON.stringify(res));

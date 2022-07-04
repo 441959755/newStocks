@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
@@ -131,8 +131,8 @@ export default class ZgHandle extends cc.Component {
                 }
 
 
-                let message1 = pb.CmdQueryAiSignal.create(me);
-                let buff1 = pb.CmdQueryAiSignal.encode(message1).finish();
+               // let message1 = pb.CmdQueryAiSignal.create(me);
+                let buff1 = pb.CmdQueryAiSignal.encode(me).finish();
                 (<any>window).socket.send(pb.MessageId.Req_QueryAiSignal, buff1, (res) => {
                     console.log('股票的买卖信号' + JSON.stringify(res));
 

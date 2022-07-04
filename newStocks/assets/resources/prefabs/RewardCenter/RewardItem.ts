@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
@@ -107,9 +107,9 @@ export default class NewClass extends cc.Component {
             let data = {
                 ts: this.itemData.ts,
             }
-            let CmdGetItem = pb.CmdGetItem;
-            let message = CmdGetItem.create(data);
-            let buff = CmdGetItem.encode(message).finish();
+            // let CmdGetItem = pb.CmdGetItem;
+            // let message = CmdGetItem.create(data);
+            let buff = pb.CmdGetItem.encode(data).finish();
             this.flag = false;
             (<any>window).socket.send(pb.MessageId.Req_Hall_GetItem, buff, (info) => {
                 console.log('getRewardCenter:' + JSON.stringify(info));

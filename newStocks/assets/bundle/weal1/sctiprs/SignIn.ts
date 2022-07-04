@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -74,9 +74,9 @@ export default class SignIn extends cc.Component {
                 adClicked: false,
             }
 
-            let CmdGetDailyAward = pb.CmdGetDailyAward;
-            let message = CmdGetDailyAward.create(data);
-            let buff = CmdGetDailyAward.encode(message).finish();
+            // let CmdGetDailyAward = pb.CmdGetDailyAward;
+            // let message = CmdGetDailyAward.create(data);
+            let buff = pb.CmdGetDailyAward.encode(data).finish();
 
             console.log(JSON.stringify(data));
 

@@ -1,6 +1,6 @@
 
 
-import { pb } from "../../protos/proto";
+
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import EventCfg from "../../sctiprs/utils/EventCfg";
@@ -65,9 +65,9 @@ export default class OtherPlayerHisInfo extends cc.Component {
 
     onQueryGameResult(data) {
 
-        let message = pb.CmdQueryGameResult.create(data)
+       // let message = pb.CmdQueryGameResult.create(data)
 
-        let buff = pb.CmdQueryGameResult.encode(message).finish();
+        let buff = pb.CmdQueryGameResult.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_QueryGameResult, buff, info => {
 

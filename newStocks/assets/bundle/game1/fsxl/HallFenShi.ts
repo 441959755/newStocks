@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 //import GameCfg from "../../../sctiprs/game/GameCfg";
 import GameData from "../../../sctiprs/GameData";
@@ -390,8 +389,8 @@ export default class HallFenShi extends cc.Component {
             total: 240,
         };
 
-        let message = pb.CmdQuoteQuery.create(info1);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+       // let message = pb.CmdQuoteQuery.create(info1);
+        let buff = pb.CmdQuoteQuery.encode(info1).finish();
         (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {
 
             if (info.items.length <= 0) {

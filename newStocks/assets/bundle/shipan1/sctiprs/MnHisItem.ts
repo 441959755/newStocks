@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import TimeUtils from "../../../sctiprs/utils/TimeUtils";

@@ -1,6 +1,6 @@
 import LLWConfing from "../common/config/LLWConfing"
 import HttpUtils from "../common/net/HttpUtils";
-import { pb } from "../protos/proto";
+
 import GameData from "./GameData";
 import LoadUtils from "./utils/LoadUtils";
 
@@ -10,8 +10,8 @@ export default {
 
         let url = LLWConfing.LoginUrl + '/l';
         data.websocket = true;
-        let message = pb.CmdLogin.create(data);
-        let buff = pb.CmdLogin.encode(message).finish();
+        //  let message = pb.CmdLogin.create(data);
+        let buff = pb.CmdLogin.encode(data).finish();
 
         buff = buff.buffer.slice(buff.byteOffset, buff.byteLength + buff.byteOffset);
 
@@ -27,10 +27,10 @@ export default {
     loginSocket(cb) {
 
         console.log('socket connected');
-        let message = pb.CmdGameLogin.create({
+        let message = {
             uid: GameData.userID,
             token: GameData.token,
-        })
+        }
 
         let buff = pb.CmdGameLogin.encode(message).finish();
 

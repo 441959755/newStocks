@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import ConfUtils from "../../../sctiprs/utils/ConfUtils";
@@ -111,9 +111,9 @@ export default class NewClass extends cc.Component {
                 }
             }
 
-            let CmdMncgEditStock = pb.CmdMncgEditStock;
-            let message = CmdMncgEditStock.create(info);
-            let buff = CmdMncgEditStock.encode(message).finish();
+            // let CmdMncgEditStock = pb.CmdMncgEditStock;
+            // let message = CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_MncgEditStockList, buff, (res) => {
                 console.log('添加选股' + JSON.stringify(res));

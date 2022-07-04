@@ -1,6 +1,5 @@
 
 
-import { pb } from "../../protos/proto";
 import GameData from "../../sctiprs/GameData";
 
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";

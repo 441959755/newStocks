@@ -5,7 +5,6 @@ import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import PopupManager from "../../../sctiprs/utils/PopupManager";
-import { pb } from "../../../protos/proto";
 import GameBundle from "../../../sctiprs/hall/GameBundle";
 import ActionUtils from "../../../sctiprs/utils/ActionUtils";
 import GameCfg from "../../../sctiprs/GameCfg";

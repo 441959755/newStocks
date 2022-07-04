@@ -1,7 +1,7 @@
 
 import LLWSDK from '../../../common/sdk/LLWSDK';
-import { pb } from '../../../protos/proto';
 import GameData from '../../../sctiprs/GameData';
+//import GameData from '../../../sctiprs/GameData';
 import EventCfg from '../../../sctiprs/utils/EventCfg';
 import GlobalEvent from '../../../sctiprs/utils/GlobalEvent';
 
@@ -37,6 +37,7 @@ export default class SMResetMoney extends cc.Component {
     //}
 
     protected onEnable(): void {
+
         if (GameData.vipStatus) {
             if (GameData.smxlState.gold < 10000) {
                 this.tipsLabel.string = '您的当前资金不足1万，无法开启训练，重置获赠5万资金';

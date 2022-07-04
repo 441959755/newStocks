@@ -1,12 +1,11 @@
 
 
-import GameData from '../../../sctiprs/GameData';
-
-import { pb } from '../../../protos/proto';
+//import GameData from '../../../sctiprs/GameData';
 import GlobalEvent from '../../../sctiprs/utils/GlobalEvent';
 import EventCfg from '../../../sctiprs/utils/EventCfg';
 import DrawUtils from '../../../sctiprs/utils/DrawUtils';
 import GameCfg from '../../../sctiprs/GameCfg';
+import GameData from '../../../sctiprs/GameData';
 
 
 const { ccclass, property } = cc._decorator;
@@ -158,8 +157,8 @@ export default class SMYieldCurveHandle extends cc.Component {
             pageSize: 200,
         }
 
-        let message = pb.CmdQueryGameResult.create(inf)
-        let buff = pb.CmdQueryGameResult.encode(message).finish();
+        // let message = pb.CmdQueryGameResult.create(inf)
+        let buff = pb.CmdQueryGameResult.encode(inf).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_QueryGameResult, buff, (info) => {
             GlobalEvent.emit(EventCfg.HIDELOADING);

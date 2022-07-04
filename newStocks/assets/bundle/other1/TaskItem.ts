@@ -1,5 +1,4 @@
 
-import { pb } from "../../protos/proto";
 import GameData from "../../sctiprs/GameData";
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
@@ -98,8 +97,8 @@ export default class TaskItem extends cc.Component {
                 adClicked: false,
             }
 
-            let message = pb.CmdGetDailyAward.create(data);
-            let buff = pb.CmdGetDailyAward.encode(message).finish();
+          //  let message = pb.CmdGetDailyAward.create(data);
+            let buff = pb.CmdGetDailyAward.encode(data).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Hall_GetDailyTaskAward, buff, (info) => {
                 console.log('任务进度' + JSON.stringify(info));

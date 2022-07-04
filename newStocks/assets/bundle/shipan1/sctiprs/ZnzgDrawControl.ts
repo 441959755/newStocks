@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import DrawData from "../../../sctiprs/DrawData";
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
@@ -408,8 +408,8 @@ export default class ZnzgDrawControl extends cc.Component {
             code: ZnzgControl.searchCode
         };
 
-        let message = pb.CmdQuoteQuery.create(info);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+       // let message = pb.CmdQuoteQuery.create(info);
+        let buff = pb.CmdQuoteQuery.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, ret => {
 

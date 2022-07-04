@@ -1,7 +1,7 @@
 
 import LLWConfing from "../../../common/config/LLWConfing";
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -57,8 +57,8 @@ export default class Day7VipHandle extends cc.Component {
             from: LLWConfing.AppFrom,
         }
 
-        let message = pb.ItemOrder.create(obj);
-        let buff = pb.ItemOrder.encode(message).finish();
+       // let message = pb.ItemOrder.create(obj);
+        let buff = pb.ItemOrder.encode(obj).finish();
         (<any>window).socket.send(pb.MessageId.Req_Hall_ShopOrder, buff, (res) => {
             console.log('商城下购买应答' + JSON.stringify(res));
             if (!res.result.err) {

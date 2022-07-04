@@ -1,5 +1,5 @@
 
-import { pb } from "../../protos/proto";
+
 import GameData from "../GameData";
 import ActionUtils from "../utils/ActionUtils";
 import EventCfg from "../utils/EventCfg";

@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
@@ -118,8 +118,8 @@ export default class NewClass extends cc.Component {
                 id: this._curData.id,
             }
 
-            let message = pb.CmdCgdsReg.create(info);
-            let buff = pb.CmdCgdsReg.encode(message).finish();
+           // let message = pb.CmdCgdsReg.create(info);
+            let buff = pb.CmdCgdsReg.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_CgdsReg, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);

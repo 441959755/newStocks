@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -161,8 +161,8 @@ export default class NewClass extends cc.Component {
 
             console.log(JSON.stringify(info));
 
-            let message = pb.CmdMncgExchange.create(info);
-            let buff = pb.CmdMncgExchange.encode(message).finish();
+          //  let message = pb.CmdMncgExchange.create(info);
+            let buff = pb.CmdMncgExchange.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_MncgExchange, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);
@@ -202,8 +202,8 @@ export default class NewClass extends cc.Component {
                 amount: this.dhjb,
             }
 
-            let message = pb.CmdMncgExchange.create(info);
-            let buff = pb.CmdMncgExchange.encode(message).finish();
+           // let message = pb.CmdMncgExchange.create(info);
+            let buff = pb.CmdMncgExchange.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_MncgExchange, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);

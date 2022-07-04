@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
@@ -32,8 +32,8 @@ export default class NewClass extends cc.Component {
             id: data.id,
         }
 
-        let message = pb.CmdCgdsRanking.create(info);
-        let buff = pb.CmdCgdsRanking.encode(message).finish();
+      //  let message = pb.CmdCgdsRanking.create(info);
+        let buff = pb.CmdCgdsRanking.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_CgdsRanking, buff, (res) => {
             GlobalEvent.emit(EventCfg.HIDELOADING);

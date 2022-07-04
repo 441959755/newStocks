@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
@@ -240,9 +240,9 @@ export default class MnxgHandle extends cc.Component {
             console.log('订阅：' + JSON.stringify(info));
 
 
-            let message = pb.CmdQuoteSubscribe.create(info);
+          //  let message = pb.CmdQuoteSubscribe.create(info);
 
-            let buff = pb.CmdQuoteSubscribe.encode(message).finish();
+            let buff = pb.CmdQuoteSubscribe.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_QuoteSubscribe, buff, info => {
                 console.log('订阅：' + JSON.stringify(info));

@@ -1,5 +1,5 @@
 
-import GameData from '../../../sctiprs/GameData';
+import GameData from "../../../sctiprs/GameData";
 
 const { ccclass, property } = cc._decorator;
 
@@ -50,6 +50,7 @@ export default class DXSetHandle extends cc.Component {
     }
 
     onEnable() {
+
         this.toggles1[0].isChecked = GameData.dxSet.k_notice;
         this.toggles2[0].isChecked = GameData.dxSet.jx_notice;
         this.toggles3[0].isChecked = GameData.dxSet.StopCheck_notice;

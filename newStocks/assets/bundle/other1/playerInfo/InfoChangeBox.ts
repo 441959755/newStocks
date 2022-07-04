@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -230,8 +229,8 @@ export default class InfoChangeBox extends cc.Component {
     }
 
     onSendMessage(id, data, call?) {
-        let message = pb.PlayerInfo.create(data);
-        let buff = pb.PlayerInfo.encode(message).finish();
+       // let message = pb.PlayerInfo.create(data);
+        let buff = pb.PlayerInfo.encode(data).finish();
 
         (<any>window).socket.send(id, buff, (info) => {
             console.log('onCmdEditInfoConvertToBuff:' + JSON.stringify(info));

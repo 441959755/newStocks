@@ -1,4 +1,4 @@
-import { pb } from "../../protos/proto";
+
 import HttpMgr from "../../sctiprs/HttpMgr";
 import HttpUtils from "../net/HttpUtils";
 

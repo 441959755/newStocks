@@ -1,5 +1,5 @@
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -120,9 +120,9 @@ export default class InviteHandle extends cc.Component {
         console.log('领取' + type + '    ' + count);
         console.log(JSON.stringify(info));
 
-        let CmdGetInviterAward = pb.CmdGetInviterAward;
-        let message = CmdGetInviterAward.create(info);
-        let buff = CmdGetInviterAward.encode(message).finish();
+        // let CmdGetInviterAward = pb.CmdGetInviterAward;
+        // let message = CmdGetInviterAward.create(info);
+        let buff = pb.CmdGetInviterAward.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Hall_GetInviterAward, buff, (res) => {
             console.log('领取邀请奖励' + JSON.stringify(res));

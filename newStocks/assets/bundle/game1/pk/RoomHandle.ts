@@ -1,6 +1,5 @@
 
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import GlobalHandle from "../../../sctiprs/GlobalHandle";
@@ -318,9 +317,9 @@ export default class RoomHandle extends cc.Component {
                 uid: GameData.userID,
                 ready: true,
             }
-            let RoomPlayerStatus = pb.RoomPlayerStatus;
-            let message = RoomPlayerStatus.create(info);
-            let buff = RoomPlayerStatus.encode(message).finish();
+            // let RoomPlayerStatus = pb.RoomPlayerStatus;
+            // let message = RoomPlayerStatus.create(info);
+            let buff = pb.RoomPlayerStatus.encode(info).finish();
 
             console.log('准备：' + JSON.stringify(info));
 
@@ -343,9 +342,9 @@ export default class RoomHandle extends cc.Component {
                 ready: false,
             }
 
-            let RoomPlayerStatus = pb.RoomPlayerStatus;
-            let message = RoomPlayerStatus.create(info);
-            let buff = RoomPlayerStatus.encode(message).finish();
+            // let RoomPlayerStatus = pb.RoomPlayerStatus;
+            // let message = RoomPlayerStatus.create(info);
+            let buff = pb.RoomPlayerStatus.encode(info).finish();
 
             console.log('取消准备：' + JSON.stringify(info));
 

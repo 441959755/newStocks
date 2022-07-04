@@ -7,7 +7,7 @@ export default {
 
     _bundle: null,
 
-    url: 'shipan',
+    url: 'shipan1',
 
     opt: null,
 

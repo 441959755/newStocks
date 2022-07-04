@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -52,8 +51,8 @@ export default class WinLossItem extends cc.Component {
                         game: this.GameType,
                     }
 
-                    let message = pb.CmdResetGameCounter.create(data);
-                    let buff = pb.CmdResetGameCounter.encode(message).finish();
+                  //  let message = pb.CmdResetGameCounter.create(data);
+                    let buff = pb.CmdResetGameCounter.encode(data).finish();
 
                     (<any>window).socket.send(pb.MessageId.Req_Hall_ResetGameCounter, buff, (info) => {
                         console.log('onCmdEditInfoConvertToBuff:' + JSON.stringify(info));

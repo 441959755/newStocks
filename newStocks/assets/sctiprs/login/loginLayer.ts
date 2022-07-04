@@ -5,7 +5,7 @@ import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import Socket from '../../common/net/Socket';
 import HttpMgr from "../HttpMgr";
-import { pb } from "../../protos/proto";
+
 
 const { ccclass, property } = cc._decorator;
 

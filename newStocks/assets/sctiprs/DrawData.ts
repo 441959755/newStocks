@@ -1,4 +1,4 @@
-import { pb } from "../protos/proto";
+
 import GameCfg from "./GameCfg";
 import TimeUtils from "./utils/TimeUtils";
 

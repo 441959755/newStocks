@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import StockData from "../../../sctiprs/StockData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
@@ -159,9 +159,9 @@ export default class ZnzgHandle extends cc.Component {
 
         console.log('quoteSubscribe:' + JSON.stringify(info));
 
-        let message = pb.CmdQuoteSubscribe.create(info);
+     //   let message = pb.CmdQuoteSubscribe.create(info);
 
-        let buff = pb.CmdQuoteSubscribe.encode(message).finish();
+        let buff = pb.CmdQuoteSubscribe.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteSubscribe, buff, info => {
             console.log('订阅：' + JSON.stringify(info));

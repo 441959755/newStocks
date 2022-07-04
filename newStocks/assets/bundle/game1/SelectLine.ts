@@ -1,5 +1,4 @@
 
-import { pb } from "../../protos/proto";
 import DrawData from "../../sctiprs/DrawData";
 import GameCfg from "../../sctiprs/GameCfg";
 import ComUtils from "../../sctiprs/utils/ComUtils";
@@ -188,8 +187,8 @@ export default class NewClass extends cc.Component {
         console.log(JSON.stringify(data));
 
 
-        let message = pb.CmdQuoteQueryFuture.create(data)
-        let buff = pb.CmdQuoteQueryFuture.encode(message).finish();
+        //  let message = pb.CmdQuoteQueryFuture.create(data)
+        let buff = pb.CmdQuoteQueryFuture.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteQueryFuture, buff, info => {
 

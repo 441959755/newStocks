@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -38,9 +38,9 @@ export default class CgsLvRank extends cc.Component {
             stage: stage,
         }
 
-        let CmdCgsRanking = pb.CmdCgsRanking;
-        let message = CmdCgsRanking.create(data);
-        let buff = CmdCgsRanking.encode(message).finish();
+        // let CmdCgsRanking = pb.CmdCgsRanking;
+        // let message = CmdCgsRanking.create(data);
+        let buff = pb.CmdCgsRanking.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_CgsGetStageRank, buff, (res) => {
             console.log('闯关赛关卡排行' + JSON.stringify(res));

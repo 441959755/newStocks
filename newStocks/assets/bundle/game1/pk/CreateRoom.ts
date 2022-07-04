@@ -1,5 +1,5 @@
 
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import GlobalHandle from "../../../sctiprs/GlobalHandle";
@@ -98,9 +98,9 @@ export default class CreateRoom extends cc.Component {
 
         console.log(JSON.stringify(info));
 
-        let CmdRoomCreate = pb.CmdRoomCreate;
-        let message = CmdRoomCreate.create(info);
-        let buff = CmdRoomCreate.encode(message).finish();
+        // let CmdRoomCreate = pb.CmdRoomCreate;
+        // let message = CmdRoomCreate.create(info);
+        let buff = pb.CmdRoomCreate.encode(info).finish();
         (<any>window).socket.send(pb.MessageId.Req_Room_Create, buff, (res) => {
             console.log('创建房间应答' + JSON.stringify(res));
             GlobalEvent.emit(EventCfg.HIDELOADING);

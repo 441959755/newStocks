@@ -1,7 +1,6 @@
 
 import LLWConfing from "../../../common/config/LLWConfing";
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
 import PopupManager from "../../../sctiprs/utils/PopupManager";
 
 const { ccclass, property } = cc._decorator;

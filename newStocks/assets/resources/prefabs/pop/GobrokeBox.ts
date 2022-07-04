@@ -1,6 +1,6 @@
 
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
+
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
 const { ccclass, property } = cc._decorator;

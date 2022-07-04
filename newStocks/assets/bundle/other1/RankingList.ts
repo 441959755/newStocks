@@ -1,5 +1,4 @@
 
-import { pb } from "../../protos/proto";
 import GameCfg from "../../sctiprs/GameCfg";
 import GameData from "../../sctiprs/GameData";
 import List from "../../sctiprs/utils/List";
@@ -101,8 +100,8 @@ export default class RankingList extends cc.Component {
             id: this.activityID,
         }
 
-        let message = pb.CmdCgsRanking.create(data);
-        let buff = pb.CmdCgsRanking.encode(message).finish();
+    //    let message = pb.CmdCgsRanking.create(data);
+        let buff = pb.CmdCgsRanking.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_CgsGetSeasonRank, buff, (info) => {
             console.log('闯关赛排行榜' + JSON.stringify(info));
@@ -121,8 +120,8 @@ export default class RankingList extends cc.Component {
             id: this.cgdsID,
         }
 
-        let message = pb.CmdCgdsRanking.create(data);
-        let buff = pb.CmdCgdsRanking.encode(message).finish();
+        //let message = pb.CmdCgdsRanking.create(data);
+        let buff = pb.CmdCgdsRanking.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_CgdsRanking, buff, (info) => {
             console.log('炒股大赛排行榜' + JSON.stringify(info));

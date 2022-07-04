@@ -1,7 +1,6 @@
 
 import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
-import { pb } from "../../protos/proto";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import PopupManager from "../utils/PopupManager";
@@ -115,8 +114,8 @@ export default class RegisterNow extends cc.Component {
             }
 
             let url = LLWConfing.LoginUrl + '/r';
-            let message = pb.CmdRegistry.create(data);
-            let buff = pb.CmdRegistry.encode(message).finish();
+            //  let message = pb.CmdRegistry.create(data);
+            let buff = pb.CmdRegistry.encode(data).finish();
             HttpUtils.sendRequest({ data: buff, url: url, method: 'POST' }).then((res) => {
                 let decode = pb.CmdLoginReply.decode(new Uint8Array(res));
 
@@ -145,8 +144,8 @@ export default class RegisterNow extends cc.Component {
             account: pNum,
         }
 
-        let message = pb.CmdGetSms.create(data);
-        let buff = pb.CmdGetSms.encode(message).finish();
+        // let message = pb.CmdGetSms.create(data);
+        let buff = pb.CmdGetSms.encode(data).finish();
 
         let url = LLWConfing.LoginUrl + '/sms';
 

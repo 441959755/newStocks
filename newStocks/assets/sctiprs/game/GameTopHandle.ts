@@ -4,7 +4,7 @@ import PopupManager from "../utils/PopupManager";
 import GameData from '../GameData';
 import ComUtils from "../utils/ComUtils";
 import ActionUtils from "../utils/ActionUtils";
-import { pb } from "../../protos/proto";
+
 import GameCfg from "../GameCfg";
 import StockData from "../StockData";
 import GlobalHandle from "../GlobalHandle";

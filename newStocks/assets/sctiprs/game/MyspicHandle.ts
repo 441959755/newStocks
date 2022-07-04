@@ -181,8 +181,8 @@ export default class MyspicHandle extends cc.Component {
                 total: le,
                 to: time,
             }
-            let message = pb.CmdQuoteQuery.create(infoPre);
-            let buff = pb.CmdQuoteQuery.encode(message).finish();
+         //   let message = pb.CmdQuoteQuery.create(infoPre);
+            let buff = pb.CmdQuoteQuery.encode(infoPre).finish();
             console.log(JSON.stringify(infoPre));
 
             (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {

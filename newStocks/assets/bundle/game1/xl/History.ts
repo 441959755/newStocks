@@ -3,7 +3,6 @@ import EventCfg from '../../../sctiprs/utils/EventCfg';
 
 import GameData from "../../../sctiprs/GameData";
 import List from '../../../sctiprs/utils/List';
-import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 const { ccclass, property } = cc._decorator;
 
@@ -50,8 +49,8 @@ export default class History extends cc.Component {
             pageSize: 200,
         }
 
-        let message = pb.CmdQueryGameResult.create(inf)
-        let buff = pb.CmdQueryGameResult.encode(message).finish();
+     //   let message = pb.CmdQueryGameResult.create(inf)
+        let buff = pb.CmdQueryGameResult.encode(inf).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_QueryGameResult, buff, (info) => {
 

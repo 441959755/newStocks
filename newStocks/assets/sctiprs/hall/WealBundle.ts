@@ -7,7 +7,7 @@ export default {
 
     _bundle: null,
 
-    url: 'weal',
+    url: 'weal1',
 
     opt: null,
 

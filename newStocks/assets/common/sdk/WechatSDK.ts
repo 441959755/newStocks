@@ -1,10 +1,12 @@
 
 
-import { pb } from "../../protos/proto";
-import GameData from "../../sctiprs/GameData";
+
+
+
 import HttpMgr from "../../sctiprs/HttpMgr";
 import LoadUtils from "../../sctiprs/utils/LoadUtils";
 import LLWConfing from "../config/LLWConfing";
+import GameData from "../../sctiprs/GameData";
 
 export default class WechatSDK {
 
@@ -21,7 +23,6 @@ export default class WechatSDK {
             this._instance = new WechatSDK();
         }
         return this._instance;
-
     }
 
     //用户登入

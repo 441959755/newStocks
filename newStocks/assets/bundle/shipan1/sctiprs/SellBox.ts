@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
@@ -305,8 +305,8 @@ export default class SellBox extends cc.Component {
                 id: id,
             }
 
-            let message = pb.CmdStockOrder.create(info);
-            let buff = pb.CmdStockOrder.encode(message).finish();
+            //let message = pb.CmdStockOrder.create(info);
+            let buff = pb.CmdStockOrder.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_Order, buff, (res) => {
 
@@ -354,8 +354,8 @@ export default class SellBox extends cc.Component {
                 info.type = pb.OrderType.BidLimit_Cancel;
             }
 
-            let message = pb.CmdStockOrderCancel.create(info);
-            let buff = pb.CmdStockOrderCancel.encode(message).finish();
+           // let message = pb.CmdStockOrderCancel.create(info);
+            let buff = pb.CmdStockOrderCancel.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_OrderCancel, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);

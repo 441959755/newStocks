@@ -1,9 +1,8 @@
 
-import { pb } from "../../protos/proto";
-import GameData from "../../sctiprs/GameData";
 import ComUtils from "../../sctiprs/utils/ComUtils";
 import EventCfg from "../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../sctiprs/utils/GlobalEvent";
+import GameData from "../../sctiprs/GameData";
 
 const { ccclass, property } = cc._decorator;
 
@@ -65,8 +64,8 @@ export default class Broadcast extends cc.Component {
                 wxHeadicon: GameData.headImgurl,
             };
 
-            let message = pb.CmdRoomEnter.create(data);
-            let buff = pb.CmdRoomEnter.encode(message).finish();
+            // let message = pb.CmdRoomEnter.create(data);
+            let buff = pb.CmdRoomEnter.encode(data).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Room_Enter, buff, (res) => {
                 console.log('加入房间：' + JSON.stringify(res));

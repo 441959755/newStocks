@@ -1,7 +1,6 @@
 
 import LLWConfing from "../../../common/config/LLWConfing";
 import LLWSDK from "../../../common/sdk/LLWSDK";
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -195,9 +194,9 @@ export default class ShopControl extends cc.Component {
                     mobile: this.editBox.string,
                 }
 
-                let CmdMobileBind = pb.CmdMobileBind;
-                let message = CmdMobileBind.create(info);
-                let buff = CmdMobileBind.encode(message).finish();
+                // let CmdMobileBind = pb.CmdMobileBind;
+                // let message = CmdMobileBind.create(info);
+                let buff = pb.CmdMobileBind.encode(info).finish();
 
                 (<any>window).socket.send(pb.MessageId.Req_Hall_MobileBind, buff, (res) => {
                     console.log('手机号绑定应答' + JSON.stringify(res));
@@ -275,9 +274,9 @@ export default class ShopControl extends cc.Component {
 
         console.log(JSON.stringify(obj));
 
-        let ItemOrder = pb.ItemOrder;
-        let message = ItemOrder.create(obj);
-        let buff = ItemOrder.encode(message).finish();
+        // let ItemOrder = pb.ItemOrder;
+        // let message = ItemOrder.create(obj);
+        let buff = pb.ItemOrder.encode(obj).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Hall_ShopOrder, buff, (res) => {
             console.log('商城下购买应答' + JSON.stringify(res));

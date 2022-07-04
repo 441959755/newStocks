@@ -11,6 +11,7 @@ import ConfUtils from '../utils/ConfUtils';
 import ShiPanBundle from './ShiPanBundle';
 import { pb } from '../../protos/proto';
 import GameBundle from './GameBundle';
+import GlobalHandle from '../GlobalHandle';
 
 
 const { ccclass, property } = cc._decorator;
@@ -98,8 +99,8 @@ export default class HallContent extends cc.Component {
 					nick: GameData.userName,
 				};
 
-				let message = pb.PlayerInfo.create(data);
-				let buff = pb.PlayerInfo.encode(message).finish();
+				//	let message = pb.PlayerInfo.create(data);
+				let buff = pb.PlayerInfo.encode(data).finish();
 				(<any>window).socket.send(pb.MessageId.Req_Hall_EditNick, buff, (info) => {
 					console.log('GameData.userName:' + JSON.stringify(info));
 				})
@@ -110,8 +111,8 @@ export default class HallContent extends cc.Component {
 					uid: GameData.userID,
 					gender: GameData.gender + '',
 				};
-				let message = pb.PlayerInfo.create(data);
-				let buff = pb.PlayerInfo.encode(message).finish();
+				//let message = pb.PlayerInfo.create(data);
+				let buff = pb.PlayerInfo.encode(data).finish();
 				(<any>window).socket.send(pb.MessageId.Req_Hall_EditGender, buff, (info) => {
 					console.log('GameData.gender:' + JSON.stringify(info));
 				})
@@ -328,16 +329,17 @@ export default class HallContent extends cc.Component {
 					capital: 0,
 					junXian: ComUtils.getJJJunXian(),
 				}
-				let CmdRoomCreate = pb.CmdRoomCreate;
-				let message = CmdRoomCreate.create(info);
-				let buff = CmdRoomCreate.encode(message).finish();
+				//let CmdRoomCreate = pb.CmdRoomCreate;
+				//let message = CmdRoomCreate.create(info);
+				let buff = pb.CmdRoomCreate.encode(info).finish();
 
 				(<any>window).socket.send(pb.MessageId.Req_Room_Create, buff, (res) => {
 					console.log('创建房间应答' + JSON.stringify(res));
 					GlobalEvent.emit(EventCfg.HIDELOADING);
 					if (res && res.err) {
-						let err = GlobalHandle.getErrorCodeByCode(res.err.code);
-						GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, err);
+
+						// let err = GlobalHandle.getErrorCodeByCode(res.err.code);
+						GlobalEvent.emit(EventCfg.SHOWTIPSTEXT, res.err.err);
 						return;
 					}
 					GameData.RoomType = 1;
@@ -411,7 +413,7 @@ export default class HallContent extends cc.Component {
 			GlobalEvent.emit(EventCfg.SHOWLOADING);
 			GameCfg.GameType = 'STUDY';
 			SchoolBundle.schoolProgress = data;
-			SchoolBundle.bundleSchool('school');
+			SchoolBundle.bundleSchool('school1');
 		}
 
 		//免费砖石

@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameCfg from "../../../sctiprs/GameCfg";
 
 import EventCfg from "../../../sctiprs/utils/EventCfg";

@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
 
@@ -41,9 +41,9 @@ export default class NewClass extends cc.Component {
             total: 100,
         }
 
-        let CmdQueryEventLog = pb.CmdQueryEventLog;
-        let message = CmdQueryEventLog.create(data);
-        let buff = CmdQueryEventLog.encode(message).finish();
+        // let CmdQueryEventLog = pb.CmdQueryEventLog;
+        // let message = CmdQueryEventLog.create(data);
+        let buff = pb.CmdQueryEventLog.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Hall_QueryEventLog, buff, (info) => {
             console.log('每周豪礼：' + JSON.stringify(info));
@@ -83,9 +83,9 @@ export default class NewClass extends cc.Component {
                 let data = {
                     code: this.editBox.string,
                 }
-                let CmdGetWeeklyAward = pb.CmdGetWeeklyAward;
-                let message = CmdGetWeeklyAward.create(data);
-                let buff = CmdGetWeeklyAward.encode(message).finish();
+                // let CmdGetWeeklyAward = pb.CmdGetWeeklyAward;
+                // let message = CmdGetWeeklyAward.create(data);
+                let buff = pb.CmdGetWeeklyAward.encode(data).finish();
 
                 (<any>window).socket.send(pb.MessageId.Req_Hall_GetWeeklyAward, buff, (info) => {
 

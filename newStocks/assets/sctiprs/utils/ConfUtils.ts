@@ -1,4 +1,4 @@
-import { pb } from "../../protos/proto";
+
 import GameCfg from "../GameCfg";
 import GameData from "../GameData";
 import EventCfg from "./EventCfg";

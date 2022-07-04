@@ -1,11 +1,9 @@
 import LLWConfing from "../../common/config/LLWConfing";
 import HttpUtils from "../../common/net/HttpUtils";
-import { pb } from "../../protos/proto";
 import GameData from "../GameData";
 import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import RegUtils from "../utils/RegUtils";
-
 
 const { ccclass, property } = cc._decorator;
 
@@ -63,7 +61,6 @@ export default class Reset extends cc.Component {
     onBtnClick(event, curtomData) {
         let name = event.target.name;
 
-
         if (name == 'closeBtn') {
             this.node.active = false;
             GlobalEvent.emit(EventCfg.SHOWLOGIN);
@@ -102,8 +99,8 @@ export default class Reset extends cc.Component {
             }
 
             let url = LLWConfing.LoginUrl + '/p';
-            let message = pb.CmdResetPwd.create(data);
-            let buff = pb.CmdResetPwd.encode(message).finish();
+            //  let message = pb.CmdResetPwd.create(data);
+            let buff = pb.CmdResetPwd.encode(data).finish();
 
             HttpUtils.sendRequest({ data: buff, url: url, method: 'POST' }).then((res) => {
                 let decode = pb.ErrorInfo.decode(new Uint8Array(res));
@@ -135,8 +132,8 @@ export default class Reset extends cc.Component {
         let data = {
             account: this.phone.string,
         }
-        let CmdGetSms = pb.CmdGetSms.create(data);
-        let buff = pb.CmdGetSms.encode(CmdGetSms).finish();
+        // let CmdGetSms = pb.CmdGetSms.create(data);
+        let buff = pb.CmdGetSms.encode(data).finish();
 
         HttpUtils.sendRequest({ url: url, data: buff, method: 'POST' }).then((res) => {
 

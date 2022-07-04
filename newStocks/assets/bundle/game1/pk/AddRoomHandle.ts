@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
@@ -72,9 +71,9 @@ export default class AddRoomHandle extends cc.Component {
             wxHeadicon: GameData.headImgurl,
         }
 
-        let CmdRoomEnter = pb.CmdRoomEnter;
-        let message = CmdRoomEnter.create(data);
-        let buff = CmdRoomEnter.encode(message).finish();
+        // let CmdRoomEnter = pb.CmdRoomEnter;
+        // let message = CmdRoomEnter.create(data);
+        let buff = pb.CmdRoomEnter.encode(data).finish();
 
         GameData.RoomType = 2;
 

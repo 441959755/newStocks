@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import ConfUtils from "../../../sctiprs/utils/ConfUtils";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
@@ -81,8 +81,8 @@ export default class NewClass extends cc.Component {
             }
             console.log(JSON.stringify(info));
 
-            let message = pb.CmdStockOrderCancel.create(info);
-            let buff = pb.CmdStockOrderCancel.encode(message).finish();
+          //  let message = pb.CmdStockOrderCancel.create(info);
+            let buff = pb.CmdStockOrderCancel.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Game_OrderCancel, buff, (res) => {
                 GlobalEvent.emit(EventCfg.HIDELOADING);

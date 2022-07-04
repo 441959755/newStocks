@@ -1,6 +1,5 @@
 
 
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -53,8 +52,8 @@ export default class HisRecrod extends cc.Component {
 
         GlobalEvent.emit(EventCfg.SHOWLOADING);
 
-        let message = pb.CmdQueryGameResult.create(data)
-        let buff = pb.CmdQueryGameResult.encode(message).finish();
+        //let message = pb.CmdQueryGameResult.create(data)
+        let buff = pb.CmdQueryGameResult.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_QueryGameResult, buff, info => {
             console.log(JSON.stringify(info.results));

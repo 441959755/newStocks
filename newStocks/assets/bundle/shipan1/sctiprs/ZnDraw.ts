@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import DrawData from "../../../sctiprs/DrawData";
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
@@ -524,8 +524,8 @@ export default class ZnDraw extends cc.Component {
             code: this.code,
         }
 
-        let message1 = pb.CmdQueryAiSignal.create(me);
-        let buff1 = pb.CmdQueryAiSignal.encode(message1).finish();
+      //  let message1 = pb.CmdQueryAiSignal.create(me);
+        let buff1 = pb.CmdQueryAiSignal.encode(me).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QueryAiSignal, buff1, (res) => {
 
@@ -679,8 +679,8 @@ export default class ZnDraw extends cc.Component {
             // from: from,
         };
 
-        let message = pb.CmdQuoteQuery.create(info1);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+      //  let message = pb.CmdQuoteQuery.create(info1);
+        let buff = pb.CmdQuoteQuery.encode(info1).finish();
 
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {
@@ -767,9 +767,9 @@ export default class ZnDraw extends cc.Component {
             items: [{ code: this.code + '', flag: flag }]
         }
         console.log('订阅：' + JSON.stringify(info));
-        let CmdQuoteSubscribe = pb.CmdQuoteSubscribe;
-        let message = CmdQuoteSubscribe.create(info);
-        let buff = CmdQuoteSubscribe.encode(message).finish();
+        // let CmdQuoteSubscribe = pb.CmdQuoteSubscribe;
+        // let message = CmdQuoteSubscribe.create(info);
+        let buff = pb.CmdQuoteSubscribe.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteSubscribe, buff, info => {
             console.log('订阅：' + JSON.stringify(info));
@@ -944,8 +944,8 @@ export default class ZnDraw extends cc.Component {
             to: to,
             total: 250,
         }
-        let message = pb.CmdQuoteQuery.create(info1);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+        //let message = pb.CmdQuoteQuery.create(info1);
+        let buff = pb.CmdQuoteQuery.encode(info1).finish();
 
         GlobalEvent.emit(EventCfg.SHOWLOADING);
 
@@ -1132,8 +1132,8 @@ export default class ZnDraw extends cc.Component {
                 isAiStock: true,
             }
 
-            let message = pb.CmdMncgEditStock.create(info);
-            let buff = pb.CmdMncgEditStock.encode(message).finish();
+           // let message = pb.CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_EditAiStockList, buff, (res) => {
 
@@ -1154,8 +1154,8 @@ export default class ZnDraw extends cc.Component {
                 isAiStock: false,
             }
 
-            let message = pb.CmdMncgEditStock.create(info);
-            let buff = pb.CmdMncgEditStock.encode(message).finish();
+            //let message = pb.CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
             (<any>window).socket.send(pb.MessageId.Req_Game_MncgEditStockList, buff, (res) => {
 
             })

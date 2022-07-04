@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameCfg from "../../../sctiprs/GameCfg";
 import GameData from "../../../sctiprs/GameData";
 import ComUtils from "../../../sctiprs/utils/ComUtils";
@@ -106,8 +106,8 @@ export default class MnxgItem extends cc.Component {
                 id: id,
             }
 
-            let message = pb.CmdMncgEditStock.create(info);
-            let buff = pb.CmdMncgEditStock.encode(message).finish();
+          //  let message = pb.CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
             (<any>window).socket.send(pb.MessageId.Req_Game_MncgEditStockList, buff, (res) => {
 
             })

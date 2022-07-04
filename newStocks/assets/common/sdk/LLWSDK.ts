@@ -1,4 +1,4 @@
-import { pb } from "../../protos/proto";
+
 import LLWConfing from "../config/LLWConfing";
 import WebSDK from "./WebSDK";
 import WechatSDK from "./WechatSDK";

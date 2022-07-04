@@ -3,7 +3,7 @@ const { ccclass, property } = cc._decorator;
 import GlobalEvent from "../utils/GlobalEvent";
 
 import EventCfg from './../utils/EventCfg';
-import { pb } from "../../protos/proto";
+
 import GameCfg from "../GameCfg";
 
 
@@ -29,7 +29,7 @@ export default class GameSet extends cc.Component {
     laNode: cc.Node = null;    //刻度
 
     onLoad() {
-        
+
         GlobalEvent.on('setDrawing', (falg) => {
 
             if (falg) {

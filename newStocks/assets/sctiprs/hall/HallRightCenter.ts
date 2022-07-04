@@ -1,6 +1,6 @@
 
 import LLWConfing from "../../common/config/LLWConfing";
-import { pb } from "../../protos/proto";
+
 import GameData from "../GameData";
 import ActionUtils from "../utils/ActionUtils";
 import GlobalEvent from "../utils/GlobalEvent";

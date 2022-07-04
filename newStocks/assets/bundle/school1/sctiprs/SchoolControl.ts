@@ -1,5 +1,4 @@
 
-import { pb } from "../../../protos/proto";
 import GameData from "../../../sctiprs/GameData";
 import SchoolBundle from "../../../sctiprs/hall/SchoolBundle";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -69,9 +68,9 @@ export default class SchoolControl extends cc.Component {
         }
 
         GameData.taskStudy[data.index] = data;
-        let CmdStudyProgress = pb.CmdStudyProgress;
-        let message = CmdStudyProgress.create(data);
-        let buff = CmdStudyProgress.encode(message).finish();
+        // let CmdStudyProgress = pb.CmdStudyProgress;
+        // let message = CmdStudyProgress.create(data);
+        let buff = pb.CmdStudyProgress.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Hall_SaveStudyProgress, buff, (info) => {
             console.log('学习任务进度' + JSON.stringify(info));

@@ -3,7 +3,7 @@ import EventCfg from "../utils/EventCfg";
 import GlobalEvent from "../utils/GlobalEvent";
 import StrategyAIData from "./StrategyAIData";
 import List from "../utils/List";
-import { pb } from "../../protos/proto";
+
 import GameCfg from "../GameCfg";
 import DrawData from "../DrawData";
 

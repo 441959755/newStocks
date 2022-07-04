@@ -1,5 +1,5 @@
 import HttpMgr from '../sctiprs/HttpMgr'
-import { pb } from "../protos/proto"
+
 import GameCfg from "./GameCfg";
 import GlobalEvent from './utils/GlobalEvent';
 import EventCfg from './utils/EventCfg';
@@ -11,8 +11,6 @@ import DrawData from './DrawData';
 
 export default {
 
-
-
     /**
      * 获取行情
      * @param obj 
@@ -20,8 +18,8 @@ export default {
      */
     getStockQuotes(obj, cb) {
 
-        let message = pb.CmdQuoteQuery.create(obj);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+     //   let message = pb.CmdQuoteQuery.create(obj);
+        let buff = pb.CmdQuoteQuery.encode(obj).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteQuery, buff, info => {
 
@@ -141,9 +139,9 @@ export default {
             }
         }
 
-        let CmdGameStart = pb.CmdGameStart;
-        let message = CmdGameStart.create(info)
-        let buff = CmdGameStart.encode(message).finish();
+        // let CmdGameStart = pb.CmdGameStart;
+        // let message = CmdGameStart.create(info)
+        let buff = pb.CmdGameStart.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_Start, buff, res => {
 
@@ -187,8 +185,8 @@ export default {
             data.total = 2000;
         }
 
-        let message = pb.CmdQuoteQuery.create(data);
-        let buff = pb.CmdQuoteQuery.encode(message).finish();
+       // let message = pb.CmdQuoteQuery.create(data);
+        let buff = pb.CmdQuoteQuery.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_QuoteQueryFuture, buff, info => {
 
@@ -262,9 +260,9 @@ export default {
 
         if (!ops) { return }
 
-        let GameOperations = pb.GameOperations;
-        let data1 = GameOperations.create(ops);
-        let buff1 = GameOperations.encode(data1).finish();
+        // let GameOperations = pb.GameOperations;
+        // let data1 = GameOperations.create(ops);
+        let buff1 = pb.GameOperations.encode(ops).finish();
 
         let data = {
             id: GameData.roomId,
@@ -272,9 +270,9 @@ export default {
             ops: buff1,
         }
 
-        let RoomGameOp = pb.RoomGameOp;
-        let message = RoomGameOp.create(data);
-        let buff = RoomGameOp.encode(message).finish();
+        // let RoomGameOp = pb.RoomGameOp;
+        // let message = RoomGameOp.create(data);
+        let buff = pb.RoomGameOp.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Sync_Room_GameOp, buff, (res) => {
             console.log('上传房间游戏操作' + JSON.stringify(res));
@@ -285,9 +283,9 @@ export default {
     // 查询游戏操作步骤
     GetGameOperations(data, cb?) {
 
-        let CmdGetGameOperations = pb.CmdGetGameOperations;
-        let message = CmdGetGameOperations.create(data)
-        let buff = CmdGetGameOperations.encode(message).finish();
+        // let CmdGetGameOperations = pb.CmdGetGameOperations;
+        // let message = CmdGetGameOperations.create(data)
+        let buff = pb.CmdGetGameOperations.encode(data).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_GetGameOperation, buff, (info) => {
             console.log('操作步骤' + JSON.stringify(info));
@@ -316,9 +314,9 @@ export default {
                 uid: GameData.userID,
             }
 
-            let CmdRoomLeave = pb.CmdRoomLeave;
-            let message = CmdRoomLeave.create(data);
-            let bufff = CmdRoomLeave.encode(message).finish();
+            // let CmdRoomLeave = pb.CmdRoomLeave;
+            // let message = CmdRoomLeave.create(data);
+            let bufff = pb.CmdRoomLeave.encode(data).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_Room_Leave, bufff, (res) => {
                 console.log('离开房间：' + JSON.stringify(res));
@@ -341,9 +339,9 @@ export default {
     onCmdGameOverReq(datas, cb?) {
         console.log('上传游戏数据' + JSON.stringify(datas));
 
-        let CmdGameOver = pb.CmdGameOver;
-        let message = CmdGameOver.create(datas);
-        let buff = CmdGameOver.encode(message).finish();
+        // let CmdGameOver = pb.CmdGameOver;
+        // let message = CmdGameOver.create(datas);
+        let buff = pb.CmdGameOver.encode(datas).finish();
 
         (<any>window).socket.send(pb.MessageId.Req_Game_Over, buff, (info) => {
             cb && (cb(info.ts));
@@ -369,9 +367,9 @@ export default {
             ts: parseInt(new Date().getTime() / 1000 + ''),
         }
 
-        let Notice = pb.Notice;
-        let message = Notice.create(info);
-        let buff = Notice.encode(message).finish();
+        // let Notice = pb.Notice;
+        // let message = Notice.create(info);
+        let buff = pb.Notice.encode(info).finish();
 
         (<any>window).socket.send(pb.MessageId.Sync_C2S_Message, buff, (res) => {
             console.log('在线邀请：' + JSON.stringify(res));

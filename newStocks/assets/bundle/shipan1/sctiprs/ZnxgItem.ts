@@ -1,4 +1,4 @@
-import { pb } from "../../../protos/proto";
+
 import GameData from "../../../sctiprs/GameData";
 import EventCfg from "../../../sctiprs/utils/EventCfg";
 import GlobalEvent from "../../../sctiprs/utils/GlobalEvent";
@@ -92,8 +92,8 @@ export default class ZnxgItem extends cc.Component {
                 isAiStock: true,
             }
 
-            let message = pb.CmdMncgEditStock.create(info);
-            let buff = pb.CmdMncgEditStock.encode(message).finish();
+         //   let message = pb.CmdMncgEditStock.create(info);
+            let buff = pb.CmdMncgEditStock.encode(info).finish();
 
             (<any>window).socket.send(pb.MessageId.Req_EditAiStockList, buff, (res) => {
 
